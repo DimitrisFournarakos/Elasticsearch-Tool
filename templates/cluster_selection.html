@@ -1,0 +1,63 @@
+<div class="tree-title">
+    <span class="folder-label">
+        📁 Elasticsearch
+    </span>
+</div>
+
+<ul class="tree">
+
+    <li class="folder">
+        <span id="clusters-folder" class="folder-label">
+            📁 Clusters
+        </span>
+
+        <ul id="cluster-list" class="child">
+            
+            
+            {% for cluster in clusters %}
+            <li class="cluster-item"
+                data-id="{{ cluster.id }}"
+                data-name="{{ cluster.name }}"
+                data-url="{{  cluster.url }}"
+                data-enabled="{{ cluster.enabled  }}"
+                data-environment="{{ cluster.environment }}">
+
+                <span class="node-label">
+                    🌐 {{ cluster.name }}
+                </span>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </li>
+
+</ul>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+    const clustersFolder = document.getElementById("clusters-folder");
+    const clusterList = document.getElementById("cluster-list");
+    
+    window.hideAllProperties();
+    
+    clustersFolder.addEventListener("click", function(){
+        
+        //Με την if  ανοιγει-κλείνει τον εκαστοτε Cluster στο δεξί Panel
+        //Αν υπάρχει η class open -> κλείστο , Αν δεν υπάρχει η class -> ανοιξέ το, αφορα και το .child.open{display:block;}
+        if(clusterList.classList.contains("open")){
+                clusterList.classList.remove("open");
+        }else{
+        clusterList.classList.add("open");
+
+        }
+    });
+});
+
+</script>
+

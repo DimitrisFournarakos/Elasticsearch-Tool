@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Elasticsearch Dashboard</title>
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}"></link>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="tree-panel">
+
+    {% if selected_cluster %}
+
+    <div class="tree-content">
+            <div class="tree-title">
+
+                <span class="folder-label">
+                    📁 {{ selected_cluster.name }}
+                </span>
+
+                </div>
+                    <ul class="tree">
+                        
+                        <li class="folder">
+                                <span class="folder-label">
+                                    📁 elasticsearch
+                                </span>
+                                    <ul class="child">
+                                            <li class="folder">                                   
+                                                <span class="folder-label">
+                                                        📁 cluster_health
+                                                </span>                          
+                                                    <ul class="child">
+                                                            <li 
+                                                            class="cluster-health-item"
+                                                            data-cluster="{{ cluster_health.cluster_name }}"
+                                                            data-status="{{ cluster_health.status }}"
+                                                            data-nodes="{{ cluster_health.number_of_nodes }}"
+                                                            data-data-nodes="{{ cluster_health.number_of_data_nodes }}"
+                                                            data-shards="{{ cluster_health.active_shards }}"
+                                                            data-primary="{{ cluster_health.active_primary_shards }}"
+                                                            data-unassigned="{{ cluster_health.unassigned_shards }}"
+                                                            data-pending="{{ cluster_health.pending_tasks }}"
+                                                            >
+                                                                
+                                                                <span class="node-label">📈 {{cluster_health.cluster_name }}</span>
+                                                        </li>
+                                                    </ul>   
+                                            </li>                                            
+
+                                        <li class="folder">                              
+                                            <span class="folder-label">
+                                                    📁 roles
+                                            </span>
+                                                <ul class="child">
+                                                    {% for role, users in grouped_roles.items %}
+                                                    <li class="folder">
+                                                        <span class="folder-label">
+                                                            📁 {{ role }}
+                                                        </span>
+                                                            <ul class="child">
+                                                                {% for user in users %}
+
+                                                                <li class="user-item"
+                                                                    data-username="{{ user.username }}"
+                                                                    data-fullname="{{ user.full_name }}"
+                                                                    data-email="{{ user.email }}"
+                                                                    data-role="{{ role }}"
+                                                                    data-enabled="{{ user.enabled  }}">
+
+                                                                    <span class="node-label">
+                                                                        👤 {{ user.username }}
+                                                                    </span>
+                                                                </li>
+
+                                                                {% endfor %}                                                            
+                                                            </ul>
+                                                        </li>
+                                                    {% endfor %}                                         
+                                                </ul>
+                                        </li>     
+                                        <li class="folder">
+                                            <span class="folder-label">
+                                                📁 users
+                                            </span>
+                                            <ul class="child">
+                                                
+                                                {% for user in users %}
+                                                <li class="folder">
+                                                    <span class="folder-label">
+                                                        👤 {{ user.username }}
+                                                    </span>                                                    
+                                                    <ul class="child">
+                                                        {% for role in user.roles %}
+                                                        <li class="user-item"
+                                                            data-username="{{ user.username }}"
+                                                            data-fullname="{{ user.full_name }}"
+                                                            data-email="{{ user.email }}"
+                                                            data-role="{{ role }}"
+                                                            data-enabled="{{ user.enabled }}">
+                                                            <span class="item-label">
+                                                                🔑 {{ role }}
+                                                            </span>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                         </li>              
+                                    
+                                        <li class="folder">                                    
+                                            <span class="folder-label">
+                                                📁 nodes
+                                            </span>                                   
+                                            <ul class="child">                                       
+                                                {% for node in nodes %}
+                                                <li class="node-item" data-name="{{ node.name }}" data-icon="🌐 " data-ip="{{ node.ip }}" data-host="{{ node.host }}" data-version="{{ node.version }}">
+                                                    <span class="node-label">
+                                                        🌐 {{node.name}}
+                                                    </span>
+                                                </li>
+                                                {% endfor%}
+                                            </ul>
+                                            
+                                        </li>
+                                                                
+                                    </ul>
+
+                                <li class="folder">
+
+                                    <span class="folder-label">
+                                        📁 indicies
+                                    </span>
+
+                                    <ul class="child">
+                                        {% for index in indices %}
+
+                                        <li class="folder">
+
+                                            <span class="folder-label">
+                                                📂 {{ index.display_name }}
+                                            </span>
+                                            <ul class="child">
+                                                <li class="folder">
+                                                    <span class="folder-label">
+                                                        📁 properties
+                                                    </span>
+
+                                                    <ul class="child">
+                                                        <li class="index-item"
+                                                            data-name="{{ index.name }}"
+                                                            data-display-name="{{ index.display_name }}"
+                                                            data-health="{{ index.health }}"
+                                                            data-status="{{ index.status }}"
+                                                            data-docs="{{ index.docs }}"
+                                                            data-size="{{ index.size }}">
+                                                            <span class="item-label">
+                                                                📄 {{ index.display_name }}-properties
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+
+                                                <li class="folder">
+                                                    <span class="folder-label">
+                                                        📁 shards
+                                                    </span>
+
+                                                    <ul class="child">
+                                                        {% for shard in index.shards %}
+
+                                                        <li class="shard-item"
+                                                            data-index="{{ index.display_name }}"
+                                                            data-id="{{ shard.id }}"
+                                                            data-prirep="{{ shard.prirep }}"
+                                                            data-state="{{ shard.state }}"
+                                                            data-node="{{ shard.node }}"
+                                                            data-docs="{{ shard.docs }}"
+                                                            data-store="{{ shard.store }}"
+                                                            data-dataset="{{ shard.dataset }}"
+                                                            data-ip="{{ shard.ip }}">
+
+                                                            <span class="item-label">
+                                                                {% if shard.prirep == "p" %}
+
+                                                                📄 primary-shard-{{ shard.id }}
+
+                                                                {% else %}
+
+                                                                📄 replica-shard-{{ shard.id }}
+
+                                                                {% endif %}
+                                                            </span>
+                                                        </li>
+
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+
+                            <li class="folder">
+
+                                    <span class="folder-label">
+                                        📁 monitoring
+                                    </span>
+
+                                    <ul class="child">
+
+                                        <li class="folder">
+                                            
+                                            <span class="folder-label">
+                                                📁 cluster
+                                            </span>
+
+                                            <ul class="child">
+
+                                                <li class="cluster-monitoring-item"
+                                                    data-name="{{ cluster_health.cluster_name }}"
+                                                    data-disk-status="{{ cluster_health.cluster_monitor_disk_status }}"
+                                                    data-nodes="{{ cluster_health.number_of_nodes }}"
+                                                    data-data-nodes="{{ cluster_health.number_of_data_nodes }}"
+                                                    data-shards="{{ cluster_health.active_shards }}"
+                                                    data-primary="{{ cluster_health.active_primary_shards }}"
+                                                    data-pending="{{ cluster_health.pending_tasks }}"
+                                                    data-unassigned="{{ cluster_health.unassigned_shards }}"
+
+                                                    data-total="{{ cluster_total_display }}"
+                                                    data-used="{{ cluster_used_display }}"
+                                                    data-free="{{ cluster_free_display }}"
+                                                    data-usage="{{ cluster_usage }}">
+
+                                                    <span class="item-label">
+                                                        📄 {{ cluster_health.cluster_name }}
+                                                    </span>
+                                                </li>
+                                            </ul>
+
+                                        </li>
+
+                                        <li class="folder">
+                                            <span class="folder-label">
+                                                📁 nodes
+                                            </span>
+                                                <ul class="child">
+                                                {% for node in node_monitoring %}
+                                                    <li class="node-monitoring-item"
+                                                        data-name="{{ node.name }}"
+                                                        data-primary="{{ node.primary_shards }}"
+                                                        data-replica="{{ node.replica_shards }}"
+                                                        data-total-shards="{{ node.total_shards }}"
+                                                        data-total="{{ node.total_display }}"
+                                                        data-used="{{ node.used_display }}"
+                                                        data-free="{{ node.free_display }}"
+                                                        data-percent="{{ node.percent }}">
+
+                                                        <span class="item-label">
+                                                            📄 {{ node.name }}
+                                                        </span>
+                                                    </li>
+                                                {% endfor %}
+                                                </ul>
+                                        </li>
+
+                                        <li class="folder">
+
+                                            <span class="folder-label">
+                                                📁 indicies
+                                            </span>
+
+                                            <ul class="child">
+                                                {% for index in indices %}
+
+                                                <li class="index-monitoring-item"
+
+                                                    data-name="{{ index.display_name }}"
+                                                    data-docs="{{ index.docs }}"
+                                                    data-size="{{ index.size_display }}"
+                                                    data-health="{{ index.health }}"
+                                                    data-cluster-total="{{ cluster_total_display }}"
+                                                    data-cluster-used="{{ cluster_used_display }}"
+                                                    data-cluster-free="{{ cluster_free_display }}">
+
+                                                    <span class="item-label">
+                                                        📄 {{ index.display_name }}
+                                                    </span>
+
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+
+                                        </li>
+
+                                        <li class="folder">
+
+                                            <span class="folder-label">
+                                                📁 shards
+                                            </span>
+
+                                            <ul class="child">
+                                                <li class="shard-allocation-item"
+                                                    data-started="{{ started_shards }}"
+                                                    data-relocating="{{ relocating_shards }}"
+                                                    data-initializing="{{ initializing_shards }}"
+                                                    data-unassigned="{{ unassigned_shards_monitoring }}">
+
+                                                    <span class="item-label">
+                                                        📄 Shard Allocation
+                                                    </span>
+                                                </li>
+
+                                                <li class="shard-storage-item"
+                                                    data-total="{{ total_shards }}"
+                                                    data-primary="{{ primary_shards }}"
+                                                    data-replica="{{ replica_shards }}"
+                                                    data-storage="{{ total_shard_storage_display }}"
+                                                    data-cluster-total="{{ cluster_total_display }}"
+                                                    data-cluster-used="{{ cluster_used_display }}"
+                                                    data-cluster-free="{{ cluster_free_display }}">
+
+                                                    <span class="item-label">
+                                                        📄 Shard Storage
+                                                    </span>
+                                                </li>
+
+                                            </ul>
+
+                                        </li>
+                                    </ul>
+                            </li>
+                            
+                            <li class="folder">
+                                <span class="folder-label">
+                                    📁 snapshots
+                                </span>
+
+                                    <ul class="child">
+                                        {% for repository, snapshot_list in snapshots.items %}
+
+                                        <li class="folder">
+                                            <span class="folder-label">
+                                                📁 {{ repository }}
+                                            </span>
+
+                                            <ul class="child">
+                                                {% for snapshot in snapshot_list %}
+
+                                                <li class="snapshot-item"
+                                                    data-name="{{ snapshot.snapshot }}"
+                                                    data-repository="{{ repository }}"
+                                                    data-state="{{ snapshot.state }}"
+                                                    data-start="{{ snapshot.start_time }}"
+                                                    data-end="{{ snapshot.end_time }}"
+                                                    data-duration="{{ snapshot.duration_in_millis }}"
+                                                    data-indices="{{ snapshot.indices|length }}">
+
+                                                    <span class="item-label">
+                                                        📄 {{ snapshot.snapshot }}
+                                                    </span>
+
+                                                </li>
+
+                                                {% endfor %}
+
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </li>
+                            </li>                        
+                    </ul>
+                            
+                <a href="{% url 'disconnect_cluster' %}" class="disconnect-btn"> Disconnect </a>
+                </div>
+                {% else %}
+
+                    {% include "cluster_selection.html" %}
+
+                {% endif %}
+
+    </div>
+
+
+
+    <!-- RIGHT SIDE -->
+    <div class="details-panel">
+        
+
+        <div class="details-title" id="details-title"></div>       
+        {% include "panels/cluster_properties.html" %} 
+        
+        {% include "panels/node_properties.html" %} 
+        
+        {% include "panels/user_properties.html" %}            
+        
+        {% include "panels/cluster_health.html" %}
+
+        {% include "panels/index_properties.html" %}
+
+        {% include "panels/shard_properties.html" %}
+
+        {% include "panels/node_disk_properties.html" %}
+
+        {% include "panels/cluster_monitoring.html" %}
+
+        {% include "panels/index_disk_usage.html" %}
+
+        {% include "panels/shard_storage.html" %}
+
+        {% include "panels/shard_allocation.html" %}
+
+        {% include "panels/snapshot_properties.html" %}
+
+    </div>
+
+</div>
+
+    {% load static %}
+
+<script src="{% static 'js/hide_all_properties.js' %}"></script>
+<script src="{% static 'js/cluster_health.js' %}"></script>
+<script src="{% static 'js/node_properties.js' %}"></script>
+<script src="{% static 'js/tree.js' %}"></script>
+<script src="{% static 'js/cluster_properties.js' %}"></script>
+<script src="{% static 'js/user_properties.js' %}"></script>
+<script src="{% static 'js/index_properties.js' %}"></script>
+<script src="{% static 'js/shard_properties.js' %}"></script>
+<script src="{% static 'js/node_disk_properties.js' %}"></script>
+<script src="{% static 'js/cluster_monitoring.js' %}"></script>
+<script src="{% static 'js/helpers.js' %}"></script>
+<script src="{% static 'js/index_disk_usage.js' %}"></script>
+<script src="{% static '/js/shard_disk_usage.js' %}"></script>
+<script src="{% static 'js/shard_allocation.js' %}"></script>
+<script src="{% static 'js/snapshot_properties.js' %}"></script>
+
+
+</body>
+</html>
+
+
+
