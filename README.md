@@ -55,15 +55,15 @@ http://localhost:9000/elastic_dashboard/
 
 ### Multi-cluster Support
 
-![Multi-clutser Support](docs/screenshots/Multi-cluster Support.png)
+![Multi-clutser Support](docs/screenshots/multi-cluster-support.png)
 
 ### Snapshot Management
 
-![Snapshots](docs/screenshots/Snapshot Management.png)  
+![Snapshots](docs/screenshots/snapshot-management.png)  
 
 ### Cluster Monitoring
 
-![Cluster_Monitoring](docs/screenshots/Cluster Monitoring.png)  
+![Cluster_Monitoring](docs/screenshots/cluster-monitoring.png)  
 
 ---
 
