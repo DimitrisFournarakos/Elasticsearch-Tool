@@ -65,6 +65,8 @@ http://localhost:9000/elastic_dashboard/
 
 ![Cluster Monitoring](docs/screenshots/cluster-monitoring.png)
 ![Node Monitoring](docs/screenshots/node-monitoring.png)
+![Index Monitoring](docs/screenshots/index-monitoring.png)
+![Shard Monitoring](docs/screenshots/shard-monitoring.png)
 ---
 
 ## Technology Stack
