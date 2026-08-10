@@ -55,7 +55,7 @@ http://localhost:9000/elastic_dashboard/
 
 ### Elasticsearch Dashboard
 
-![docs/Dashboard/dashboard.png]
+![Dashboard](docs/screenshots/dashboard.png)
 
 ### Snapshot Management
 
@@ -63,7 +63,7 @@ http://localhost:9000/elastic_dashboard/
 
 ### Cluster Monitoring
 
-docs/screenshots/monitoring.png  
+![Cluster_Monitoring](docs/screenshots/monitoring.png)  
 
 ---
 
@@ -135,6 +135,53 @@ MONITORING_PASSWORD=ChangeMe456!
 ```
 
 ---
+## Cluster Configuration
+
+Before using the application, configure the Elasticsearch clusters that you want to monitor.
+
+Make and Edit the `clusters.json` file and add your cluster information.
+The clusters.json file must be located in the project root directory.
+
+Example:
+
+```json
+{
+  "clusters": [
+    {
+      "id": "prod",
+      "name": "elastic-cluster",
+      "url": "http://localhost:9200",
+      "username": "elastic",
+      "password": "your_password",
+      "enabled": true,
+      "environment": "production"
+    },
+    {
+      "id": "monitoring",
+      "name": "monitoring-cluster",
+      "url": "http://localhost:9203",
+      "username": "elastic",
+      "password": "your_password",
+      "enabled": true,
+      "environment": "monitoring"
+    }
+  ]
+}
+```
+
+### Field Description
+
+| Field | Description |
+|---------|---------|
+| id | Unique cluster identifier |
+| name | Cluster display name |
+| url | Elasticsearch endpoint URL |
+| username | Elasticsearch username |
+| password | Elasticsearch password |
+| enabled | Enable or disable the cluster |
+| environment | Environment type (production, monitoring, development, etc.) |
+
+After updating `clusters.json`, restart the application.
 
 ## Docker Deployment
 
