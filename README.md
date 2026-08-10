@@ -252,4 +252,8 @@ https://github.com/DimitrisFournarakos
 
 ## License
 
-MIT License
+Copyright © 2026 Dimitrios Fournarakos.
+
+All Rights Reserved.
+
+This project is not licensed for public use, modification, redistribution, or commercial exploitation without explicit written permission from the author.
