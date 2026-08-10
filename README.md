@@ -62,7 +62,8 @@ http://localhost:9000/elastic_dashboard/
 ![Users Management](docs/screenshots/users-management.png)
 
 ### Health Management
-![Cluster Health](docs/screenshots/cluster-health-monitoring.png)
+![Cluster Health Monitoring](docs/screenshots/cluster-health-monitoring.png)
+![Cluster Health Dashboard](docs/screenshots/dashboard-cluster-health.png)
 
 ### Snapshots Management
 ![Snapshot Management](docs/screenshots/snapshot-management.png)
