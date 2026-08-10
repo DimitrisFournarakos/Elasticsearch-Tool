@@ -1,0 +1,48 @@
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.4.3
+    container_name: es-node-01
+
+    environment:
+      - node.name=es-node-01
+      - cluster.name=elastic-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+
+    ports:
+      - "9200:9200"
+
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+    restart: unless-stopped
+
+  monitoring-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.4.3
+    container_name: monitoring-es-01
+
+    environment:
+      - node.name=monitoring-es-01
+      - cluster.name=monitoring-cluster
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=${MONITORING_PASSWORD}
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+
+    ports:
+      - "9203:9200"
+
+    volumes:
+      - monitoring_esdata:/usr/share/elasticsearch/data
+      - monitoring_snapshots:/usr/share/elasticsearch/snapshots
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+    restart: unless-stopped
+
+volumes:
+  esdata:
+  monitoring_esdata:
+  monitoring_snapshots:

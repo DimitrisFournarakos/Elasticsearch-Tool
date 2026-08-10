@@ -1,0 +1,13 @@
+services:
+
+  elasticsearch-tool:
+    build: .
+    container_name: elasticsearch-tool
+
+    ports:
+      - "9000:9000"
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
