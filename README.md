@@ -57,17 +57,27 @@ http://localhost:9000/elastic_dashboard/
 
 ![Multi-clusters](docs/screenshots/multi-cluster-support.png)
 
-### Management
+### Users Management
 
 ![Users Management](docs/screenshots/users-management.png)
+
+### Health Management
 ![Cluster Health](docs/screenshots/cluster-health-monitoring.png)
+
+### Snapshots Management
 ![Snapshot Management](docs/screenshots/snapshot-management.png)
 
-### Monitoring
+### Cluster Monitoring
 
 ![Cluster Monitoring](docs/screenshots/cluster-monitoring.png)
+
+### Node Monitoring
 ![Node Monitoring](docs/screenshots/node-monitoring.png)
+
+### Index Monitoring
 ![Index Monitoring](docs/screenshots/index-monitoring.png)
+
+### Shard Monitoring
 ![Shard Monitoring](docs/screenshots/shard-monitoring.png)
 ---
 
