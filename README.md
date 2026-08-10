@@ -55,7 +55,7 @@ http://localhost:9000/elastic_dashboard/
 
 ### Multi-cluster Support
 
-![Multi-clusters/multi-cluster-support.png
+![Multi-clusters/multi-cluster-support.png]
 
 ### Snapshot Management
 
@@ -63,7 +63,7 @@ docs/screenshots/snapshot-management.png
 
 ### Cluster Monitoring
 
-![Cluster Monitoring](er-monitoring.png
+![Cluster Monitoring](er-monitoring.png)
 ---
 
 ## Technology Stack
