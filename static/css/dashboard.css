@@ -162,6 +162,11 @@ ul.tree li{
 #snapshot-properties{
     display:none;
 }
+#cluster-health-history-properties{
+    display:none;
+}
+
+
 .node-label{
     display:inline-block;
     padding:2px 6px;

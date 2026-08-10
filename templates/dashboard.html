@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"></link>
 </head>
 
+
 <body>
 <div class="container">
 
@@ -51,7 +52,20 @@
                                                             data-pending="{{ cluster_health.pending_tasks }}"
                                                             >
                                                                 
-                                                                <span class="node-label">📈 {{cluster_health.cluster_name }}</span>
+                                                                <span class="node-label">
+                                                                    📈 current_status
+                                                                </span>
+                                                                <li                                                                   
+                                                                    class="cluster-health-history-item"                                                                   
+                                                                    data-cluster="{{ cluster_health.cluster_name }}"                                                                
+                                                                    >
+                                                                   
+                                                                    <span class="node-label">                                                                   
+                                                                        📊 history_status                                                                 
+                                                                    </span>
+                                                                    
+                                                                </li>
+
                                                         </li>
                                                     </ul>   
                                             </li>                                            
@@ -424,6 +438,8 @@
 
         {% include "panels/snapshot_properties.html" %}
 
+        {% include "panels/cluster_health_history.html" %}
+
     </div>
 
 </div>
@@ -445,6 +461,9 @@
 <script src="{% static '/js/shard_disk_usage.js' %}"></script>
 <script src="{% static 'js/shard_allocation.js' %}"></script>
 <script src="{% static 'js/snapshot_properties.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/cluster_health_history.js' %}"></script>
+
 
 
 </body>

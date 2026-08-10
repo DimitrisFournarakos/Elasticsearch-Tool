@@ -230,3 +230,10 @@ def connect_cluster(request, cluster_id):
 def disconnect_cluster(request):
     request.session.pop("selected_cluster",None)
     return redirect("elastic_dashboard")
+
+def cluster_health_history_panel(request, cluster_name):
+    with open(f"health_history/{cluster_name}.json","r") as f:
+
+        data = json.load(f)
+
+    return JsonResponse(data,safe=False)
