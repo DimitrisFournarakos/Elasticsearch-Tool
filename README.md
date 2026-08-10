@@ -53,17 +53,17 @@ http://localhost:9000/elastic_dashboard/
 
 ## Screenshots
 
-### Elasticsearch Dashboard
+### Multi-cluster Support
 
-![Dashboard](docs/screenshots/dashboard.png)
+![Multi-clutser Support](docs/screenshots/Multi-cluster Support.png)
 
 ### Snapshot Management
 
-![Snapshots](docs/screenshots/snapshots.png)  
+![Snapshots](docs/screenshots/Snapshot Management.png)  
 
 ### Cluster Monitoring
 
-![Cluster_Monitoring](docs/screenshots/monitoring.png)  
+![Cluster_Monitoring](docs/screenshots/Cluster Monitoring.png)  
 
 ---
 
