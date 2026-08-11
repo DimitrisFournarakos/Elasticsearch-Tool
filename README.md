@@ -82,6 +82,56 @@ http://localhost:9000/elastic_dashboard/
 ![Shard Monitoring](docs/screenshots/shard-monitoring.png)
 ---
 
+## About Cluster Health History Monitoring
+
+Elasticsearch Tool provides built-in historical cluster health monitoring.
+
+For every monitored cluster, the application automatically creates a hidden Elasticsearch index:
+
+```text
+.cluster-health-history
+```
+
+No manual configuration is required.
+
+### How It Works
+
+Whenever a cluster health state changes, a new history record is automatically stored.
+
+Example:
+
+```text
+GREEN -> YELLOW -> RED -> GREEN
+```
+
+The application records only health status transitions, avoiding unnecessary duplicate entries.
+
+### Stored Information
+
+```json
+{
+  "cluster": "elastic-cluster",
+  "status": "green",
+  "timestamp": "2026-08-11T10:52:18Z"
+}
+```
+
+### Available Metrics
+
+- Current Cluster Status
+- Total Health Events
+- Historical Health Timeline
+- Recent Status Changes
+- Health Trend Visualization
+
+### Benefits
+
+- Fully automated setup
+- No external database required
+- No manual index creation required
+- Native Elasticsearch storage
+- Scalable for large Elasticsearch environments
+
 ## Technology Stack
 
 - Django

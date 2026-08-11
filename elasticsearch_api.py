@@ -1,7 +1,93 @@
 from elasticsearch import Elasticsearch
+from datetime import datetime,timezone
 import json
+
 def get_client(cluster):
     return Elasticsearch(cluster["url"], basic_auth=( cluster["username"], cluster["password"] ))
+
+def get_cluster_by_id(cluster_id):
+    clusters = get_clusters()
+
+    for cluster in clusters:
+        if cluster["id"] == cluster_id:
+            return cluster
+
+    return None
+
+def ensure_health_history_index(es):
+    index_name = ".cluster-health-history"
+
+    if not es.indices.exists(index=index_name):
+        es.indices.create( index=index_name,
+            mappings={
+                "properties": {
+                    "cluster": { "type": "keyword"},
+                    "status": {"type": "keyword"},
+                    "timestamp": {"type": "date"}
+                }
+            }
+        )
+
+def save_cluster_health_history(es,cluster_name,status):
+    ensure_health_history_index(es)
+
+    es.index( index=".cluster-health-history",
+        document={
+            "cluster": cluster_name,
+            "status": status,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    )
+
+def get_last_health_status(es,cluster_name):
+    ensure_health_history_index(es)
+
+    response = es.search(index=".cluster-health-history",size=1,
+        sort=[
+            {
+                "timestamp": {
+                    "order": "desc"
+                }
+            }
+        ],
+        query={
+            "term": {
+                "cluster": cluster_name
+            }
+        }
+    )
+
+    hits = response["hits"]["hits"]
+    if not hits:
+        return None
+
+    return hits[0]["_source"]["status"]
+
+
+def get_cluster_health_history(cluster,cluster_name):
+    es = get_client(cluster)
+    ensure_health_history_index(es)
+
+    response = es.search( index=".cluster-health-history",size=200,
+        sort=[{
+                "timestamp": {
+                    "order": "asc"
+                }
+            }
+        ],
+        query={
+            "term": {
+                "cluster": cluster_name
+            }
+        }
+    )
+
+    results = []
+
+    for hit in response["hits"]["hits"]:
+        results.append(hit["_source"])
+
+    return results
 
 def get_clusters():
     with open("clusters.json","r") as f:
@@ -45,8 +131,12 @@ def get_users(cluster):
 
 def get_cluster_health(cluster):
     es = get_client(cluster)
-
+    
     health = es.cluster.health()
+    last_status = get_last_health_status(es,health["cluster_name"])
+
+    if last_status != health["status"]:
+        save_cluster_health_history(es,health["cluster_name"],health["status"])
 
     return{
         "cluster_name": health["cluster_name"],

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots
+from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,get_cluster_by_id
 import json 
 from collections import defaultdict
 ###
@@ -231,9 +231,8 @@ def disconnect_cluster(request):
     request.session.pop("selected_cluster",None)
     return redirect("elastic_dashboard")
 
-def cluster_health_history_panel(request, cluster_name):
-    with open(f"health_history/{cluster_name}.json","r") as f:
+def cluster_health_history_panel(request,cluster_name):
+    cluster = request.session.get("selected_cluster")
+    history = get_cluster_health_history(cluster,cluster_name)
 
-        data = json.load(f)
-
-    return JsonResponse(data,safe=False)
+    return JsonResponse(history,safe=False)
