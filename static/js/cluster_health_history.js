@@ -9,7 +9,30 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
 
     document.getElementById("history-cluster-name").textContent = clusterName;
     document.getElementById("history-total-events").textContent = history.length;
-    // const currentStatus = data[data.length - 1].status;
+
+    //Calculate Availability->Availability = (Total Events / Healthy Events) * 100
+    const greenEvents =history.filter(item => item.status === "green").length;
+    const availability = history.length > 0 ? ( greenEvents / history.length ) * 100 : 0;
+    document.getElementById("history-availability").textContent = availability.toFixed(2) + "%";
+
+    let trend = "Stable";
+        if(history.length >= 2){
+            const previous = history[history.length - 2].status;
+            const current =history[history.length - 1].status;
+            const score ={red: 1,yellow: 2,green: 3};
+
+            if(score[current] > score[previous]){
+                trend = "↗ Improving";
+            }
+            else if(score[current] < score[previous]){
+                trend = "↘ Degrading";
+            }
+            else{
+                trend = "→ Stable";
+            }
+        }
+        document.getElementById("history-trend").textContent = trend;
+
     const icon = currentStatus === "green" ? "🟢" : currentStatus === "yellow" ? "🟡" : "🔴";
 
     document.getElementById("history-current-status").innerHTML = `${icon} ${currentStatus.toUpperCase()}`;
