@@ -48,6 +48,26 @@ body{
     background:#1e1e1e;
     overflow:auto;
     padding:25px;
+
+}
+
+/* Right Panel Scrollbar */
+
+.details-panel::-webkit-scrollbar {
+    width: 12px;
+}
+
+.details-panel::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.details-panel::-webkit-scrollbar-thumb {
+    background: #6b6b6b;
+    border-radius: 10px;
+}
+
+.details-panel::-webkit-scrollbar-thumb:hover {
+    background: #909090;
 }
 
 .details-title{
@@ -231,3 +251,32 @@ ul.tree li{
     background:#777;
 }
 
+#health-events{
+    max-height:300px;
+    overflow-y:auto;
+    border:1px solid #444;
+    padding:10px;   
+    background: #252526;
+    border-radius: 8px;
+}
+/*Scroll Bar για το Health Events*/
+#health-events::-webkit-scrollbar {
+    width: 10px;
+}
+
+#health-events::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+#health-events::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 10px;
+}
+
+#health-events::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+#health-events {
+    background: #252526;
+    border-radius: 8px;
+}
