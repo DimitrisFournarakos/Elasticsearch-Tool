@@ -64,10 +64,18 @@ def get_last_health_status(es,cluster_name):
     return hits[0]["_source"]["status"]
 
 
-def get_cluster_health_history(cluster,cluster_name):
+def get_cluster_health_history(cluster,cluster_name,period):
     es = get_client(cluster)
     ensure_health_history_index(es)
 
+    range_query = {
+    "1h": "now-1h",
+    "24h": "now-24h",
+    "7d": "now-7d",
+    "30d": "now-30d",
+    "365d": "now-365d"
+    }.get(period,"now-24h")
+    
     response = es.search( index=".cluster-health-history",size=200,
         sort=[{
                 "timestamp": {
@@ -76,10 +84,23 @@ def get_cluster_health_history(cluster,cluster_name):
             }
         ],
         query={
-            "term": {
-                "cluster": cluster_name
+                "bool":{
+                    "must":[
+                        {
+                            "term":{
+                                "cluster":cluster_name
+                        }
+                        },
+                        {
+                            "range":{
+                                "timestamp":{
+                                    "gte": range_query
+                                }
+                            }
+                        }
+                    ]
+                }
             }
-        }
     )
 
     results = []
@@ -131,7 +152,7 @@ def get_users(cluster):
 
 def get_cluster_health(cluster):
     es = get_client(cluster)
-    
+
     health = es.cluster.health()
     last_status = get_last_health_status(es,health["cluster_name"])
 

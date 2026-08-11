@@ -1,8 +1,8 @@
 let clusterHealthChart = null;
 
-async function loadClusterHealthHistory(clusterName)
+async function loadClusterHealthHistory(clusterName,period = "24h")
 {
-    const response = await fetch(`/cluster-health-history/${clusterName}/`);
+    const response = await fetch(`/cluster-health-history/${clusterName}/?period=${period}`);
     const data = await response.json();
 
     document.getElementById("history-cluster-name").textContent = clusterName;
@@ -142,4 +142,16 @@ document.addEventListener("DOMContentLoaded", function ()
         await loadClusterHealthHistory(this.dataset.cluster);
 
     });
+    const filter = document.getElementById("history-period");
+
+    if(filter)
+    {
+        filter.addEventListener("change",
+            async function(){
+                const clusterName = document.getElementById("history-cluster-name").textContent;
+                await loadClusterHealthHistory(clusterName,this.value);
+            }
+        );
+    }
+
 });
