@@ -233,7 +233,9 @@ def disconnect_cluster(request):
 
 def cluster_health_history_panel(request,cluster_name):
     cluster = request.session.get("selected_cluster")
+    cluster_health = get_cluster_health(cluster)
+
     period = request.GET.get("period","24h")
     history = get_cluster_health_history(cluster,cluster_name,period)
 
-    return JsonResponse(history,safe=False)
+    return JsonResponse({"history": history,"current_status":cluster_health["status"]})

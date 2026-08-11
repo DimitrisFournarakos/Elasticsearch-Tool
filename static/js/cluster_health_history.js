@@ -4,10 +4,12 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
 {
     const response = await fetch(`/cluster-health-history/${clusterName}/?period=${period}`);
     const data = await response.json();
+    const history = data.history;
+    const currentStatus = data.current_status;
 
     document.getElementById("history-cluster-name").textContent = clusterName;
-    document.getElementById("history-total-events").textContent = data.length;
-    const currentStatus = data[data.length - 1].status;
+    document.getElementById("history-total-events").textContent = history.length;
+    // const currentStatus = data[data.length - 1].status;
     const icon = currentStatus === "green" ? "🟢" : currentStatus === "yellow" ? "🟡" : "🔴";
 
     document.getElementById("history-current-status").innerHTML = `${icon} ${currentStatus.toUpperCase()}`;
@@ -23,18 +25,28 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     const labels = [];
     const values = [];
 
-    data.forEach(entry =>{
-        labels.push(entry.timestamp);
+    history.forEach(entry =>{
+        const formattedLabel = new Date(entry.timestamp).toLocaleString("en-EN",
+                                                                        {
+                                                                            day: "2-digit",
+                                                                            month: "2-digit",
+                                                                            year: "2-digit",
 
-        if(entry.status === "green")
-            values.push(3);
+                                                                            hour: "2-digit",
+                                                                            minute: "2-digit"
+                                                                        });
+                                                                        labels.push(formattedLabel);
+                                                                        if(entry.status === "green")
 
-        else if(entry.status === "yellow")
-            values.push(2);
+                                                                            values.push(3);
+                                                                        else if(entry.status === "yellow")
+                                                                            values.push(2);
 
-        else
-            values.push(1);
-    });
+                                                                        else
+
+                                                                            values.push(1);
+                        });
+
 
     const ctx = document.getElementById("clusterHealthChart");
     if (clusterHealthChart) {
@@ -115,11 +127,22 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     const events = document.getElementById("health-events");
 
     events.innerHTML = "";
-    data.slice().reverse().forEach(item =>
+    history.slice().reverse().forEach(item =>
     {
             const color = item.status === "green" ? "#00ff88": item.status === "yellow" ? "#ffd700" : "#ff4d4d";
+            const formattedDate = new Date(item.timestamp).toLocaleString("en-EN",
+                                                                                {
+                                                                                    year: "numeric",
+                                                                                    month: "2-digit",
+                                                                                    day: "2-digit",
 
-    events.innerHTML += `<div style="margin-bottom:6px;"> ${item.timestamp} - <span style="color:${color};font-weight:bold;"> ${item.status.toUpperCase()}</span></div>`;
+                                                                                    hour: "2-digit",
+                                                                                    minute: "2-digit",
+                                                                                    second: "2-digit"
+                                                                                }
+                                                                         );
+
+        events.innerHTML += `<div style="margin-bottom:6px;">${formattedDate}-<span style="color:${color};font-weight:bold;">${item.status.toUpperCase()}</span></div>`;
     });
 }
 
