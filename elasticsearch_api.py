@@ -13,7 +13,7 @@ def get_cluster_by_id(cluster_id):
             return cluster
 
     return None
-
+#----Functions for cluster health history-------------------------
 def ensure_health_history_index(es):
     index_name = ".cluster-health-history"
 
@@ -102,7 +102,6 @@ def get_cluster_health_history(cluster,cluster_name,period):
                 }
             }
     )
-
     results = []
 
     for hit in response["hits"]["hits"]:
@@ -110,6 +109,7 @@ def get_cluster_health_history(cluster,cluster_name,period):
 
     return results
 
+#------------------------------------------------------------------------------------------
 def get_clusters():
     with open("clusters.json","r") as f:
         data = json.load(f)

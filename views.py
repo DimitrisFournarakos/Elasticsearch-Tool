@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,get_cluster_by_id
 import json 
 from collections import defaultdict
-###
+
 def login_view(request):
 
     if request.method == "POST": #Έλεγχος αν πάτησε Login

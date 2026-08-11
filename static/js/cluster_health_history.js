@@ -33,13 +33,11 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
         }
         document.getElementById("history-trend").textContent = trend;
 
-    const icon = currentStatus === "green" ? "🟢" : currentStatus === "yellow" ? "🟡" : "🔴";
 
+    const icon = currentStatus === "green" ? "🟢" : currentStatus === "yellow" ? "🟡" : "🔴";
     document.getElementById("history-current-status").innerHTML = `${icon} ${currentStatus.toUpperCase()}`;
     
-
-    if (!data || data.length === 0)
-        {
+    if (!data || data.length === 0){
             document.getElementById("history-cluster-name").textContent = clusterName;
             document.getElementById("health-events").innerHTML ="<div>No historical data available yet.</div>";
             return;
@@ -59,26 +57,22 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
                                                                             minute: "2-digit"
                                                                         });
                                                                         labels.push(formattedLabel);
-                                                                        if(entry.status === "green")
-
-                                                                            values.push(3);
-                                                                        else if(entry.status === "yellow")
-                                                                            values.push(2);
-
-                                                                        else
-
-                                                                            values.push(1);
+                                                                            if(entry.status === "green")
+                                                                                values.push(3);
+                                                                            else if(entry.status === "yellow")
+                                                                                values.push(2);
+                                                                            else
+                                                                                values.push(1);
                         });
 
 
     const ctx = document.getElementById("clusterHealthChart");
-    if (clusterHealthChart) {
+    if (clusterHealthChart){
         clusterHealthChart.destroy();
     }
 
     clusterHealthChart = new Chart(ctx, {
         type: 'line',
-
         data:
         { 
             labels: labels,
@@ -101,12 +95,12 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
                 legend:
                 {
 
-                    labels:{
+                    labels:
+                    {
                         color:"#ffffff"
                     }
                 }
             },
-
             scales:
             {
                 y:
@@ -169,8 +163,7 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     });
 }
 
-document.addEventListener("DOMContentLoaded", function ()
-{
+document.addEventListener("DOMContentLoaded", function (){
     const historyNode = document.querySelector(".cluster-health-history-item");
 
     if (!historyNode){
