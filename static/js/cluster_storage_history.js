@@ -4,18 +4,6 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
     const response = await fetch(`/cluster-storage-history/${clusterName}/?period=${period}`);
     const data = await response.json();
     const history = data.history;
-    console.log(
-            "Period:",
-            period
-        );
-
-        console.log(
-            "Storage Events:",
-            history.length
-        );
-
-        console.log(history);
-
 
                     document.getElementById("storage-total-events").textContent = history.length;
                     let latest = null;
@@ -162,6 +150,7 @@ document.addEventListener("DOMContentLoaded",function (){
                 togglePanel("cluster-storage-history-properties",this.dataset.cluster);
 
                     const clusterName = this.dataset.cluster;
+                    document.getElementById("details-title").innerHTML = `📊 ${clusterName}`;
                     document.getElementById("storage-cluster-name").textContent = clusterName;
                     loadClusterStorageHistory(clusterName);
 
@@ -174,7 +163,6 @@ document.addEventListener("DOMContentLoaded",function (){
     const storageFilter = document.getElementById("storage-period");
     if(storageFilter){
         storageFilter.addEventListener("change", function (){
-            console.log("Selected:",this.value);
                 const clusterName = document.getElementById("storage-cluster-name").textContent;
                 loadClusterStorageHistory(clusterName,this.value);
 
