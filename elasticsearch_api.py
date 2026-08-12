@@ -433,7 +433,7 @@ def get_indices(cluster):
 
         #Εδώ είναι που κρύβω τον index που φτιάχνω για να αποθηκεύονται μέσα σε αυτόν όλα τα records για το health του cluster.
         #Όταν δηλαδή το Cluster π.χ. αλλάξει από Green σε Yellow κλπ. + 1 record,που κρατάω μέσα στον index cluster-health-history.        
-        if index["index"] in [".cluster-health-history",".cluster-storage-history"]:
+        if index["index"] in [".cluster-health-history",".cluster-storage-history",".cluster-node-history"]:
             continue
 
         indices.append({
