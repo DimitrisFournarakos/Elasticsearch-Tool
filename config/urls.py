@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from views import elastic_dashboard,login_view,connect_cluster,disconnect_cluster,cluster_health_history_panel,cluster_storage_history_panel
+from views import elastic_dashboard,login_view,connect_cluster,disconnect_cluster,cluster_health_history_panel,cluster_storage_history_panel,node_history_panel
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +25,7 @@ urlpatterns = [
     path("disconnect_cluster/",disconnect_cluster,name="disconnect_cluster"),
     path("elastic_dashboard/",elastic_dashboard , name="elastic_dashboard"),
     path("cluster-health-history/<str:cluster_name>/",cluster_health_history_panel),
-    path("cluster-storage-history/<str:cluster_name>/",cluster_storage_history_panel)
+    path("cluster-storage-history/<str:cluster_name>/",cluster_storage_history_panel),
+    path("node-history/<str:node_name>/",node_history_panel)
 
 ]

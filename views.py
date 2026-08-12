@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history
+from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history,get_last_node_usage,save_node_history,get_node_history
 import json 
 from collections import defaultdict
 
@@ -104,14 +104,23 @@ def elastic_dashboard(request):
         cluster_used_display =  format_storage_size(cluster_used)
         cluster_free_display =  format_storage_size(cluster_free)
 
+        #Calculate last storage_history of cluster health
         es = get_client(selected_cluster)
         last_usage = get_last_storage_usage(es,cluster_health["cluster_name"])
         if (last_usage is None  or  abs(last_usage - cluster_usage) >= 0.5):
             save_cluster_storage_history(es,cluster_health["cluster_name"],cluster_total,cluster_used,cluster_free,cluster_usage)
 
+        #Calculate last storage_history of cluster node
+        es = get_client(selected_cluster)
+        for disk_node in node_disk_usage:
+            last_usage = get_last_node_usage(es,disk_node["name"])
+
+            if (last_usage is None  or  abs(last_usage - disk_node["percent"]) >= 0.5):
+                save_node_history(es,cluster_health["cluster_name"],disk_node["name"],disk_node["total"],disk_node["used"],disk_node["free"],disk_node["percent"])
+
+
         primary_shards = 0
         replica_shards = 0
-
         started_shards = 0
         relocating_shards = 0
         initializing_shards = 0
@@ -250,5 +259,13 @@ def cluster_storage_history_panel(request,cluster_name):
     period = request.GET.get("period","24h")
     
     history = get_cluster_storage_history(cluster,cluster_name,period)
+
+    return JsonResponse({"history": history})
+
+def node_history_panel(request,node_name):
+    cluster = request.session.get("selected_cluster")
+    period = request.GET.get("period","24h")
+
+    history = get_node_history(cluster,node_name,period)
 
     return JsonResponse({"history": history})

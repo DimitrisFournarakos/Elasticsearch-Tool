@@ -229,6 +229,124 @@ def get_cluster_storage_history(cluster,cluster_name,period):
     return results
 #--------------------------------------------------------------------------------------------
 
+#----Functions for each node storage history - hidden index ".cluster-node-history"----------
+def ensure_node_history_index(es):
+    index_name = ".cluster-node-history"
+
+    if not es.indices.exists(index=index_name):
+        es.indices.create(index=index_name,
+            mappings={
+                "properties": {
+                    "cluster": {
+                        "type": "keyword"
+                    },
+                    "node": {
+                        "type": "keyword"
+                    },
+                    "usage_percent": {
+                        "type": "float"
+                    },
+                    "used_bytes": {
+                        "type": "long"
+                    },
+                    "free_bytes": {
+                        "type": "long"
+                    },
+                    "total_bytes": {
+                        "type": "long"
+                    },
+                    "timestamp": {
+                        "type": "date"
+                    }
+                }
+            }
+        )
+
+def save_node_history(es,cluster_name,node_name,total_bytes,used_bytes,free_bytes,usage_percent):
+    ensure_node_history_index(es)
+    es.index(index=".cluster-node-history",
+        document={
+            "cluster": cluster_name,
+            "node": node_name,
+            "total_bytes": total_bytes,
+            "used_bytes": used_bytes,
+            "free_bytes": free_bytes,
+            "usage_percent": usage_percent,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    )
+
+def get_last_node_usage(es,node_name):
+    ensure_node_history_index(es)
+    response = es.search(index=".cluster-node-history",
+        size=1,
+        sort=[
+            {
+                "timestamp":{
+                    "order":"desc"
+                }
+            }
+        ],
+        query={
+            "term":{
+                "node": node_name
+            }
+        }
+    )
+
+    hits = response["hits"]["hits"]
+    if not hits:
+        return None
+
+    return hits[0]["_source"]["usage_percent"]
+
+def get_node_history(cluster,node_name,period):
+    es = get_client(cluster)
+    ensure_node_history_index(es)
+
+    range_query = {
+        "1h": "now-1h",
+        "24h": "now-24h",
+        "7d": "now-7d",
+        "30d": "now-30d",
+        "365d": "now-365d"
+    }.get(period, "24h")
+
+    response = es.search(index=".cluster-node-history",
+        size=200,
+        sort=[
+            {
+                "timestamp": {
+                    "order": "asc"
+                }
+            }
+        ],
+        query={
+            "bool": {
+                "must": [
+                    {
+                        "term": {
+                            "node": node_name
+                        }
+                    },
+                    {
+                        "range": {
+                            "timestamp": {
+                                "gte": range_query
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    )
+    results = []
+
+    for hit in response["hits"]["hits"]:
+        results.append(hit["_source"])
+
+    return results
+#--------------------------------------------------------------------------------------------
 def get_clusters():
     with open("clusters.json","r") as f:
         data = json.load(f)
