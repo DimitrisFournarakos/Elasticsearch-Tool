@@ -282,21 +282,37 @@
                                             </span>
                                                 <ul class="child">
                                                 {% for node in node_monitoring %}
-                                                    <li class="node-monitoring-item"
-                                                        data-name="{{ node.name }}"
-                                                        data-primary="{{ node.primary_shards }}"
-                                                        data-replica="{{ node.replica_shards }}"
-                                                        data-total-shards="{{ node.total_shards }}"
-                                                        data-total="{{ node.total_display }}"
-                                                        data-used="{{ node.used_display }}"
-                                                        data-free="{{ node.free_display }}"
-                                                        data-percent="{{ node.percent }}">
-
-                                                        <span class="item-label">
-                                                            📄 {{ node.name }}
+                                                    <li class="folder">
+                                                        <span class="folder-label">
+                                                            📁 {{ node.name }}
                                                         </span>
+                                                        <ul class="child">
+
+                                                            <li class="node-monitoring-item"
+                                                                data-name="{{ node.name }}"
+                                                                data-primary="{{ node.primary_shards }}"
+                                                                data-replica="{{ node.replica_shards }}"
+                                                                data-total-shards="{{ node.total_shards }}"
+                                                                data-total="{{ node.total_display }}"
+                                                                data-used="{{ node.used_display }}"
+                                                                data-free="{{ node.free_display }}"
+                                                                data-percent="{{ node.percent }}">
+
+                                                                <span class="item-label">
+                                                                    📄 current_status
+                                                                </span>
+                                                            </li>
+
+                                                            <li class="node-history-item"
+                                                                data-node="{{ node.name }}">
+                                                                <span class="item-label">
+                                                                    📊 history
+                                                                </span>
+                                                            </li>
+
+                                                        </ul>
                                                     </li>
-                                                {% endfor %}
+                                                    {% endfor %}
                                                 </ul>
                                         </li>
 
@@ -454,6 +470,8 @@
 
         {% include "panels/cluster_storage_history.html" %}
 
+        {% include "panels/node_history.html" %}
+
     </div>
 
 </div>
@@ -478,7 +496,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/cluster_health_history.js' %}"></script>
 <script src="{% static 'js/cluster_storage_history.js' %}"></script>
-
+<script src="{% static 'js/node_history.js' %}"></script>
 </body>
 </html>
 
