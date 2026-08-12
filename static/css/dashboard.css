@@ -266,16 +266,16 @@ ul.tree li{
     width: 10px;
 }
 
-.history-events-box:-webkit-scrollbar-track {
+.history-events-box::-webkit-scrollbar-track {
     background: #1e1e1e;
 }
 
-.history-events-box:-webkit-scrollbar-thumb {
+.history-events-box::-webkit-scrollbar-thumb {
     background: #3a3a3a;
     border-radius: 10px;
 }
 
-.history-events-box:-webkit-scrollbar-thumb:hover {
+.history-events-box::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 .history-events-box {
@@ -290,7 +290,7 @@ ul.tree li{
     gap:10px;
     margin-bottom:15px;
 }
-#history-period{
+.history-filter{
     background:#252526;
     color:white;
     border:1px solid #444;
@@ -299,7 +299,7 @@ ul.tree li{
     cursor:pointer;
     font-size:14px;
 }
-#history-period:hover{
+.history-filter:hover{
     border-color:#777;
 }
 /*------------------------------------------*/
