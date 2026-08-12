@@ -159,7 +159,7 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
                                                                                 }
                                                                          );
 
-        events.innerHTML += `<div style="margin-bottom:6px;">${formattedDate}-<span style="color:${color};font-weight:bold;">${item.status.toUpperCase()}</span></div>`;
+        events.innerHTML += `<div style="margin-bottom:6px;">${formattedDate} - <span style="color:${color};font-weight:bold;">${item.status.toUpperCase()}</span></div>`;
     });
 }
 

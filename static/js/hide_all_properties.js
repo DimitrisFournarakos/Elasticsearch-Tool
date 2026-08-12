@@ -14,6 +14,7 @@ window.hideAllProperties = function () {
     document.getElementById("shard-allocation-properties").style.display = "none";
     document.getElementById("snapshot-properties").style.display = "none";
     document.getElementById("cluster-health-history-properties").style.display = "none";
+    document.getElementById("cluster-storage-history-properties").style.display = "none";
 };
 
 //Συνάρτηση για να ανοιγει-κλείνει με click ένα αρχείο στο δεξί πάνελ.

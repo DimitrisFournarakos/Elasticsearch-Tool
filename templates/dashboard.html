@@ -239,25 +239,38 @@
                                             </span>
 
                                             <ul class="child">
+                                                <li class="folder">
 
-                                                <li class="cluster-monitoring-item"
-                                                    data-name="{{ cluster_health.cluster_name }}"
-                                                    data-disk-status="{{ cluster_health.cluster_monitor_disk_status }}"
-                                                    data-nodes="{{ cluster_health.number_of_nodes }}"
-                                                    data-data-nodes="{{ cluster_health.number_of_data_nodes }}"
-                                                    data-shards="{{ cluster_health.active_shards }}"
-                                                    data-primary="{{ cluster_health.active_primary_shards }}"
-                                                    data-pending="{{ cluster_health.pending_tasks }}"
-                                                    data-unassigned="{{ cluster_health.unassigned_shards }}"
-
-                                                    data-total="{{ cluster_total_display }}"
-                                                    data-used="{{ cluster_used_display }}"
-                                                    data-free="{{ cluster_free_display }}"
-                                                    data-usage="{{ cluster_usage }}">
-
-                                                    <span class="item-label">
-                                                        📄 {{ cluster_health.cluster_name }}
+                                                    <span class="folder-label">
+                                                        📁 {{ cluster_health.cluster_name }}
                                                     </span>
+                                                    <ul class="child">
+                                                        <li class="cluster-monitoring-item"
+                                                            data-name="{{ cluster_health.cluster_name }}"
+                                                            data-disk-status="{{ cluster_health.cluster_monitor_disk_status }}"
+                                                            data-nodes="{{ cluster_health.number_of_nodes }}"
+                                                            data-data-nodes="{{ cluster_health.number_of_data_nodes }}"
+                                                            data-shards="{{ cluster_health.active_shards }}"
+                                                            data-primary="{{ cluster_health.active_primary_shards }}"
+                                                            data-pending="{{ cluster_health.pending_tasks }}"
+                                                            data-unassigned="{{ cluster_health.unassigned_shards }}"
+                                                            data-total="{{ cluster_total_display }}"
+                                                            data-used="{{ cluster_used_display }}"
+                                                            data-free="{{ cluster_free_display }}"
+                                                            data-usage="{{ cluster_usage }}">
+                                                            <span class="item-label">
+                                                                📄 current_status
+                                                            </span>
+                                                        </li>
+
+                                                        <li class="cluster-storage-history-item"
+                                                            data-cluster="{{ cluster_health.cluster_name }}">
+                                                            <span class="item-label">
+                                                                📊 storage_history
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+
                                                 </li>
                                             </ul>
 
@@ -439,6 +452,8 @@
 
         {% include "panels/cluster_health_history.html" %}
 
+        {% include "panels/cluster_storage_history.html" %}
+
     </div>
 
 </div>
@@ -462,6 +477,7 @@
 <script src="{% static 'js/snapshot_properties.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/cluster_health_history.js' %}"></script>
+<script src="{% static 'js/cluster_storage_history.js' %}"></script>
 
 </body>
 </html>

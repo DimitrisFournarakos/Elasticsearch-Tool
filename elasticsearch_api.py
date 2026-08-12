@@ -13,7 +13,7 @@ def get_cluster_by_id(cluster_id):
             return cluster
 
     return None
-#----Functions for cluster health history-------------------------
+#----Functions for cluster health history - hidden index ".cluster-health-history"------------------------
 def ensure_health_history_index(es):
     index_name = ".cluster-health-history"
 
@@ -109,7 +109,126 @@ def get_cluster_health_history(cluster,cluster_name,period):
 
     return results
 
-#------------------------------------------------------------------------------------------
+#----Functions for cluster storage history - hidden index ".cluster-storage-history"------------------------------------
+def ensure_storage_history_index(es):
+    index_name = ".cluster-storage-history"
+
+    if not es.indices.exists(index=index_name):
+        es.indices.create(index=index_name,
+            mappings={
+                "properties": {
+                    "cluster": {
+                        "type": "keyword"
+                    },
+                    "total_bytes": {
+                        "type": "long"
+                    },
+                    "used_bytes": {
+                        "type": "long"
+                    },
+                    "free_bytes": {
+                        "type": "long"
+                    },
+                    "usage_percent": {
+                        "type": "float"
+                    },
+                    "timestamp": {
+                        "type": "date"
+                    }
+                }
+            }
+        )
+
+def save_cluster_storage_history(es,cluster_name,total,used,free,usage_percent):
+    ensure_storage_history_index(es)
+    es.index(index=".cluster-storage-history",
+        document={
+            "cluster": cluster_name,
+            "total_bytes": total,
+            "used_bytes": used,
+            "free_bytes": free,
+            "usage_percent": usage_percent,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    )
+
+def get_last_storage_usage(es,cluster_name):
+    ensure_storage_history_index(es)
+
+    response = es.search(
+        index=".cluster-storage-history",
+        size=1,
+        sort=[
+            {
+                "timestamp": {
+                    "order":"desc"
+                }
+            }
+        ],
+        query={
+            "term":{
+                "cluster":
+                    cluster_name
+            }
+        }
+    )
+    hits = response["hits"]["hits"]
+
+    if not hits:
+        return None
+
+    return hits[0]["_source"]["usage_percent"]
+
+def get_cluster_storage_history(cluster,cluster_name,period):
+    es = get_client(cluster)
+    ensure_storage_history_index(es)
+
+    range_query = {
+        "1h": "now-1h",
+        "24h": "now-24h",
+        "7d": "now-7d",
+        "30d": "now-30d",
+        "365d": "now-365d"
+                    }.get(period,"now-24h")
+
+    response = es.search(
+        index=".cluster-storage-history",
+        size=200,
+        sort=[
+            {
+                "timestamp": {
+                    "order": "asc"
+                }
+            }
+        ],
+        query={
+            "bool":{
+                "must":[
+                    {
+                        "term":{
+                            "cluster": cluster_name
+                        }
+                    },
+                    {
+                        "range":{
+                            "timestamp":{
+                                "gte": range_query
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    )
+
+    results = []
+
+    for hit in response["hits"]["hits"]:
+        results.append(hit["_source"])
+
+    return results
+#--------------------------------------------------------------------------------------------
+
 def get_clusters():
     with open("clusters.json","r") as f:
         data = json.load(f)
@@ -196,7 +315,7 @@ def get_indices(cluster):
 
         #Εδώ είναι που κρύβω τον index που φτιάχνω για να αποθηκεύονται μέσα σε αυτόν όλα τα records για το health του cluster.
         #Όταν δηλαδή το Cluster π.χ. αλλάξει από Green σε Yellow κλπ. + 1 record,που κρατάω μέσα στον index cluster-health-history.        
-        if index["index"] in ".cluster-health-history":
+        if index["index"] in [".cluster-health-history",".cluster-storage-history"]:
             continue
 
         indices.append({

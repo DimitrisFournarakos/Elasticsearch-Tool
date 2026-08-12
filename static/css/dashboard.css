@@ -185,7 +185,9 @@ ul.tree li{
 #cluster-health-history-properties{
     display:none;
 }
-
+#cluster-storage-history-properties{
+    display:none;
+}
 
 .node-label{
     display:inline-block;
@@ -251,7 +253,7 @@ ul.tree li{
     background:#777;
 }
 
-#health-events{
+.history-events-box{
     max-height:300px;
     overflow-y:auto;
     border:1px solid #444;
@@ -260,23 +262,23 @@ ul.tree li{
     border-radius: 8px;
 }
 /*Scroll Bar για το Health Events*/
-#health-events::-webkit-scrollbar {
+.history-events-box::-webkit-scrollbar {
     width: 10px;
 }
 
-#health-events::-webkit-scrollbar-track {
+.history-events-box:-webkit-scrollbar-track {
     background: #1e1e1e;
 }
 
-#health-events::-webkit-scrollbar-thumb {
+.history-events-box:-webkit-scrollbar-thumb {
     background: #3a3a3a;
     border-radius: 10px;
 }
 
-#health-events::-webkit-scrollbar-thumb:hover {
+.history-events-box:-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-#health-events {
+.history-events-box {
     background: #252526;
     border-radius: 8px;
 }

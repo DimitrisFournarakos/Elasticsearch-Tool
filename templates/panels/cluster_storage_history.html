@@ -1,0 +1,36 @@
+<div class="property-box" id="cluster-storage-history-properties">
+    <h2>Cluster Storage History</h2>
+    <br>
+    <p><strong>Cluster:</strong> <span id="storage-cluster-name"></span></p>
+    <p><strong>Current Usage:</strong> <span id="storage-current-usage"></span></p>
+    <p><strong>Disk Status:</strong> <span id="storage-current-status"></span></p>
+    <p><strong>Total Events:</strong> <span id="storage-total-events"></span></p>
+    <p><strong>Availability:</strong> <span id="storage-availability"></span></p>
+    <p><strong>Trend:</strong> <span id="storage-trend"></span></p>
+    <br>
+    <hr>
+    <br>
+    <div class="history-filter-container">
+        <label for="history-period">Time Period:</label>
+        <select id="history-period">
+            <option value="1h">Last Hour</option>
+            <option value="24h" selected>Last 24 Hours</option>
+            <option value="7d">Last 7 Days</option>
+            <option value="30d">Last 30 Days</option>
+            <option value="365d">Last 365 Days</option>
+        </select>
+    </div>
+    <br>
+    <h3>Storage Usage History</h3>
+
+    <div style="height:400px;"><canvas id="clusterStorageChart"></canvas></div>
+    <br>
+    <hr>
+    <br>
+
+    <h3>Recent Storage Events</h3>
+    <br>
+    <div class="history-events-box" id="storage-events">
+    </div>
+
+</div>
