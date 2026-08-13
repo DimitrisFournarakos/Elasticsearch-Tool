@@ -211,6 +211,7 @@ def elastic_dashboard(request):
     for user in users:
         for role in user["roles"]:
             grouped_roles[role].append(user)
+            
     #Εδω το context που επιστρέφω χρησιμευει κυριως στις for που βαζω στο dashboard.html για να επιστρέφω τα πραγματικά δεδομένα στους φακέλους.
     context = {"nodes": nodes,"users": users,
                "grouped_roles": dict(grouped_roles),
