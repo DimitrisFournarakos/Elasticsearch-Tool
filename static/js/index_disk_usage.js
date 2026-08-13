@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded",
                         return;
                     }
 
-                    document.getElementById("details-title").innerHTML = "📄 " + this.dataset.name;
+                    document.getElementById("details-title").innerHTML = "📄 " + this.dataset.displayName;
                     document.getElementById("index-monitor-name").textContent =this.dataset.name;
                     document.getElementById("index-monitor-docs").textContent =this.dataset.docs;
                     document.getElementById("index-monitor-size").textContent =this.dataset.size;

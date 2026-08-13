@@ -321,24 +321,40 @@
                                             <span class="folder-label">
                                                 📁 indicies
                                             </span>
-
                                             <ul class="child">
                                                 {% for index in indices %}
 
-                                                <li class="index-monitoring-item"
-
-                                                    data-name="{{ index.display_name }}"
-                                                    data-docs="{{ index.docs }}"
-                                                    data-size="{{ index.size_display }}"
-                                                    data-health="{{ index.health }}"
-                                                    data-cluster-total="{{ cluster_total_display }}"
-                                                    data-cluster-used="{{ cluster_used_display }}"
-                                                    data-cluster-free="{{ cluster_free_display }}">
-
-                                                    <span class="item-label">
-                                                        📄 {{ index.display_name }}
+                                                <li class="folder">
+                                                    <span class="folder-label">
+                                                        📁 {{ index.display_name }}
                                                     </span>
 
+                                                    <ul class="child">
+                                                        <li class="index-monitoring-item"
+                                                            data-display-name="{{ index.display_name }}"
+                                                            data-name="{{ index.name }}"
+                                                            data-docs="{{ index.docs }}"
+                                                            data-size="{{ index.size_display }}"
+                                                            data-health="{{ index.health }}"
+                                                            data-cluster-total="{{ cluster_total_display }}"
+                                                            data-cluster-used="{{ cluster_used_display }}"
+                                                            data-cluster-free="{{ cluster_free_display }}">
+
+                                                            <span class="item-label">
+                                                                📄 current_status
+                                                            </span>
+                                                        </li>
+
+                                                        <li class="index-history-item"
+                                                            data-index="{{ index.name }}"
+                                                            data-display-name="{{ index.display_name }}"
+                                                            data-cluster-total="{{ cluster_total_display }}">
+
+                                                            <span class="item-label">
+                                                                📊 growth_history
+                                                            </span>
+                                                        </li>
+                                                    </ul>
                                                 </li>
                                                 {% endfor %}
                                             </ul>
@@ -472,6 +488,8 @@
 
         {% include "panels/node_history.html" %}
 
+        {% include "panels/index_history.html" %}
+
     </div>
 
 </div>
@@ -497,6 +515,8 @@
 <script src="{% static 'js/cluster_health_history.js' %}"></script>
 <script src="{% static 'js/cluster_storage_history.js' %}"></script>
 <script src="{% static 'js/node_history.js' %}"></script>
+<script src="{% static 'js/index_history.js' %}"></script>
+
 </body>
 </html>
 

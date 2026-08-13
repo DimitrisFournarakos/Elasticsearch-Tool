@@ -347,6 +347,153 @@ def get_node_history(cluster,node_name,period):
 
     return results
 #--------------------------------------------------------------------------------------------
+
+#----Functions for index  history - hidden index ".cluster-index-history"------------------------
+def ensure_index_history_index(es):
+    index_name = ".cluster-index-history"
+
+    if not es.indices.exists(index=index_name):
+        es.indices.create(index=index_name,
+            mappings={
+                "properties": {
+                    "cluster": {
+                        "type": "keyword"
+                    },
+                    "index_name": {
+                        "type": "keyword"
+                    },
+                    "documents": {
+                        "type": "long"
+                    },
+                    "size_bytes": {
+                        "type": "long"
+                    },
+                    "timestamp": {
+                        "type": "date"
+                    }
+                }
+            }
+        )
+
+def save_index_history(es,cluster_name,index_name,documents,size_bytes):
+    ensure_index_history_index(es)
+    
+    es.index(index=".cluster-index-history",
+        document={
+                "cluster": cluster_name,
+                "index_name": index_name,
+                "display_name": (index_name.replace(".internal.", "").split(".")[0]),
+                "documents": documents,
+                "size_bytes": size_bytes,
+                "size_display": format_storage_size(size_bytes),
+                "timestamp": datetime.now(timezone.utc).isoformat()
+                }
+
+    )
+
+def get_last_index_size(es,index_name):
+    ensure_index_history_index(es)
+
+    response = es.search(index=".cluster-index-history",
+        size=1,
+        sort=[
+            {
+                "timestamp": {
+                    "order": "desc"
+                }
+            }
+        ],
+        query={
+            "term": {
+                "index_name": index_name
+            }
+        }
+    )
+
+    hits = response["hits"]["hits"]
+    if not hits:
+        return None
+
+    return hits[0]["_source"]["size_bytes"]
+
+def get_last_index_documents(es,index_name):
+    ensure_index_history_index(es)
+    
+    response = es.search(
+        index=".cluster-index-history",
+        size=1,
+        sort=[
+            {
+                "timestamp":{
+                    "order":"desc"
+                }
+            }
+        ],
+        query={
+            "term":{
+                "index_name":
+                    index_name
+            }
+        }
+    )
+
+    hits = response["hits"]["hits"]
+    if not hits:
+        return None
+
+    return hits[0]["_source"]["documents"]
+
+def get_index_history(cluster,index_name,period):
+    es = get_client(cluster)
+    
+    ensure_index_history_index(es)
+    
+    range_query = {
+        "1h": "now-1h",
+        "24h": "now-24h",
+        "7d": "now-7d",
+        "30d": "now-30d",
+        "365d": "now-365d"
+    }.get(period, "24h")
+    
+    response = es.search(
+        index=".cluster-index-history",
+        size=200,
+
+        sort=[
+            {
+                "timestamp": {
+                    "order": "asc"
+                }
+            }
+        ],
+        query={
+            "bool": {
+                "must": [
+                    {
+                        "term": {
+                            "index_name": index_name
+                        }
+                    },
+                    {
+                        "range": {
+                            "timestamp": {
+                                "gte": range_query
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    )
+
+    results = []
+    for hit in response["hits"]["hits"]:
+        results.append(hit["_source"])
+
+
+    return results
+#------------------------------------------------------------------------------------------------
 def get_clusters():
     with open("clusters.json","r") as f:
         data = json.load(f)
@@ -432,8 +579,9 @@ def get_indices(cluster):
             display_name = display_name.split(".")[0]
 
         #Εδώ είναι που κρύβω τον index που φτιάχνω για να αποθηκεύονται μέσα σε αυτόν όλα τα records για το health του cluster.
-        #Όταν δηλαδή το Cluster π.χ. αλλάξει από Green σε Yellow κλπ. + 1 record,που κρατάω μέσα στον index cluster-health-history.        
-        if index["index"] in [".cluster-health-history",".cluster-storage-history",".cluster-node-history"]:
+        #Όταν δηλαδή το Cluster π.χ. αλλάξει από Green σε Yellow κλπ. + 1 record,που κρατάω μέσα στον index cluster-health-history.
+        #Το ίδιο ισχύει και για τα υπόλοιπα που κρύβω.        
+        if index["index"] in [".cluster-health-history",".cluster-storage-history",".cluster-node-history",".cluster-index-history"]:
             continue
 
         indices.append({

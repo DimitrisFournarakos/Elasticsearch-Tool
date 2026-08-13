@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history,get_last_node_usage,save_node_history,get_node_history
+from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history,get_last_node_usage,save_node_history,get_node_history,get_last_index_size,save_index_history,get_index_history,get_last_index_documents
 import json 
 from collections import defaultdict
 
@@ -57,6 +57,21 @@ def elastic_dashboard(request):
         shards = get_shards(selected_cluster)
         node_disk_usage = get_node_disk_usage(selected_cluster)
         snapshots = get_snapshots(selected_cluster)
+
+        #Αποθηκεύει νέο record μόνο όταν αλλάζει τουλάχιστον 1 MB
+        es = get_client(selected_cluster)
+        for index in indices:
+            try:
+                size_bytes = elastic_size_to_bytes(index["size"])
+                last_size = get_last_index_size(es,index["name"])
+
+                last_docs = get_last_index_documents(es,index["name"])
+                if (last_docs is None  or  last_docs != int(index["docs"])):
+                    save_index_history(es,cluster_health["cluster_name"],index["name"],int(index["docs"]),int(size_bytes))
+
+            except:
+                pass
+
 
         node_monitoring = {}
         for shard in shards:
@@ -267,5 +282,12 @@ def node_history_panel(request,node_name):
     period = request.GET.get("period","24h")
 
     history = get_node_history(cluster,node_name,period)
+
+    return JsonResponse({"history": history})
+
+def index_history_panel(request,index_name):
+    cluster = request.session.get("selected_cluster")
+    period = request.GET.get("period","24h")
+    history = get_index_history(cluster,index_name,period)
 
     return JsonResponse({"history": history})

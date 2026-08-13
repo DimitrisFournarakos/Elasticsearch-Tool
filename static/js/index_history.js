@@ -19,7 +19,7 @@ async function loadIndexHistory(indexName,period = "24h"){
     //Index Current Size
     let indexPercentage = 0;
     if(latest){
-        document.getElementById("index-current-size").textContent = latest.size_bytes;
+        document.getElementById("index-current-size").textContent = latest.size_display;
         indexPercentage = (latest.size_bytes / window.currentClusterTotal) * 100;
     }
 
@@ -87,39 +87,110 @@ async function loadIndexHistory(indexName,period = "24h"){
             events.innerHTML += `<div style="margin-bottom:8px;">${date} - Docs: ${item.documents}</div>`;
         });
 
+    const docsLabels = [];
+    const docsValues = [];
+    const storageLabels = [];
+    const storageValues = [];
+
+    history.forEach(item => {
+
+        const label = new Date(item.timestamp).toLocaleString("en-EN",
+                    {   day: "2-digit",
+                        month: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+            docsLabels.push(label);
+            docsValues.push(item.documents);
+            storageLabels.push(label);
+            storageValues.push(item.size_bytes);
+    });
+
+    const docsCtx = document.getElementById("indexDocsChart");
+    //Document Growth Chart
+    if(indexDocsChart){
+        indexDocsChart.destroy();
+    }
+
+    indexDocsChart = new Chart(
+        docsCtx,
+        {
+            type: "line",
+
+            data:
+            {
+                labels: docsLabels,
+                datasets: [{ label:"Documents", data:docsValues, borderColor:"#4CAF50", backgroundColor:"rgba(76,175,80,0.15)", tension: 0.3,fill: true }]
+            },
+            options:
+            {
+                responsive: true,
+                maintainAspectRatio:false
+            }
+        }
+    );
+
+
+    //Storage Growth Chart
+    const storageCtx = document.getElementById("indexSizeChart");
+    if(indexSizeChart){
+        indexSizeChart.destroy();
+    
+    }
+        console.log("Storage Values:",storageValues);
+        indexSizeChart = new Chart(
+            storageCtx,
+            {
+                type: "line",
+
+                data:
+                {
+                    labels: storageLabels,
+                    datasets:[{ label:"Storage Size", data:storageValues, borderColor:"#2196F3", backgroundColor:"rgba(33,150,243,0.15)", tension: 0.3, fill: true }]
+                },
+                options:
+                {
+                    responsive: true,
+                    maintainAspectRatio:false
+                }
+            }
+        );
 }
 
 
 document.addEventListener("DOMContentLoaded",function (){
         document.querySelectorAll(".index-history-item").forEach(item =>{
+
             item.addEventListener("click",function (){
                     if(!togglePanel("index-history-properties", this.dataset.index)){
                         return;
                     }
 
                     const indexName = this.dataset.index;
+                    const displayName = this.dataset.displayName;
                     window.currentClusterTotal = parseBytes(this.dataset.clusterTotal);
 
-                    document.getElementById("details-title").innerHTML =`📊 ${indexName}`;
+                    document.getElementById("details-title").innerHTML =`📊 ${displayName}`;
                     document.getElementById( "index-history-name").textContent = indexName;
                     loadIndexHistory(indexName);
 
-                    const indexFilter = document.getElementById("index-period");
-
-                    if(indexFilter){
-                        indexFilter.addEventListener("change",function (){
-                                const indexName = document.getElementById("index-history-name").textContent;
-
-                                loadIndexHistory(indexName,this.value);
-                            }
-                        );
-                    }
                 }
-
             );
         });
-    }
-);
+        
+        const indexFilter = document.getElementById("index-period");
+            if(indexFilter){
+                indexFilter.addEventListener("change",function (){
+                        const indexName = document.getElementById("index-history-name").textContent;
+                        loadIndexHistory(indexName,this.value);
+                    }
+                );
+            }
+
+    
+});
 
 
 //Υπολογίζω το ποσοστό του index ως προς το cluster - Calculate the percentage of index regarding to the cluster.
