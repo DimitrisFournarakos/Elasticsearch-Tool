@@ -147,7 +147,9 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
 document.addEventListener("DOMContentLoaded",function (){
         document.querySelectorAll(".cluster-storage-history-item").forEach(item =>{
             item.addEventListener("click",function (){
-                togglePanel("cluster-storage-history-properties",this.dataset.cluster);
+                    if(!togglePanel("cluster-storage-history-properties",this.dataset.cluster)){
+                        return;
+                        }
 
                     const clusterName = this.dataset.cluster;
                     document.getElementById("details-title").innerHTML = `📊 ${clusterName}`;
