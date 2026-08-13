@@ -188,6 +188,9 @@ ul.tree li{
 #cluster-storage-history-properties{
     display:none;
 }
+#node-history-properties{
+    display: none;
+}
 
 .node-label{
     display:inline-block;

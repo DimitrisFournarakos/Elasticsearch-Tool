@@ -73,7 +73,7 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                             label = " Warning ";
                         }
 
-                        events.innerHTML += `<div style="margin-bottom:8px; padding:4px 0;">${date} -<span style=" color:${color}; font-weight:bold;">${label}</span>(${item.usage_percent}%)</div>`;
+                        events.innerHTML += `<div style="margin-bottom:8px; ">${date} -<span style=" color:${color}; font-weight:bold;">${label}</span>(${item.usage_percent}%)</div>`;
 
                     });
                     
