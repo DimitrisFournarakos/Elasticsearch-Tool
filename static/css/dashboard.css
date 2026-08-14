@@ -367,22 +367,15 @@ ul.tree li{
         240px;
 
     gap:12px;
-
     font-weight:bold;
     color:#c5c5c5;
-
     margin-bottom:5px;
-    
     padding-top:4px;
     padding-bottom:8px;
-
     border-bottom:1px solid #444;
-
     position:sticky;
     top:0;
-
     background:#252526;
-
     z-index:100;
     box-shadow:0 0 0 10px #252526, /*δημιουργεί μια "μάσκα" με το ίδιο χρώμα φόντου και θα κρύβει τελείως το πρώτο row,καλύπτει πλήρως ό,τι περνά από κάτω,δεν φαίνονται τα δεδομένα πίσω από το header*/
                 0 1px 0 #444;
