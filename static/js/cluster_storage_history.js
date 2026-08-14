@@ -5,6 +5,7 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
     const data = await response.json();
     const history = data.history;
 
+
                     document.getElementById("storage-total-events").textContent = history.length;
                     let latest = null;
                     if(history.length > 0){
@@ -90,9 +91,13 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                                 eventLabel = "📉 Storage Reduced";
                                 eventColor = "#ffd700";
                             }
+
+                            const usagePrefix = usageDiff > 0 ? "+" : usageDiff < 0 ? "-" : '<span class="storage-event-sign-placeholder"></span>';
+                            events.innerHTML += `<div class="storage-event-row"><span class="storage-event-date">${date}</span><span class="storage-event-usage">${usagePrefix}${Math.abs(usageDiff).toFixed(2)}%</span><span class="storage-event-status"style="color:${eventColor};">${eventLabel}</span></div>`;
+                        
                         }
 
-                        events.innerHTML += `<div style="margin-bottom:4px;"> ${date} - <span style="color:${eventColor};font-weight:bold;">${eventLabel} </span>( ${usageDiff > 0 ? '+' : ''}${usageDiff.toFixed(2)} % )</div>`;
+                        
 
                     });
                     
