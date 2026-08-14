@@ -93,7 +93,8 @@ async function loadNodeHistory(nodeName,period = "24h"){
                 }
             }
 
-            events.innerHTML += `<div style="margin-bottom:4px;"> ${date} - <span style="color:${eventColor};font-weight:bold;"> ${eventLabel}</span> ( ${usageDiff > 0 ? '+' : ''}${usageDiff.toFixed(2)} % )</div>`;
+            const usagePrefix = usageDiff > 0 ? "+" : usageDiff < 0 ? "-" : '<span class="node-event-sign-placeholder"></span>';
+            events.innerHTML += `<div class="node-event-row"><span class="node-event-date">${date}</span><span class="node-event-usage">${usagePrefix}${Math.abs(usageDiff).toFixed(2)}%</span><span class="node-event-status"style="color:${eventColor};">${eventLabel}</span></div>`;
         });
 
         const labels = [];
@@ -158,32 +159,33 @@ async function loadNodeHistory(nodeName,period = "24h"){
         );
 }
 
-document.addEventListener("DOMContentLoaded",function (){
-        document.querySelectorAll(".node-history-item").forEach(item =>{
+document.addEventListener("DOMContentLoaded", function (){
 
-            item.addEventListener("click",function (){
-                    if(!togglePanel("node-history-properties",this.dataset.node)){
-                    return;                   
-                    }
-            
+    document.querySelectorAll(".node-history-item").forEach(item => {
+
+        item.addEventListener("click", function (){
+
+            if(!togglePanel("node-history-properties",this.dataset.node)){
+                return;
+            }
+
             const nodeName = this.dataset.node;
             document.getElementById("node-history-name").textContent = nodeName;
             loadNodeHistory(nodeName);
-
             document.getElementById("details-title").innerHTML = `📊 ${nodeName}`;
 
-
-            const nodeFilter = document.getElementById("node-period");
-            if(nodeFilter){
-                nodeFilter.addEventListener("change",function (){
-                        const nodeName = document.getElementById("node-history-name").textContent;
-                        loadNodeHistory(nodeName,this.value);
-                    }
-                );
-            }
-
-                }
-            );
         });
+
+    });
+
+    const nodeFilter = document.getElementById("node-period");
+    if(nodeFilter){
+        nodeFilter.addEventListener("change",function (){
+
+                const nodeName = document.getElementById("node-history-name").textContent;
+                loadNodeHistory(nodeName,this.value);
+
+            });
     }
-);
+
+});
