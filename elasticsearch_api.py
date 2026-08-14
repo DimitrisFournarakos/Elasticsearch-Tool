@@ -382,7 +382,7 @@ def save_index_history(es,cluster_name,index_name,documents,size_bytes):
         document={
                 "cluster": cluster_name,
                 "index_name": index_name,
-                "display_name": (index_name.replace(".internal.", "").split(".")[0]),
+                "display_name": (index_name),
                 "documents": documents,
                 "size_bytes": size_bytes,
                 "size_display": format_storage_size(size_bytes),
@@ -447,7 +447,7 @@ def get_index_history(cluster,index_name,period):
     es = get_client(cluster)
     
     ensure_index_history_index(es)
-    
+
     range_query = {
         "1h": "now-1h",
         "24h": "now-24h",
@@ -490,8 +490,7 @@ def get_index_history(cluster,index_name,period):
     results = []
     for hit in response["hits"]["hits"]:
         results.append(hit["_source"])
-
-
+        
     return results
 #------------------------------------------------------------------------------------------------
 def get_clusters():

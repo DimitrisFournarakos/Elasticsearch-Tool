@@ -5,6 +5,9 @@ async function loadIndexHistory(indexName,period = "24h"){
     const response = await fetch(`/index-history/${indexName}/?period=${period}`);
     const data = await response.json();
     const history = data.history;
+    console.log("Index History Loaded");
+    console.log(indexName);
+    console.log(period);
 
     //Total Events
     document.getElementById("index-total-events").textContent = history.length;

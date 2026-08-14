@@ -62,6 +62,7 @@ def elastic_dashboard(request):
         es = get_client(selected_cluster)
         for index in indices:
             try:
+
                 size_bytes = elastic_size_to_bytes(index["size"])
                 last_size = get_last_index_size(es,index["name"])
 
