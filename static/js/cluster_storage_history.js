@@ -47,7 +47,7 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                     
                     const events = document.getElementById("storage-events");
                     events.innerHTML = "";
-                    history.slice().reverse().forEach(item =>{
+                    history.slice().reverse().forEach((item,index) =>{
                         const date = new Date(item.timestamp).toLocaleString("en-EN",
                                 {
                                     day: "2-digit",
@@ -73,7 +73,26 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                             label = " Warning ";
                         }
 
-                        events.innerHTML += `<div style="margin-bottom:8px; ">${date} -<span style=" color:${color}; font-weight:bold;">${label}</span>(${item.usage_percent}%)</div>`;
+                        let eventLabel = "➜ Stable";
+                        let eventColor = "#4fc3f7";
+                        let usageDiff = 0;
+
+                        const originalIndex = history.length - 1 - index;
+                        if(originalIndex > 0){
+                            const previous = history[originalIndex - 1];
+
+                            usageDiff = item.usage_percent - previous.usage_percent;
+                            if(usageDiff > 0){
+                                eventLabel = "📈 Storage Growth";
+                                eventColor = "#00ff88";
+                            }
+                            else if(usageDiff < 0){
+                                eventLabel = "📉 Storage Reduced";
+                                eventColor = "#ffd700";
+                            }
+                        }
+
+                        events.innerHTML += `<div style="margin-bottom:4px;"> ${date} - <span style="color:${eventColor};font-weight:bold;">${eventLabel} </span>( ${usageDiff > 0 ? '+' : ''}${usageDiff.toFixed(2)} % )</div>`;
 
                     });
                     

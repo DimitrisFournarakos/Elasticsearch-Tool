@@ -5,9 +5,7 @@ async function loadIndexHistory(indexName,period = "24h"){
     const response = await fetch(`/index-history/${indexName}/?period=${period}`);
     const data = await response.json();
     const history = data.history;
-    console.log("Index History Loaded");
-    console.log(indexName);
-    console.log(period);
+
 
     //Total Events
     document.getElementById("index-total-events").textContent = history.length;
@@ -75,7 +73,7 @@ async function loadIndexHistory(indexName,period = "24h"){
     const events = document.getElementById("index-events");
     events.innerHTML = "";
 
-    history.slice().reverse().forEach(item =>{
+    history.slice().reverse().forEach((item,index) =>{
             const date = new Date(item.timestamp).toLocaleString("en-EN",
                     {   day: "2-digit",
                         month: "2-digit",
@@ -87,8 +85,43 @@ async function loadIndexHistory(indexName,period = "24h"){
                     }
                 );
 
-            events.innerHTML += `<div style="margin-bottom:8px;">${date} - Docs: ${item.documents}</div>`;
-        });
+            let eventLabel = "➜ No Change";
+            let eventColor = "#4fc3f7";
+            let docsDiff = 0;
+            let sizeDiff = 0;
+
+            const originalIndex = history.length - 1 - index;
+            if(originalIndex > 0){
+                const previous = history[originalIndex - 1];
+
+                docsDiff = item.documents - previous.documents;
+                sizeDiff = item.size_bytes - previous.size_bytes;
+
+                if(docsDiff > 0 || sizeDiff > 0){
+                    eventLabel = "📈 Growth Detected";
+                    eventColor = "#00ff88";
+                }
+                else if(docsDiff < 0 || sizeDiff < 0){
+                    eventLabel = "📉 Decrease Detected";
+                    eventColor = "#ffd700";
+                }
+            }
+
+            //Helper for MB
+            const sizeDiffMB = (sizeDiff / (1024 * 1024)).toFixed(2);
+
+            //Size and Docs Prefix
+            const sizePrefix = sizeDiff > 0 ? "+" : sizeDiff < 0 ? "-" : '<span class="event-sign-placeholder"></span>' ; 
+            const docsPrefix = docsDiff > 0 ? "+" : docsDiff < 0 ? "-" : '<span class="event-sign-placeholder"></span>' ;
+
+            //I create div class="event-row" in order to put recent event documents alignment one under the other(with css event-row,event-date,event-docs,event-size,event-status in dashboard.css)
+            events.innerHTML += `<div class="event-row">
+                                    <span class="event-date">${date}</span>
+                                    <span class="event-docs">${docsPrefix}${Math.abs(docsDiff)} Docs</span>
+                                    <span class="event-size">${sizePrefix}${Math.abs(sizeDiffMB).toFixed(2)} MB</span>                                
+                                    <span class="event-status" style="color:${eventColor};">${eventLabel}</span>
+                                </div>`;
+                            });
 
     const docsLabels = [];
     const docsValues = [];
