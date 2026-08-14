@@ -114,8 +114,9 @@ async function loadIndexHistory(indexName,period = "24h"){
             const sizePrefix = sizeDiff > 0 ? "+" : sizeDiff < 0 ? "-" : '<span class="event-sign-placeholder"></span>' ; 
             const docsPrefix = docsDiff > 0 ? "+" : docsDiff < 0 ? "-" : '<span class="event-sign-placeholder"></span>' ;
 
+            
             //I create div class="event-row" in order to put recent event documents alignment one under the other(with css event-row,event-date,event-docs,event-size,event-status in dashboard.css)
-            events.innerHTML += `<div class="event-row">
+            events.innerHTML += `<div class="event-row" >
                                     <span class="event-date">${date}</span>
                                     <span class="event-docs">${docsPrefix}${Math.abs(docsDiff)} Docs</span>
                                     <span class="event-size">${sizePrefix}${Math.abs(sizeDiffMB).toFixed(2)} MB</span>                                

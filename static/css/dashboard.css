@@ -260,7 +260,7 @@ ul.tree li{
 }
 
 .history-events-box{
-    max-height:300px;
+    max-height:220px;
     overflow-y:auto;
     border:1px solid #444;
     padding:10px;   
@@ -283,14 +283,6 @@ ul.tree li{
 
 .history-events-box::-webkit-scrollbar-thumb:hover {
     background: #555;
-}
-.history-events-box{
-    max-height:220px;
-    overflow-y:auto;
-    border:1px solid #444;
-    padding:10px;
-    background:#252526;
-    border-radius:8px;
 }
 
 /*Style for the Filters in Cluster Health History Dashboard*/
@@ -322,11 +314,18 @@ ul.tree li{
         220px
         130px
         130px
-        auto;
+        240px;
 
     gap:12px;
     margin-bottom:4px;
+    margin-top: 4px;
+    
     align-items:center;
+}
+
+/*μετακινεί μόνο το πρώτο row κάτω από το header.*/
+.event-row:first-child{
+    margin-top:12px;
 }
 
 .event-date{
@@ -346,6 +345,7 @@ ul.tree li{
 .event-status{
     font-weight:bold;
     white-space:nowrap;
+    padding-left:8px;
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -364,15 +364,17 @@ ul.tree li{
         220px
         130px
         130px
-        auto;
+        240px;
 
     gap:12px;
 
     font-weight:bold;
     color:#c5c5c5;
 
-    margin-bottom:10px;
-    padding-bottom:12px;
+    margin-bottom:5px;
+    
+    padding-top:4px;
+    padding-bottom:8px;
 
     border-bottom:1px solid #444;
 
@@ -381,12 +383,8 @@ ul.tree li{
 
     background:#252526;
 
-    z-index:10;
+    z-index:100;
+    box-shadow:0 0 0 10px #252526, /*δημιουργεί μια "μάσκα" με το ίδιο χρώμα φόντου και θα κρύβει τελείως το πρώτο row,καλύπτει πλήρως ό,τι περνά από κάτω,δεν φαίνονται τα δεδομένα πίσω από το header*/
+                0 1px 0 #444;
 }
-
-#index-events{
-    max-height:220px;
-    overflow-y:auto;
-}
-
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
