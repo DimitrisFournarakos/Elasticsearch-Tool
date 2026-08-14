@@ -111,16 +111,16 @@ async function loadIndexHistory(indexName,period = "24h"){
             const sizeDiffMB = (sizeDiff / (1024 * 1024)).toFixed(2);
 
             //Size and Docs Prefix
-            const sizePrefix = sizeDiff > 0 ? "+" : sizeDiff < 0 ? "-" : '<span class="event-sign-placeholder"></span>' ; 
-            const docsPrefix = docsDiff > 0 ? "+" : docsDiff < 0 ? "-" : '<span class="event-sign-placeholder"></span>' ;
+            const sizePrefix = sizeDiff > 0 ? "+" : sizeDiff < 0 ? "-" : '<span class="index-event-sign-placeholder"></span>' ; 
+            const docsPrefix = docsDiff > 0 ? "+" : docsDiff < 0 ? "-" : '<span class="index-event-sign-placeholder"></span>' ;
 
             
             //I create div class="event-row" in order to put recent event documents alignment one under the other(with css event-row,event-date,event-docs,event-size,event-status in dashboard.css)
-            events.innerHTML += `<div class="event-row" >
-                                    <span class="event-date">${date}</span>
-                                    <span class="event-docs">${docsPrefix}${Math.abs(docsDiff)} Docs</span>
-                                    <span class="event-size">${sizePrefix}${Math.abs(sizeDiffMB).toFixed(2)} MB</span>                                
-                                    <span class="event-status" style="color:${eventColor};">${eventLabel}</span>
+            events.innerHTML += `<div class="index-event-row" >
+                                    <span class="index-event-date">${date}</span>
+                                    <span class="index-event-docs">${docsPrefix}${Math.abs(docsDiff)} Docs</span>
+                                    <span class="index-event-size">${sizePrefix}${Math.abs(sizeDiffMB).toFixed(2)} MB</span>                                
+                                    <span class="index-event-status" style="color:${eventColor};">${eventLabel}</span>
                                 </div>`;
                             });
 

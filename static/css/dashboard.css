@@ -307,7 +307,7 @@ ul.tree li{
 /*------------------------------------------*/
 
 /*Στοιχιση των recent events το ένα κάτω από το άλλο*/
-.event-row{
+.index-event-row{
     display:grid;
 
     grid-template-columns:
@@ -324,25 +324,25 @@ ul.tree li{
 }
 
 /*μετακινεί μόνο το πρώτο row κάτω από το header.*/
-.event-row:first-child{
+.index-event-row:first-child{
     margin-top:12px;
 }
 
-.event-date{
+.index-event-date{
     color:white;
 }
 
-.event-docs{
+.index-event-docs{
     color:#4fc3f7;
     font-weight:bold;
 }
 
-.event-size{
+.index-event-size{
     color:#c586c0;
     font-weight:bold;
 }
 
-.event-status{
+.index-event-status{
     font-weight:bold;
     white-space:nowrap;
     padding-left:8px;
@@ -352,12 +352,12 @@ ul.tree li{
 /*Placeholder για την τιμή 0,να βάζει μπροστά από το μηδέν ενα space γιατί δεν έχει πρόσημο έτσι ώστε να στοιχίζεται σωστά  με τις υπόλοιπες τιμές*/
 /*+300 Docs
    0 Docs*/
-.event-sign-placeholder{
+.index-event-sign-placeholder{
     display:inline-block;
     width:8px;
 }
-/*-------Επικεφαλίδες των στηλών στο Recent Events-------*/
-#event-header{
+/*-------Επικεφαλίδες των στηλών στο Recent Events των Indicies-------*/
+#index-event-header{
     display:grid;
 
     grid-template-columns:
