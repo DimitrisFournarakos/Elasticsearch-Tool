@@ -11,12 +11,34 @@ document.addEventListener("DOMContentLoaded", function () {
             if (document.getElementById("index-properties").style.display !== "block"){
                 return;
             }
-            document.getElementById("details-title").innerHTML ="📂 " + this.dataset.displayName;
-            document.getElementById("index-name").textContent =this.dataset.name;
+            document.getElementById("details-title").innerHTML ="📂 " + this.dataset.displayName;        
+            document.getElementById("index-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;
             document.getElementById("index-docs").textContent =this.dataset.docs;
             document.getElementById("index-size").textContent =this.dataset.size;
-            document.getElementById("index-health").textContent = this.dataset.health;
-            document.getElementById("index-status").textContent = this.dataset.status;
+            
+            //Index Health , Style
+            const health = this.dataset.health.toLowerCase();
+            const healthElement = document.getElementById("index-health");
+
+            if(health === "green"){
+                healthElement.innerHTML = `<span style=" color:white; font-weight:bold;">🟢 Green</span>`;
+            }
+            else if(health === "yellow"){
+                healthElement.innerHTML = `<span style="color:white;font-weight:bold;"> 🟡 Yellow</span>`;
+            }
+            else{
+                healthElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🔴 Red</span>`;
+            }
+            
+            //Index Status , Style
+            const status = this.dataset.status.toLowerCase();
+            const statusElement = document.getElementById("index-status");
+
+            if(status === "open"){
+                statusElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🟢 Open</span>`;
+            }else{
+                statusElement.innerHTML =`<span style=" color:white; font-weight:bold;"> 🔴 Closed</span>`;
+            }
            
 
         });
