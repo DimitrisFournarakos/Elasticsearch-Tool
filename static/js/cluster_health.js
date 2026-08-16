@@ -21,13 +21,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const status = this.dataset.status.toLowerCase();
         const statusElement = document.getElementById("health-cluster-status");
         if (status === "green") {
-            statusElement.innerHTML ="🟢 GREEN";
-        }
-        else if (status === "yellow") {
-            statusElement.innerHTML ="🟡 YELLOW";
-        }
-        else {
-            statusElement.innerHTML ="🔴 RED";
+            statusElement.innerHTML = `<span style="color:white;font-weight:bold;"> 🟢 Green </span>`;
+        }else if (status === "yellow") {
+            statusElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🟡 Yellow </span>`;
+        }else {
+            statusElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🔴 Red </span>`;
         }
 
     });

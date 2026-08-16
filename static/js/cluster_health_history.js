@@ -6,6 +6,7 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     const data = await response.json();
     const history = data.history;
     const currentStatus = data.current_status;
+    const latestEvent = history[history.length - 1].status.toLowerCase();
 
     document.getElementById("history-cluster-name").textContent = clusterName;
     document.getElementById("history-total-events").textContent = history.length;
@@ -34,9 +35,13 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
         document.getElementById("history-trend").textContent = trend;
 
 
-    const icon = currentStatus === "green" ? "🟢" : currentStatus === "yellow" ? "🟡" : "🔴";
-    document.getElementById("history-current-status").innerHTML = `${icon} ${currentStatus.toUpperCase()}`;
+    const icon = currentStatus === "green" ? "🟢 " : currentStatus === "yellow" ? "🟡" : "🔴";
+    document.getElementById("history-current-status").innerHTML = `<span style="color:white;font-weight:bold;"> ${icon} ${ currentStatus === "green" ? "Green" : currentStatus === "yellow" ? "Yellow" : "Red" }</span>`;
     
+    //Calculate Latest Recorded Event
+    const latestIcon = latestEvent === "green" ? "🟢 " : latestEvent === "yellow" ? "🟡" : "🔴";
+    document.getElementById("history-last-status").innerHTML = `<span style="color:white;font-weight:bold;">${latestIcon} ${latestEvent === "green" ? "Green" : latestEvent === "yellow" ? "Yellow" : "Red"}</span>`;
+
     if (!data || data.length === 0){
             document.getElementById("history-cluster-name").textContent = clusterName;
             document.getElementById("health-events").innerHTML ="<div>No historical data available yet.</div>";
@@ -159,7 +164,12 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
                                                                                 }
                                                                          );
 
-        events.innerHTML += `<div style="margin-bottom:6px;">${formattedDate} - <span style="color:${color};font-weight:bold;">${item.status.toUpperCase()}</span></div>`;
+        const status = item.status.toLowerCase();
+        const statusColor = status === "green" ? "#00ff88" : status === "yellow" ? "#ffd700" : "#ff4d4d";
+        const statusIcon = status === "green"  ? "🟢"  : status === "yellow"  ? "🟡" : "🔴";
+
+        events.innerHTML += `<div style="margin-bottom:4px;">${formattedDate} - <span style="color:${statusColor};font-weight:bold;">${statusIcon}${status === "green" ? "Green" : status === "yellow" ? "Yellow" : "Red"}</span></div>`;
+    
     });
 }
 
