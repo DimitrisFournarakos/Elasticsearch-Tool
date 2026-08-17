@@ -194,7 +194,12 @@ ul.tree li{
 #index-history-properties{
     display: none;
 }
-
+#shard-history-properties{
+    display: none;
+}
+#shard-current-status-properties{
+    display: none;
+}
 .node-label{
     display:inline-block;
     padding:2px 6px;
@@ -573,6 +578,74 @@ ul.tree li{
 
 .health-event-label{
     font-weight:bold;
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*Επικεφαλίδες για τα Recent Events των Shards - Στοιχιση το ενα κατω από το άλλο */
+/* Recent Events Header for Shards History */
+/* Recent Shards Events Header */
+
+#shard-event-header{
+    display:grid;
+
+    grid-template-columns:
+        220px
+        180px
+        240px;
+
+    gap:12px;
+
+    font-weight:bold;
+    color:#c5c5c5;
+
+    padding-top:4px;
+    padding-bottom:8px;
+
+    border-bottom:1px solid #444;
+
+    position:sticky;
+    top:0;
+
+    background:#252526;
+
+    z-index:100;
+    box-shadow:0 0 0 20px #252526, /*δημιουργεί μια "μάσκα" με το ίδιο χρώμα φόντου και θα κρύβει τελείως το πρώτο row,καλύπτει πλήρως ό,τι περνά από κάτω,δεν φαίνονται τα δεδομένα πίσω από το header*/
+                0 1px 0 #444;
+}
+
+#shard-events{
+    padding-top:8px;
+}
+
+.shard-event-row{
+    display:grid;
+
+    grid-template-columns:
+        220px
+        180px
+        240px;
+
+    gap:12px;
+
+    margin-bottom:4px;
+
+    align-items:center;
+}
+
+.shard-event-row:first-child{
+    margin-top:16px;
+}
+
+.shard-event-change{
+    color:#4fc3f7;
+    font-weight:bold;
+}
+
+.shard-event-status{
+    font-weight:bold;
+    white-space:nowrap;
 }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/

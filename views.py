@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
-from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history,get_last_node_usage,save_node_history,get_node_history,get_last_index_size,save_index_history,get_index_history,get_last_index_documents
+from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history,get_last_node_usage,save_node_history,get_node_history,get_last_index_size,save_index_history,get_index_history,get_last_index_documents,get_last_shard_history,save_shard_history,get_shard_history
 import json 
 from collections import defaultdict
 
@@ -178,6 +178,11 @@ def elastic_dashboard(request):
                 pass
 
         total_shard_storage_display = format_storage_size(total_shard_storage_bytes)
+        last_shard_history = get_last_shard_history(es,cluster_health["cluster_name"])
+
+        if (last_shard_history is None or last_shard_history["started"] != started_shards or last_shard_history["relocating"] != relocating_shards or last_shard_history["initializing"] != initializing_shards or last_shard_history["unassigned"] != unassigned_shards):
+
+            save_shard_history(es,cluster_health["cluster_name"],started_shards,relocating_shards,initializing_shards,unassigned_shards,total_shard_storage_bytes)
 
         for index in indices:
             index["shards"] = []
@@ -319,3 +324,11 @@ def index_history_panel(request,index_name):
             break
 
     return JsonResponse({"history": history,"current_docs": current_docs,"current_size": current_size})
+
+def shard_history_panel(request,cluster_name):
+    cluster = request.session.get("selected_cluster")
+
+    period = request.GET.get("period","24h")
+    history = get_shard_history(cluster,cluster_name,period)
+
+    return JsonResponse({"history": history})

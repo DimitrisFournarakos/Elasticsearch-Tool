@@ -17,6 +17,8 @@ window.hideAllProperties = function () {
     document.getElementById("cluster-storage-history-properties").style.display = "none";
     document.getElementById("node-history-properties").style.display = "none";
     document.getElementById("index-history-properties").style.display = "none";
+    document.getElementById("shard-current-status-properties").style.display = "none";
+    document.getElementById("shard-history-properties").style.display = "none";
     
 };
 

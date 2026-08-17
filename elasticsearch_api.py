@@ -496,6 +496,134 @@ def get_index_history(cluster,index_name,period):
         
     return results
 #------------------------------------------------------------------------------------------------
+
+#----Functions for shard  history - hidden index ".cluster-shard-history"------------------------
+def ensure_shard_history_index(es):
+    index_name = ".cluster-shard-history"
+
+    if not es.indices.exists(index=index_name):
+        es.indices.create(index=index_name,
+            mappings={
+                "properties":{
+
+                    "cluster":{
+                        "type":"keyword"
+                    },
+                    "started":{
+                        "type":"integer"
+                    },
+                    "relocating":{
+                        "type":"integer"
+                    },
+                    "initializing":{
+                        "type":"integer"
+                    },
+                    "unassigned":{
+                        "type":"integer"
+                    },
+                    "total_storage_bytes":{
+                        "type":"long"
+                    },
+                    "timestamp":{
+                        "type":"date"
+                    }
+                }
+            }
+        )
+
+def save_shard_history(es,cluster_name,started,relocating,initializing,unassigned,total_storage_bytes):
+    ensure_shard_history_index(es)
+
+    es.index(index=".cluster-shard-history",
+        document={
+            "cluster": cluster_name,
+            "started": started,
+            "relocating": relocating,
+            "initializing": initializing,
+            "unassigned": unassigned,
+            "total_storage_bytes": total_storage_bytes,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
+    )
+
+def get_last_shard_history(es,cluster_name):
+    ensure_shard_history_index(es)
+
+    response = es.search(index=".cluster-shard-history",
+        size=1,
+        sort=[
+            {
+                "timestamp":{
+                    "order":"desc"
+                }
+            }
+        ],
+        query={
+            "term":{
+                "cluster":
+                    cluster_name
+            }
+        }
+    )
+
+    hits = response["hits"]["hits"]
+
+    if not hits:
+        return None
+
+    return hits[0]["_source"]
+
+def get_shard_history(cluster,cluster_name,period):
+    es = get_client(cluster)
+    ensure_shard_history_index(es)
+
+    range_query = {
+        "1h": "now-1h",
+        "24h": "now-24h",
+        "7d": "now-7d",
+        "30d": "now-30d",
+        "365d": "now-365d"
+    }.get(period,"now-24h")
+
+    response = es.search(index=".cluster-shard-history",
+        size=200,
+        sort=[
+            {
+                "timestamp": {
+                    "order": "asc"
+                }
+            }
+        ],
+        query={
+            "bool": {
+                "must": [
+                    {
+                        "term": {
+                            "cluster":
+                                cluster_name
+                        }
+                    },
+                    {
+                        "range": {
+                            "timestamp": {
+                                "gte":
+                                    range_query
+                            }
+                        }
+                    }
+
+                ]
+            }
+        }
+    )
+
+    results = []
+
+    for hit in response["hits"]["hits"]:
+        results.append(hit["_source"])
+
+    return results
+#------------------------------------------------------------------------------------------------
 def get_clusters():
     with open("clusters.json","r") as f:
         data = json.load(f)
@@ -583,7 +711,7 @@ def get_indices(cluster):
         #Εδώ είναι που κρύβω τον index που φτιάχνω για να αποθηκεύονται μέσα σε αυτόν όλα τα records για το health του cluster.
         #Όταν δηλαδή το Cluster π.χ. αλλάξει από Green σε Yellow κλπ. + 1 record,που κρατάω μέσα στον index cluster-health-history.
         #Το ίδιο ισχύει και για τα υπόλοιπα που κρύβω.        
-        if index["index"] in [".cluster-health-history",".cluster-storage-history",".cluster-node-history",".cluster-index-history"]:
+        if index["index"] in [".cluster-health-history",".cluster-storage-history",".cluster-node-history",".cluster-index-history",".cluster-shard-history"]:
             continue
 
         indices.append({

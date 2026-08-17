@@ -1,0 +1,58 @@
+<div id="shard-history-properties" class="property-box">
+    <h2>Shard Growth History</h2>
+    <br>
+    <p><strong>Started Shards:</strong> <span id="shard-started"></span></p>
+    <p><strong>Relocating Shards:</strong> <span id="shard-relocating"></span></p>
+    <p><strong>Initializing Shards:</strong> <span id="shard-initializing"></span></p>
+    <p><strong>Unassigned Shards:</strong> <span id="shard-unassigned"></span></p>
+    <p><strong>Current Shard Health:</strong> <span id="shard-history-health-status"></span></p>
+    <p><strong>Total Events:</strong> <span id="shard-total-events"></span></p>
+    <p><strong>Availability:</strong> <span id="shard-availability"></span></p>
+    <p><strong>Trend:</strong> <span id="shard-trend"></span></p>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="history-filter-container">
+        <label>Time Period:</label>
+        <select id="shard-period" class="history-filter">
+            <option value="1h">Last Hour</option>
+            <option value="24h" selected>Last 24 Hours</option>
+            <option value="7d">Last 7 Days</option>
+            <option value="30d">Last 30 Days</option>
+            <option value="365d">Last 365 Days</option>
+        </select>
+    </div>
+
+    <br>
+
+    <h3>Shard Allocation History</h3>
+    <div style="height:350px;">
+        <canvas id="shardAllocationChart"></canvas>
+    </div>
+
+    <br>
+
+    <h3>Shard Health History</h3>
+
+    <div style="height:350px;">
+        <canvas id="shardHealthChart"></canvas>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <h3>Recent Events</h3>
+    <br>
+    <div class="history-events-box">
+        <div id="shard-event-header">
+            <span>Timestamp</span>
+            <span>Changes</span>
+            <span>Event</span>
+        </div>
+        <div id="shard-events"></div>
+    </div>
+
+</div>
