@@ -6,6 +6,20 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     const data = await response.json();
     const history = data.history;
     const currentStatus = data.current_status;
+
+    //If the cluster is empty,
+    if(history.length === 0){
+    document.getElementById("history-cluster-name").textContent = clusterName;
+    document.getElementById( "history-current-status").textContent = "No Data";
+    document.getElementById( "history-last-status").textContent = "No Data";
+    document.getElementById("history-total-events").textContent = "0";
+    document.getElementById("history-availability").textContent = "0%";
+    document.getElementById("history-trend").textContent = "No Data";
+    document.getElementById("health-events").innerHTML =`<div style=" color:#c5c5c5; padding:10px;"> No historical data available yet.</div>`;
+    
+    return;
+    }
+
     const latestEvent = history[history.length - 1].status.toLowerCase();
 
     document.getElementById("history-cluster-name").textContent = clusterName;

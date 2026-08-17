@@ -225,7 +225,10 @@ def get_cluster_storage_history(cluster,cluster_name,period):
 
     for hit in response["hits"]["hits"]:
         results.append(hit["_source"])
-
+        
+    print("CLUSTER:", cluster_name)
+    print("PERIOD:", period)
+    print("RESULTS:", len(results))
     return results
 #--------------------------------------------------------------------------------------------
 
@@ -539,7 +542,7 @@ def get_cluster_health(cluster):
     health = es.cluster.health()
     last_status = get_last_health_status(es,health["cluster_name"])
 
-    if last_status != health["status"]:
+    if (last_status is None  or  last_status != health["status"]):
         save_cluster_health_history(es,health["cluster_name"],health["status"])
 
     return{

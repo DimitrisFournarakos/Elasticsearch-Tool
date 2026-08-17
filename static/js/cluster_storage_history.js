@@ -92,13 +92,12 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                                 eventColor = "#ffd700";
                             }
 
-                            const usagePrefix = usageDiff > 0 ? "+" : usageDiff < 0 ? "-" : '<span class="storage-event-sign-placeholder"></span>';
-                            events.innerHTML += `<div class="storage-event-row"><span class="storage-event-date">${date}</span><span class="storage-event-usage">${usagePrefix}${Math.abs(usageDiff).toFixed(2)}%</span><span class="storage-event-status"style="color:${eventColor};">${eventLabel}</span></div>`;
-                        
+                            
                         }
 
-                        
-
+                        const usagePrefix = usageDiff > 0 ? "+" : usageDiff < 0 ? "-" : '<span class="storage-event-sign-placeholder"></span>';
+                        events.innerHTML += `<div class="storage-event-row"><span class="storage-event-date">${date}</span><span class="storage-event-usage">${usagePrefix}${Math.abs(usageDiff).toFixed(2)}%</span><span class="storage-event-status"style="color:${eventColor};">${eventLabel}</span></div>`;
+                                                                       
                     });
                     
                     //Create labels and values for chart
