@@ -38,7 +38,8 @@ async function loadIndexHistory(indexName,period = "24h"){
     {
         diskStatus = "🟡 Warning";
     }
-    document.getElementById("index-current-status").textContent = diskStatus;
+    document.getElementById("index-current-status").innerHTML = `<span style="font-weight:bold;">${diskStatus}</span>`;
+    
 
     //Documents Trend
     let docsTrend = "→ Stable";
@@ -180,7 +181,6 @@ async function loadIndexHistory(indexName,period = "24h"){
         indexSizeChart.destroy();
     
     }
-        console.log("Storage Values:",storageValues);
         indexSizeChart = new Chart(
             storageCtx,
             {
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded",function (){
                     window.currentClusterTotal = parseBytes(this.dataset.clusterTotal);
 
                     document.getElementById("details-title").innerHTML =`📊 ${displayName}`;
-                    document.getElementById( "index-history-name").textContent = indexName;
+                    document.getElementById( "index-history-name").innerHTML = `<span style="font-weight:bold;">${indexName}</span>`;
                     loadIndexHistory(indexName);
 
                 }

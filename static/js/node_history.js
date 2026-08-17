@@ -25,7 +25,8 @@ async function loadNodeHistory(nodeName,period = "24h"){
     else if(latest && latest.usage_percent >= 75){
         diskStatus = "🟡 Warning";
     }
-    document.getElementById("node-current-status").textContent = diskStatus;
+    document.getElementById("node-current-status").innerHTML = `<span style="font-weight:bold;">${diskStatus}</span>`;
+
 
     //Calculate node-availability
     const healthyEvents = history.filter(item =>item.usage_percent < 75).length;
@@ -174,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function (){
             }
 
             const nodeName = this.dataset.node;
-            document.getElementById("node-history-name").textContent = nodeName;
+            document.getElementById("node-history-name").innerHTML = `<span style="font-weight:bold;">${nodeName}</span>`;
             loadNodeHistory(nodeName);
             document.getElementById("details-title").innerHTML = `📊 ${nodeName}`;
 

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded",function () {
                     }
 
                     document.getElementById("details-title").innerHTML = "📄 " + this.dataset.name;
-                    document.getElementById("monitor-node").textContent =this.dataset.name;
+                    document.getElementById("monitor-node").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;
                     document.getElementById("monitor-primary").textContent =this.dataset.primary;
                     document.getElementById("monitor-replica").textContent =this.dataset.replica;
                     document.getElementById("monitor-total").textContent =this.dataset.totalShards;
@@ -36,7 +36,8 @@ document.addEventListener("DOMContentLoaded",function () {
                     else {
                         status = "🟢 Healthy";
                     }
-                    document.getElementById("monitor-status").textContent = status;
+                    document.getElementById("monitor-status").innerHTML = `<span style="font-weight:bold;">${status}</span>`;
+
                 }
             );
 

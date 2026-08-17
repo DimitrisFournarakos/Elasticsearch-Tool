@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded",function (){
 
                     const clusterName = this.dataset.cluster;
                     document.getElementById("details-title").innerHTML = `📊 ${clusterName}`;
-                    document.getElementById("storage-cluster-name").textContent = clusterName;
+                    document.getElementById("storage-cluster-name").innerHTML = `<span style="font-weight:bold;">${clusterName}</span>`;                
                     loadClusterStorageHistory(clusterName);
 
 

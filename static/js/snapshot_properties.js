@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded",function(){
                     }
 
                     document.getElementById("details-title").innerHTML = "📄 " + this.dataset.name;
-                    document.getElementById("snapshot-name").textContent = this.dataset.name;
+                    document.getElementById("snapshot-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;
                     document.getElementById("snapshot-repository").textContent = this.dataset.repository;
                     document.getElementById("snapshot-state").textContent = this.dataset.state;
-                    document.getElementById("snapshot-indices").textContent = this.dataset.indices;
+                    document.getElementById("snapshot-indices").innerHTML = `<span style="font-weight:bold;">${this.dataset.indices}</span>`;
 
                 }
             );
