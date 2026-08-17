@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded",function () {
                     return;
                 }
                 document.getElementById("details-title").innerHTML ="📄 " + this.dataset.name;
-                document.getElementById("cluster-monitor-name").textContent = this.dataset.name;
+                document.getElementById("cluster-monitor-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;
                 document.getElementById("cluster-monitor-nodes").textContent = this.dataset.nodes;
                 document.getElementById("cluster-monitor-data-nodes").textContent = this.dataset.dataNodes;
 
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded",function () {
                     diskStatus = "🟢 Healthy";
                 }
 
-                document.getElementById("cluster-monitor-disk-status").innerHTML = diskStatus;
+                document.getElementById("cluster-monitor-disk-status").innerHTML = `<span style="color:white; font-weight:bold;">${diskStatus}</span>`;
             }
         );
 
