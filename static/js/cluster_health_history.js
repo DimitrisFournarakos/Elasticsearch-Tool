@@ -26,7 +26,7 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
 
     const latestEvent = history[history.length - 1].status.toLowerCase();
 
-    document.getElementById("history-cluster-name").textContent = clusterName;
+    document.getElementById("history-cluster-name").innerHTML = `<span style="font-weight:bold;">${clusterName}</span>`;
     document.getElementById("history-total-events").textContent = history.length;
 
     //Calculate Availability->Availability = (Total Events / Healthy Events) * 100

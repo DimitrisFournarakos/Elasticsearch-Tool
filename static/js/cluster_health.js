@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         document.getElementById("details-title").innerHTML = "📈 " + this.dataset.cluster;
-        document.getElementById("health-cluster-name").textContent = this.dataset.cluster;
+        document.getElementById("health-cluster-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.cluster}</span>`;
         document.getElementById("health-cluster-nodes").textContent = this.dataset.nodes;
         document.getElementById("health-cluster-data-nodes").textContent = this.dataset.dataNodes;
         document.getElementById("health-cluster-shards").textContent = this.dataset.shards;
