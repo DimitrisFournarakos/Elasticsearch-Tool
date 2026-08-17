@@ -510,3 +510,69 @@ ul.tree li{
     width:8px;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*Επικεφαλίδες για τα Recent Events των Clusters - Στοιχιση το ενα κατω από το άλλο */
+/* Recent Events Header for Clusters Health History */
+/* Recent Health Events Header */
+#health-event-header{
+    display:grid;
+
+    grid-template-columns:
+        220px
+        120px
+        240px;
+
+    gap:12px;
+
+    font-weight:bold;
+    color:#c5c5c5;
+
+    margin-bottom:5px;
+
+    padding-top:4px;
+    padding-bottom:8px;
+
+    border-bottom:1px solid #444;
+
+    position:sticky;
+    top:0;
+
+    background:#252526;
+    z-index:100;
+    box-shadow:0 0 0 20px #252526, /*δημιουργεί μια "μάσκα" με το ίδιο χρώμα φόντου και θα κρύβει τελείως το πρώτο row,καλύπτει πλήρως ό,τι περνά από κάτω,δεν φαίνονται τα δεδομένα πίσω από το header*/
+                0 1px 0 #444;
+}
+
+.health-event-row{
+    display:grid;
+
+    grid-template-columns:
+        220px
+        120px
+        240px;
+
+    gap:12px;
+
+    margin-bottom:4px;
+
+    align-items:center;
+}
+
+.health-event-row:first-child{
+    margin-top:16px;
+}
+
+.health-event-date{
+    color:white;
+}
+
+.health-event-status{
+    font-weight:bold;
+}
+
+.health-event-label{
+    font-weight:bold;
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------------------------------*/

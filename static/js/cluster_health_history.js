@@ -7,7 +7,7 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     const history = data.history;
     const currentStatus = data.current_status;
 
-    //If the cluster is empty,
+    //If the cluster is empty,Just in case clusterHealthChart.destroy(); doesn't work
     if(history.length === 0){
     document.getElementById("history-cluster-name").textContent = clusterName;
     document.getElementById( "history-current-status").textContent = "No Data";
@@ -17,8 +17,12 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     document.getElementById("history-trend").textContent = "No Data";
     document.getElementById("health-events").innerHTML =`<div style=" color:#c5c5c5; padding:10px;"> No historical data available yet.</div>`;
     
-    return;
+    if(clusterHealthChart){
+        clusterHealthChart.destroy();
+        clusterHealthChart = null;
     }
+
+    history.push({status: currentStatus,timestamp: new Date().toISOString()});}
 
     const latestEvent = history[history.length - 1].status.toLowerCase();
 
@@ -182,8 +186,23 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
         const statusColor = status === "green" ? "#00ff88" : status === "yellow" ? "#ffd700" : "#ff4d4d";
         const statusIcon = status === "green"  ? "🟢"  : status === "yellow"  ? "🟡" : "🔴";
 
-        events.innerHTML += `<div style="margin-bottom:4px;">${formattedDate} - <span style="color:${statusColor};font-weight:bold;">${statusIcon}${status === "green" ? "Green" : status === "yellow" ? "Yellow" : "Red"}</span></div>`;
-    
+        let eventLabel = "➜ Stable";
+        let eventColor = "#4fc3f7";
+
+        if(status === "green"){
+            eventLabel = "📈 Healthy";
+            eventColor = "#00ff88";
+        }else if(status === "yellow"){
+            eventLabel = "⚠ Warning";
+            eventColor = "#ffd700";
+        }
+        else{
+            eventLabel = "📉 Critical";
+            eventColor = "#ff4d4d";
+        }
+
+        events.innerHTML += `<div class="health-event-row"><span class="health-event-date">${formattedDate}</span><span class="health-event-status" style="color:${statusColor};">${statusIcon}${status === "green" ? "Green" : status === "yellow" ? "Yellow" : "Red"}</span><span class="health-event-label"style="color:${eventColor};">${eventLabel}</span></div>`;
+
     });
 }
 

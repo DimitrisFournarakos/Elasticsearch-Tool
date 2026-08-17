@@ -277,7 +277,15 @@ def cluster_storage_history_panel(request,cluster_name):
     
     history = get_cluster_storage_history(cluster,cluster_name,period)
 
-    return JsonResponse({"history": history})
+    #Calculate again cluster_usage in order to put it in dashboard of an empty cluster 
+    cluster = request.session.get("selected_cluster")
+    node_disk_usage = get_node_disk_usage(cluster)
+
+    cluster_total = max(node["total"] for node in node_disk_usage)
+    cluster_used = max( node["used"] for node in node_disk_usage)
+    cluster_usage = round( (cluster_used / cluster_total) * 100, 2)
+
+    return JsonResponse({"history": history,"current_usage": cluster_usage})
 
 def node_history_panel(request,node_name):
     cluster = request.session.get("selected_cluster")
@@ -285,11 +293,29 @@ def node_history_panel(request,node_name):
 
     history = get_node_history(cluster,node_name,period)
 
-    return JsonResponse({"history": history})
+    node_disk_usage = get_node_disk_usage(cluster)
+    current_usage = 0
+    for node in node_disk_usage:
+        if node["name"] == node_name:
+            current_usage = node["percent"]
+            break
+
+    return JsonResponse({"history": history,"current_usage": current_usage})
+
 
 def index_history_panel(request,index_name):
     cluster = request.session.get("selected_cluster")
     period = request.GET.get("period","24h")
     history = get_index_history(cluster,index_name,period)
 
-    return JsonResponse({"history": history})
+    current_docs = 0
+    current_size = 0
+    indices = get_indices(cluster)
+
+    for index in indices:
+        if index["name"] == index_name:
+            current_docs = int(index["docs"])
+            current_size = int(elastic_size_to_bytes(index["size"]))
+            break
+
+    return JsonResponse({"history": history,"current_docs": current_docs,"current_size": current_size})

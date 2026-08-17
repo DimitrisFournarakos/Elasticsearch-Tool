@@ -6,7 +6,11 @@ async function loadIndexHistory(indexName,period = "24h"){
     const data = await response.json();
     const history = data.history;
 
+    if(history.length === 0){
+        history.push({documents:data.current_docs,size_bytes:data.current_size,size_display:data.current_size,timestamp:new Date().toISOString()});
+    }
 
+    
     //Total Events
     document.getElementById("index-total-events").textContent = history.length;
 

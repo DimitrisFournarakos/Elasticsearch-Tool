@@ -5,6 +5,10 @@ async function loadNodeHistory(nodeName,period = "24h"){
     const data = await response.json();
     const history = data.history;
 
+    if(history.length === 0){
+        history.push({usage_percent:data.current_usage,timestamp:new Date().toISOString()});
+    }
+
     //node-total-events
     document.getElementById("node-total-events").textContent = history.length;
     let latest = null;
