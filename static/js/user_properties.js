@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             document.getElementById("details-title").innerHTML = "👤 " + this.dataset.username;
-            document.getElementById("user-username").textContent = this.dataset.username;
+            document.getElementById("user-username").innerHTML = `<span style="font-weight:bold;">${this.dataset.username}</span>`;
             document.getElementById("user-fullname").textContent = this.dataset.fullname;
             document.getElementById("user-email").textContent = this.dataset.email;
-            document.getElementById("user-role").textContent = this.dataset.role;
+            document.getElementById("user-role").innerHTML = `<span style="font-weight:bold;">${this.dataset.role}</span>`;
             document.getElementById("user-enabled").textContent = this.dataset.enabled;
             
         });

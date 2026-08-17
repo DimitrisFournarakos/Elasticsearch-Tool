@@ -636,12 +636,21 @@ def get_nodes(cluster):
     nodes = []
 
     for node_id, node_data in response["nodes"].items():
+        transport_address = node_data.get("transport_address","-")
+
+        # Από 'transport_address': '172.20.0.5:9300' --> Κρατάω μόνο το Port ,π.χ.9300
+        port = "-"
+        if ":" in transport_address:
+            port = transport_address.split(":")[-1]
+
+        
         nodes.append({
             "id": node_id,
             "name": node_data["name"],
             "ip": node_data.get("ip",""),
             "host": node_data.get("host",""),
-            "version": node_data.get("version", "")
+            "version": node_data.get("version", ""),
+            "ports": port
         })
         
     nodes.sort(key=lambda x: x["name"]) #Θέλω να επιστρέφει με την σειρά τους nodes.

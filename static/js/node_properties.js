@@ -10,8 +10,9 @@ document.addEventListener("DOMContentLoaded", function(){
             }
 
             document.getElementById("details-title").innerHTML = this.dataset.icon + " " + this.dataset.name;
-            document.getElementById("node-name").textContent = this.dataset.name;
+            document.getElementById("node-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;
             document.getElementById("node-host").textContent = this.dataset.host;
+            document.getElementById("node-ports").innerHTML = `<span style="font-weight:bold;">${this.dataset.ports}</span>`;
             document.getElementById("node-ip").textContent = this.dataset.ip;
             document.getElementById("node-version").textContent = this.dataset.version;
 
