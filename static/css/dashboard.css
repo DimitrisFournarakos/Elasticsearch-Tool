@@ -650,7 +650,7 @@ ul.tree li{
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*Style for Refresh Button*/
-#refresh-dashboard-btn{
+#refresh-dashboard-btn,#refresh-clusters-btn{
     position:absolute;
     top:18px;
     right:35px;
@@ -677,8 +677,9 @@ ul.tree li{
     z-index:2000;
 }
 
-#refresh-dashboard-btn:hover
-.refresh-tooltip{
+#refresh-dashboard-btn:hover .refresh-tooltip,
+#refresh-clusters-btn:hover .refresh-tooltip{
     opacity:0.9;
     display:block;
 }
+/*---------------------------------------------------------------------------------------------------------------------------------------------------*/

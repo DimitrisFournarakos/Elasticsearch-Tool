@@ -48,7 +48,7 @@ Designed to provide an intuitive alternative administration interface for monito
 
 Access the application:
 
-http://localhost:9000/elastic_dashboard/
+http://localhost:9000
 ---
 
 ## Screenshots

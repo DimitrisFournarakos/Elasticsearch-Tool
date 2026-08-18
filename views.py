@@ -4,27 +4,6 @@ from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_cluster
 import json 
 from collections import defaultdict
 
-def login_view(request):
-
-    if request.method == "POST": #Έλεγχος αν πάτησε Login
-        #Διαβάζω τα πεδία
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        with open("users.json", "r") as f:
-            data = json.load(f) # το φορτώνει ως dictionary
-
-        for user in data["users"]:
-
-            if ( user["username"] == username and user["password"] == password):
-
-                return redirect("elastic_dashboard")
-
-        return render(request,"login.html",{"error": True}) # Αν ο χρήστης δώσει λάθος στοιχεία .
-
-    return render(request, "login.html") # Αν ο χρήστης δεν πατήσει login απλώς ανοίγω την σελίδα login.html
-
-
 def elastic_dashboard(request):
     selected_cluster = request.session.get("selected_cluster")
     clusters = get_clusters()
