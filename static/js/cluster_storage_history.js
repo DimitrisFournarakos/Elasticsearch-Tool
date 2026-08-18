@@ -35,15 +35,16 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                     document.getElementById("storage-availability").textContent = availability.toFixed(2) + "%";
 
                     let trend = "→ Stable";
-                    if(history.length >= 2){
-                        const previous = history[history.length - 2].usage_percent;
-                        const current = history[history.length - 1].usage_percent;
 
-                        if(current > previous){
+                    if(history.length >= 2){
+
+                        const first = history[0].usage_percent;
+                        const last = history[history.length - 1].usage_percent;
+
+                        if(last > first){
                             trend = "↗ Increasing";
                         }
-                        else if(current < previous)
-                        {
+                        else if(last < first){
                             trend = "↘ Decreasing";
                         }
                     }

@@ -42,37 +42,34 @@ async function loadIndexHistory(indexName,period = "24h"){
     
 
     //Documents Trend
-    let docsTrend = "→ Stable";
-
+    let docsTrend = "<b>→</b> Stable";
     if(history.length >= 2){
-        const previous = history[history.length - 2].documents;
-        const current = history[history.length - 1].documents;
 
-        if(current > previous){
-            docsTrend = "↗ Increasing";
+        const first = history[0].documents;
+        const last = history[history.length - 1].documents;
+
+        if(last > first){
+            docsTrend = "<b>↗</b> Increasing";
         }
-        else if(current < previous)
-        {
-            docsTrend = "↘ Decreasing";
+        else if(last < first){
+            docsTrend = "<b>↘</b> Decreasing";
         }
     }
-    document.getElementById("index-docs-trend").textContent = docsTrend;
+    document.getElementById("index-docs-trend").innerHTML = docsTrend;
 
     //Storage Trend
-    let storageTrend = "→ Stable";
+    let storageTrend = "→  Stable";
     if(history.length >= 2){
-        const previous = history[history.length - 2].size_bytes;
-        const current = history[history.length - 1].size_bytes;
+        const first = history[0].size_bytes;
+        const last = history[history.length - 1].size_bytes;
 
-        if(current > previous){
+        if(last > first){
             storageTrend = "↗ Increasing";
-        }
-        else if(current < previous)
-        {
+        }else if(last < first){
             storageTrend = "↘ Decreasing";
         }
     }
-    document.getElementById("index-size-trend").textContent = storageTrend;
+    document.getElementById("index-size-trend").innerHTML = storageTrend;
 
     //Recent Events
     const events = document.getElementById("index-events");

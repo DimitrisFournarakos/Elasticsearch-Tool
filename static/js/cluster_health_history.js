@@ -34,22 +34,23 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
     const availability = history.length > 0 ? ( greenEvents / history.length ) * 100 : 0;
     document.getElementById("history-availability").textContent = availability.toFixed(2) + "%";
 
-    let trend = "Stable";
-        if(history.length >= 2){
-            const previous = history[history.length - 2].status;
-            const current =history[history.length - 1].status;
-            const score ={red: 1,yellow: 2,green: 3};
+    let trend = "→ Stable";
+    if(history.length >= 2){
+        const first = history[0].status.toLowerCase();
+        const last = history[history.length - 1].status.toLowerCase();
 
-            if(score[current] > score[previous]){
-                trend = "↗ Improving";
-            }
-            else if(score[current] < score[previous]){
-                trend = "↘ Degrading";
-            }
-            else{
-                trend = "→ Stable";
-            }
+        const score = {red: 1,yellow: 2,green: 3};
+
+        if(score[last] > score[first]){
+            trend = "↗ Improving";
         }
+        else if(score[last] < score[first]){
+            trend = "↘ Degrading";
+        }
+        else{
+            trend = "→ Stable";
+        }
+    }
         document.getElementById("history-trend").textContent = trend;
 
 

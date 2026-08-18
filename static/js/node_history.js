@@ -35,18 +35,18 @@ async function loadNodeHistory(nodeName,period = "24h"){
 
     //Calculate node-trend
     let trend = "→ Stable";
-    if(history.length >= 2){
 
+    if(history.length >= 2){
         const previous = history[history.length - 2].usage_percent;
         const current = history[history.length - 1].usage_percent;
+
         if(current > previous){
             trend = "↗ Increasing";
-        }
-        else if(current < previous)
-        {
+        } else if(current < previous) {
             trend ="↘ Decreasing";
         }
     }
+
     document.getElementById("node-trend").textContent = trend;
 
     //Frame with node-events
