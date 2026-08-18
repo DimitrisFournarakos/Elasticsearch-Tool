@@ -89,29 +89,39 @@ http://localhost:9000
 ![Shard Monitoring](docs/screenshots/shard-growth-history-2.png)
 ---
 
-## About Cluster Health History Monitoring
+## Historical Monitoring
 
-Elasticsearch Tool provides built-in historical cluster health monitoring.
+Elasticsearch Tool includes built-in historical monitoring capabilities.
 
-For every monitored cluster, the application automatically creates a hidden Elasticsearch index:
+The application automatically creates hidden Elasticsearch indices to store monitoring data:
 
 ```text
 .cluster-health-history
+.cluster-storage-history
+.cluster-node-history
+.cluster-index-history
+.cluster-shard-history
 ```
 
-No manual configuration is required.
+### Available Historical Dashboards
 
-### How It Works
+- Cluster Health History
+- Cluster Growth History
+- Node Growth History
+- Index Growth History
+- Shard Growth History
 
-Whenever a cluster health state changes, a new history record is automatically stored.
+### Features
 
-Example:
+- Automatic historical data collection
+- Trend analysis
+- Availability metrics
+- Recent events tracking
+- Interactive charts
+- Native Elasticsearch storage
 
-```text
-GREEN -> YELLOW -> RED -> GREEN
-```
+No external database or manual configuration is required.
 
-The application records only health status transitions, avoiding unnecessary duplicate entries.
 
 ### Stored Information
 
