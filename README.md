@@ -123,32 +123,66 @@ The application automatically creates hidden Elasticsearch indices to store moni
 No external database or manual configuration is required.
 
 
+## Historical Monitoring
+
+Elasticsearch Tool includes built-in historical monitoring capabilities.
+
+The application automatically creates hidden Elasticsearch indices to store monitoring data:
+
+```text
+.cluster-health-history
+.cluster-storage-history
+.cluster-node-history
+.cluster-index-history
+.cluster-shard-history
+```
+
+### Available Historical Dashboards
+
+- Cluster Health History
+- Cluster Growth History
+- Node Growth History
+- Index Growth History
+- Shard Growth History
+
 ### Stored Information
+
+Depending on the monitoring type, historical records may include:
 
 ```json
 {
   "cluster": "elastic-cluster",
-  "status": "green",
   "timestamp": "2026-08-11T10:52:18Z"
 }
 ```
 
+Examples of stored metrics:
+
+- Health status changes
+- Storage usage changes
+- Node disk usage
+- Index growth metrics
+- Shard allocation statistics
+
 ### Available Metrics
 
-- Current Cluster Status
-- Total Health Events
-- Historical Health Timeline
-- Recent Status Changes
-- Health Trend Visualization
+- Current Status
+- Historical Timeline
+- Trend Analysis
+- Availability Metrics
+- Growth Monitoring
+- Recent Events
+- Interactive Charts
 
 ### Benefits
 
 - Fully automated setup
 - No external database required
-- No manual index creation required
 - Native Elasticsearch storage
+- Hidden monitoring indices
+- Historical trend analysis
+- Growth monitoring
 - Scalable for large Elasticsearch environments
-
 ## Technology Stack
 
 - Django
