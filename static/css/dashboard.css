@@ -651,66 +651,34 @@ ul.tree li{
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*Style for Refresh Button*/
 #refresh-dashboard-btn{
-
     position:absolute;
-
     top:18px;
-    right:20px;
-
+    right:35px;
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
-    color:#d4d4d4;
-
+    color:#e1c873;
     cursor:pointer;
-
     user-select:none;
-
-    transition:
-        transform .3s ease,
-        color .3s ease;
 }
 
-.refresh-icon{
-    transition: transform .3s ease;
-    transform-origin: center;
-}
-
-#refresh-dashboard-btn:hover svg{
-    transform: rotate(180deg);
-}
 .refresh-tooltip{
-
     position:absolute;
-
     top:32px;
-
     right:0;
-
     background:#252526;
-
     color:white;
-
     border:1px solid #444;
-
     border-radius:6px;
-
     padding:6px 10px;
-
     font-size:12px;
-
     white-space:nowrap;
-
     display:none;
-
     z-index:2000;
 }
 
 #refresh-dashboard-btn:hover
 .refresh-tooltip{
-
+    opacity:0.9;
     display:block;
 }
