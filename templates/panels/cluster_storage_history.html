@@ -1,15 +1,45 @@
 <div class="property-box" id="cluster-storage-history-properties">
+
     <h2>Cluster Growth History</h2>
     <br>
-    <p><strong>Cluster:</strong> <span id="storage-cluster-name"></span></p>
-    <p><strong>Current Usage:</strong> <span id="storage-current-usage"></span></p>
-    <p><strong>Disk Status:</strong> <span id="storage-current-status"></span></p>
-    <p><strong>Total Events:</strong> <span id="storage-total-events"></span></p>
-    <p><strong>Availability:</strong> <span id="storage-availability"></span></p>
-    <p><strong>Trend:</strong> <span id="storage-trend"></span></p>
-    <br>
+
+    <div class="metrics-grid">
+
+        <div class="metric-card">
+            <div class="metric-title">Cluster</div>
+            <div class="metric-value" id="storage-cluster-name"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Current Usage</div>
+            <div class="metric-value" id="storage-current-usage"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Disk Status</div>
+            <div class="metric-value" id="storage-current-status"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Total Events</div>
+            <div class="metric-value" id="storage-total-events"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Availability</div>
+            <div class="metric-value" id="storage-availability"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Trend</div>
+            <div class="metric-value" id="storage-trend"></div>
+        </div>
+
+    </div>
+
     <hr>
     <br>
+
     <div class="history-filter-container">
         <label for="storage-period">Time Period:</label>
         <select class="history-filter" id="storage-period">
@@ -20,17 +50,27 @@
             <option value="365d">Last 365 Days</option>
         </select>
     </div>
+
     <br>
-    
+
     <h3>Storage Usage History</h3>
-    <div style="height:400px;"><canvas id="clusterStorageChart"></canvas></div>
+
+    <div style="height:400px;">
+        <canvas id="clusterStorageChart"></canvas>
+    </div>
+
     <br>
+
     <hr>
+
     <br>
 
     <h3>Recent Storage Events</h3>
+
     <br>
+
     <div class="history-events-box">
+
         <div id="storage-event-header">
             <span>Timestamp</span>
             <span>Usage</span>
@@ -38,6 +78,7 @@
         </div>
 
         <div id="storage-events"></div>
+
     </div>
 
 </div>

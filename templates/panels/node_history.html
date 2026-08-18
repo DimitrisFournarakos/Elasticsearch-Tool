@@ -1,20 +1,50 @@
 <div class="property-box" id="node-history-properties">
 
-   
-        <h2>Node Growth History</h2>
-        <br>
-        <p><strong>Node:</strong> <span id="node-history-name"></span></p>
-        <p><strong>Current Usage:</strong> <span id="node-current-usage"></span></p>
-        <p><strong>Disk Status:</strong> <span id="node-current-status"></span></p>
-        <p><strong>Total Events:</strong> <span id="node-total-events"></span></p>
-        <p><strong>Availability:</strong> <span id="node-availability"></span></p>
-        <p><strong>Trend:</strong> <span id="node-trend">-</span></p>
-    
+    <h2>Node Growth History</h2>
+
     <br>
+
+    <div class="metrics-grid">
+
+        <div class="metric-card">
+            <div class="metric-title">Node</div>
+            <div class="metric-value" id="node-history-name"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Current Usage</div>
+            <div class="metric-value" id="node-current-usage"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Disk Status</div>
+            <div class="metric-value" id="node-current-status"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Total Events</div>
+            <div class="metric-value" id="node-total-events"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Availability</div>
+            <div class="metric-value" id="node-availability"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Trend</div>
+            <div class="metric-value" id="node-trend"></div>
+        </div>
+
+    </div>
+
     <hr>
+
     <br>
+
     <div class="history-filter-container">
         <label>Time Period:</label>
+
         <select id="node-period" class="history-filter">
             <option value="1h">Last Hour</option>
             <option value="24h" selected>Last 24 Hours</option>
@@ -23,15 +53,25 @@
             <option value="365d">Last 365 Days</option>
         </select>
     </div>
+
     <br>
 
     <h3>Node Usage History</h3>
-    <div style="height:400px;"><canvas id="nodeHistoryChart"></canvas></div>
+
+    <div style="height:400px;">
+        <canvas id="nodeHistoryChart"></canvas>
+    </div>
+
     <br>
+
     <hr>
+
     <br>
+
     <h3>Recent Events</h3>
+
     <br>
+
     <div class="history-events-box">
 
         <div id="node-event-header">
@@ -39,8 +79,9 @@
             <span>Usage</span>
             <span>Event</span>
         </div>
-    
+
         <div id="node-events"></div>
+
     </div>
 
 </div>
