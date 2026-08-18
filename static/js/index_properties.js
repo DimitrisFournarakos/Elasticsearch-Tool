@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
             document.getElementById("details-title").innerHTML ="📂 " + this.dataset.displayName;        
-            document.getElementById("index-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;
+            document.getElementById("index-name").innerHTML = this.dataset.name;
             document.getElementById("index-docs").textContent =this.dataset.docs;
             document.getElementById("index-size").textContent =this.dataset.size;
             
@@ -21,13 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const healthElement = document.getElementById("index-health");
 
             if(health === "green"){
-                healthElement.innerHTML = `<span style=" color:white; font-weight:bold;">🟢 Green</span>`;
+                healthElement.innerHTML = `<span style=" color:white; ">🟢 Green</span>`;
             }
             else if(health === "yellow"){
-                healthElement.innerHTML = `<span style="color:white;font-weight:bold;"> 🟡 Yellow</span>`;
+                healthElement.innerHTML = `<span style="color:white;"> 🟡 Yellow</span>`;
             }
             else{
-                healthElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🔴 Red</span>`;
+                healthElement.innerHTML = `<span style="color:white; "> 🔴 Red</span>`;
             }
             
             //Index Status , Style
@@ -35,9 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const statusElement = document.getElementById("index-status");
 
             if(status === "open"){
-                statusElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🟢 Open</span>`;
+                statusElement.innerHTML = `<span style="color:white;"> 🟢 Open</span>`;
             }else{
-                statusElement.innerHTML =`<span style=" color:white; font-weight:bold;"> 🔴 Closed</span>`;
+                statusElement.innerHTML =`<span style=" color:white; "> 🔴 Closed</span>`;
             }
            
 

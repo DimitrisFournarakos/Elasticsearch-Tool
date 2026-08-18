@@ -25,13 +25,13 @@ async function loadShardHistory(clusterName,period = "24h"){
         
         
         if(latest.unassigned > 0){
-            shardHealthElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🔴 Critical</span>`;
+            shardHealthElement.innerHTML = `<span style="color:white; "> 🔴 Critical</span>`;
         }
         else if(latest.initializing > 0 || latest.relocating > 5){
-            shardHealthElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🟡 Warning</span>`;
+            shardHealthElement.innerHTML = `<span style="color:white; "> 🟡 Warning</span>`;
         }
         else{
-            shardHealthElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🟢 Healthy</span>`;
+            shardHealthElement.innerHTML = `<span style="color:white; "> 🟢 Healthy</span>`;
         }
 
         

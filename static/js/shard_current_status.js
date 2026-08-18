@@ -19,22 +19,22 @@ document.addEventListener("DOMContentLoaded",function (){
 
                     const healthElement = document.getElementById("shard-health-status");
                     if(unassigned > 0){
-                        healthElement.innerHTML =`<span style="color:white;font-weight:bold;"> 🔴 Critical</span>`;
+                        healthElement.innerHTML =`🔴 Critical`;
                     }
                     else if(initializing > 0 || relocating > 5){
-                        healthElement.innerHTML =`<span style="color:white; font-weight:bold;"> 🟡 Warning</span>`;
+                        healthElement.innerHTML =`🟡 Warning`;
                     }
                     else{
-                        healthElement.innerHTML =`<span style=" color:white; font-weight:bold;"> 🟢 Healthy</span>`;
+                        healthElement.innerHTML =` 🟢 Healthy`;
                     }
 
                     const allocationElement = document.getElementById("shard-allocation-status");
                     if(unassigned > 0){
-                        allocationElement.innerHTML =`<span style=" color:white; font-weight:bold;"> ❌ Allocation Issues</span>`;
+                        allocationElement.innerHTML =`<span style=" color:white; "> ❌ Allocation Issues</span>`;
                     }else if(relocating > 0 || initializing > 0){
-                        allocationElement.innerHTML =`<span style="color:white; font-weight:bold;"> ⚠ Rebalancing</span>`;
+                        allocationElement.innerHTML =`<span style="color:white; "> ⚠ Rebalancing</span>`;
                     }else{
-                        allocationElement.innerHTML =`<span style="color:white; font-weight:bold;"> ✅ Fully Allocated</span>`;
+                        allocationElement.innerHTML =`<span style="color:white; "> ✅ Fully Allocated</span>`;
                     }
 
                     document.getElementById("shard-current-total").textContent = this.dataset.total;

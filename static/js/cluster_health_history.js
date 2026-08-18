@@ -26,7 +26,7 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
 
     const latestEvent = history[history.length - 1].status.toLowerCase();
 
-    document.getElementById("history-cluster-name").innerHTML = `<span style="font-weight:bold;">${clusterName}</span>`;
+    document.getElementById("history-cluster-name").innerHTML = clusterName;
     document.getElementById("history-total-events").textContent = history.length;
 
     //Calculate Availability->Availability = (Total Events / Healthy Events) * 100
@@ -55,11 +55,11 @@ async function loadClusterHealthHistory(clusterName,period = "24h")
 
 
     const icon = currentStatus === "green" ? "🟢 " : currentStatus === "yellow" ? "🟡" : "🔴";
-    document.getElementById("history-current-status").innerHTML = `<span style="color:white;font-weight:bold;"> ${icon} ${ currentStatus === "green" ? "Green" : currentStatus === "yellow" ? "Yellow" : "Red" }</span>`;
+    document.getElementById("history-current-status").innerHTML = `<span style="color:white;"> ${icon} ${ currentStatus === "green" ? "Green" : currentStatus === "yellow" ? "Yellow" : "Red" }</span>`;
     
     //Calculate Latest Recorded Event
     const latestIcon = latestEvent === "green" ? "🟢 " : latestEvent === "yellow" ? "🟡" : "🔴";
-    document.getElementById("history-last-status").innerHTML = `<span style="color:white;font-weight:bold;">${latestIcon} ${latestEvent === "green" ? "Green" : latestEvent === "yellow" ? "Yellow" : "Red"}</span>`;
+    document.getElementById("history-last-status").innerHTML = `<span style="color:white;">${latestIcon} ${latestEvent === "green" ? "Green" : latestEvent === "yellow" ? "Yellow" : "Red"}</span>`;
 
     if (!data || data.length === 0){
             document.getElementById("history-cluster-name").textContent = clusterName;

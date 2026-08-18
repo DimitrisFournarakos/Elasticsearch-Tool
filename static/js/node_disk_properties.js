@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded",function () {
                     else {
                         status = "🟢 Healthy";
                     }
-                    document.getElementById("monitor-status").innerHTML = `<span style="font-weight:bold;">${status}</span>`;
+                    document.getElementById("monitor-status").innerHTML = status;
 
                 }
             );

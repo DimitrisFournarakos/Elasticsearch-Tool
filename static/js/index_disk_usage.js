@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded",
                     }
 
                     document.getElementById("details-title").innerHTML = "📄 " + this.dataset.displayName;
-                    document.getElementById("index-monitor-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.name}</span>`;                    
-                    document.getElementById("index-monitor-docs").textContent =this.dataset.docs;
-                    document.getElementById("index-monitor-size").textContent =this.dataset.size;
+                    document.getElementById("index-monitor-name").innerHTML = this.dataset.name;                    
+                    document.getElementById("index-monitor-docs").textContent = this.dataset.docs;
+                    document.getElementById("index-monitor-size").textContent = this.dataset.size;
 
                     //Βοηθητική συνάρτηση για να μετατρέπει τα gb,mb,kb σε bytes.
                     function sizeToBytes(size){
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded",
                         diskStatus = "🟢 Healthy";
                     }
 
-                    document.getElementById("index-monitor-status").innerHTML = `<span style="font-weight:bold;">${diskStatus}</span>`;
+                    document.getElementById("index-monitor-status").innerHTML = diskStatus;
                     document.getElementById("index-monitor-cluster-total").textContent = this.dataset.clusterTotal;
                     document.getElementById("index-monitor-cluster-used").textContent = this.dataset.clusterUsed;
                     document.getElementById("index-monitor-cluster-free").textContent = this.dataset.clusterFree;

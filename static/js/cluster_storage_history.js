@@ -28,7 +28,7 @@ async function loadClusterStorageHistory(clusterName,period = "24h"){
                         diskColor = "#ffd700";
                     }
 
-                    document.getElementById("storage-current-status").innerHTML =`<span style="color:white; font-weight:bold;"> ${diskStatus} </span>`;
+                    document.getElementById("storage-current-status").innerHTML =`<span style="color:white;"> ${diskStatus} </span>`;
                     
                     const healthyEvents = history.filter(item => item.usage_percent < 75).length;
                     const availability = history.length > 0 ? (healthyEvents / history.length) * 100 : 0;
@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded",function (){
 
                     const clusterName = this.dataset.cluster;
                     document.getElementById("details-title").innerHTML = `📊 ${clusterName}`;
-                    document.getElementById("storage-cluster-name").innerHTML = `<span style="font-weight:bold;">${clusterName}</span>`;                
+                    document.getElementById("storage-cluster-name").innerHTML = clusterName;                
                     loadClusterStorageHistory(clusterName);
 
 

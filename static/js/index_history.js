@@ -38,7 +38,7 @@ async function loadIndexHistory(indexName,period = "24h"){
     {
         diskStatus = "🟡 Warning";
     }
-    document.getElementById("index-current-status").innerHTML = `<span style="font-weight:bold;">${diskStatus}</span>`;
+    document.getElementById("index-current-status").innerHTML = diskStatus;
     
 
     //Documents Trend
@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded",function (){
                     window.currentClusterTotal = parseBytes(this.dataset.clusterTotal);
 
                     document.getElementById("details-title").innerHTML =`📊 ${displayName}`;
-                    document.getElementById( "index-history-name").innerHTML = `<span style="font-weight:bold;">${indexName}</span>`;
+                    document.getElementById( "index-history-name").innerHTML = indexName;
                     loadIndexHistory(indexName);
 
                 }
