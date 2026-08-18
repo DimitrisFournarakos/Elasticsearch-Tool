@@ -8,6 +8,7 @@
 
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"></link>
+
 </head>
 
 <body>
@@ -20,13 +21,32 @@
     {% if selected_cluster %}
 
     <div class="tree-content">
-            <div class="tree-title">
+        
+                <div class="tree-title">                
+                        <span class="folder-label">
+                            📁 {{ selected_cluster.name }}
+                        </span>
+                        <span id="refresh-dashboard-btn">
+                            <svg
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round">
 
-                <span class="folder-label">
-                    📁 {{ selected_cluster.name }}
-                </span>
-
+                                <path d="M21 2v6h-6"></path>
+                                <path d="M20.49 15A9 9 0 1 1 21 8"></path>
+                            </svg>
+                            <span class="refresh-tooltip">
+                                Refresh Cluster Data
+                            </span>
+                        </span>            
                 </div>
+
+                
                     <ul class="tree">
                         
                         <li class="folder">
@@ -524,6 +544,7 @@
 <script src="{% static 'js/index_history.js' %}"></script>
 <script src="{% static 'js/shard_history.js' %}"></script>
 <script src="{% static 'js/shard_current_status.js' %}"></script>
+<script src="{% static 'js/refresh_dashboard.js' %}"></script>
 </body>
 </html>
 
