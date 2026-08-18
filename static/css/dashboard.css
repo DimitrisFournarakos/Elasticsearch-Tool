@@ -704,7 +704,7 @@ ul.tree li{
         260px
         300px;
 
-    gap:50px;
+    gap:35px;
 
     font-weight:bold;
 
@@ -723,9 +723,9 @@ ul.tree li{
 
     grid-template-columns:
         260px
-        300px;
+        350px;
 
-    gap:50px;
+    gap:35px;
 
     padding:6px 0;
 }
