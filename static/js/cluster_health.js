@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         document.getElementById("details-title").innerHTML = "📈 " + this.dataset.cluster;
-        document.getElementById("health-cluster-name").innerHTML = `<span style="font-weight:bold;">${this.dataset.cluster}</span>`;
+        document.getElementById("health-cluster-name").textContent = this.dataset.cluster;
         document.getElementById("health-cluster-nodes").textContent = this.dataset.nodes;
         document.getElementById("health-cluster-data-nodes").textContent = this.dataset.dataNodes;
         document.getElementById("health-cluster-shards").textContent = this.dataset.shards;
@@ -21,11 +21,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const status = this.dataset.status.toLowerCase();
         const statusElement = document.getElementById("health-cluster-status");
         if (status === "green") {
-            statusElement.innerHTML = `<span style="color:white;font-weight:bold;"> 🟢 Green </span>`;
+            statusElement.innerHTML = `🟢 Green`;
         }else if (status === "yellow") {
-            statusElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🟡 Yellow </span>`;
+            statusElement.innerHTML = `🟡 Yellow`;
         }else {
-            statusElement.innerHTML = `<span style="color:white; font-weight:bold;"> 🔴 Red </span>`;
+            statusElement.innerHTML = `🔴 Red`;
         }
 
     });

@@ -683,3 +683,64 @@ ul.tree li{
     display:block;
 }
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*Table Style for properties*/
+.properties-table{
+
+    background:#252526;
+
+    border:1px solid #444;
+
+    border-radius:8px;
+    
+    padding:12px;
+}
+
+.properties-header{
+
+    display:grid;
+
+    grid-template-columns:
+        260px
+        300px;
+
+    gap:50px;
+
+    font-weight:bold;
+
+    color:#ffffff;
+
+    padding-bottom:10px;
+
+    margin-bottom:10px;
+
+    border-bottom:1px solid #444;
+}
+
+.property-row{
+
+    display:grid;
+
+    grid-template-columns:
+        260px
+        300px;
+
+    gap:50px;
+
+    padding:6px 0;
+}
+
+
+.property-label{
+
+    color:#d4d4d4;
+
+    font-weight:bold;
+}
+
+.property-value{
+    color:white;
+    font-weight:bold;
+    
+}
+
