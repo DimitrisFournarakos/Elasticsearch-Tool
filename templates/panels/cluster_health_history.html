@@ -1,15 +1,45 @@
 <div class="property-box" id="cluster-health-history-properties">
+
     <h2>Cluster Health History</h2>
     <br>
-    <p><strong>Cluster:</strong> <span id="history-cluster-name"> </span></p>
-    <p><strong>Live Cluster Status:</strong> <span id="history-current-status"> </span></p>
-    <p><strong>Latest Recorded Event:</strong> <span id="history-last-status"> </span></p>
-    <p><strong>Total Events:</strong> <span id="history-total-events"> </span></p>
-    <p><strong>Availability:</strong> <span id="history-availability"> </span></p>
-    <p><strong>Trend:</strong> <span id="history-trend"> </span></p>
-    <br>
+
+    <div class="metrics-grid">
+
+        <div class="metric-card">
+            <div class="metric-title">Cluster</div>
+            <div class="metric-value" id="history-cluster-name"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Live Cluster Status</div>
+            <div class="metric-value" id="history-current-status"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Latest Recorded Event</div>
+            <div class="metric-value" id="history-last-status"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Total Events</div>
+            <div class="metric-value" id="history-total-events"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Availability</div>
+            <div class="metric-value" id="history-availability"></div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-title">Trend</div>
+            <div class="metric-value" id="history-trend"></div>
+        </div>
+
+    </div>
+
     <hr>
     <br>
+
     <div class="history-filter-container">
         <label for="history-period">Time Period:</label>
         <select class="history-filter" id="history-period">
@@ -20,16 +50,27 @@
             <option value="365d">Last 365 Days</option>
         </select>
     </div>
+
     <br>
 
     <h3>Health History</h3>
-    <div style="height:400px;"><canvas id="clusterHealthChart"></canvas></div>
+
+    <div style="height:400px;">
+        <canvas id="clusterHealthChart"></canvas>
+    </div>
+
     <br>
+
     <hr>
+
     <br>
+
     <h3>Recent Events</h3>
+
     <br>
-   <div class="history-events-box">
+
+    <div class="history-events-box">
+
         <div id="health-event-header">
             <span>Timestamp</span>
             <span>Status</span>
@@ -37,6 +78,7 @@
         </div>
 
         <div id="health-events"></div>
+
     </div>
 
 </div>
