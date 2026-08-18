@@ -59,7 +59,8 @@ http://localhost:9000
 
 ### Users Management
 
-![Users Management](docs/screenshots/users-management.png)
+![Users Management](docs/screenshots/users-management-1.png)
+![Users Management](docs/screenshots/users-management-2.png)
 
 ### Health Management
 ![Cluster Health Monitoring](docs/screenshots/cluster-health-monitoring.png)
@@ -71,15 +72,21 @@ http://localhost:9000
 ### Cluster Monitoring
 
 ![Cluster Monitoring](docs/screenshots/cluster-monitoring.png)
+![Cluster Monitoring](docs/screenshots/cluster-growth-history.png)
 
 ### Node Monitoring
 ![Node Monitoring](docs/screenshots/node-monitoring.png)
+![Node Monitoring](docs/screenshots/node-growth-history.png)
 
 ### Index Monitoring
 ![Index Monitoring](docs/screenshots/index-monitoring.png)
+![Index Monitoring](docs/screenshots/index-growth-history-1.png)
+![Index Monitoring](docs/screenshots/index-growth-history-2.png)
 
 ### Shard Monitoring
 ![Shard Monitoring](docs/screenshots/shard-monitoring.png)
+![Shard Monitoring](docs/screenshots/shard-growth-history-1.png)
+![Shard Monitoring](docs/screenshots/shard-growth-history-2.png)
 ---
 
 ## About Cluster Health History Monitoring
