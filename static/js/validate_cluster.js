@@ -11,10 +11,19 @@ document.addEventListener("DOMContentLoaded", function(){
             const username = document.getElementById( "cluster-username").value;
             const password = document.getElementById("cluster-password").value;
             const result = document.getElementById("cluster-validation-result");
-            console.log(document.getElementById("form-cluster-url"));
-            console.log(document.getElementById("form-cluster-url").value);
 
-            result.innerHTML = "Validating...";
+            const errorPanel = document.getElementById("cluster-validation-error");
+            errorPanel.classList.remove("show");
+            errorPanel.style.display = "none";
+
+            const clusterInfo = document.getElementById("cluster-detected-info");
+            clusterInfo.classList.remove("show");
+            clusterInfo.style.display = "none";
+
+            document.getElementById("save-cluster-btn").disabled = true;
+            result.innerHTML = "";
+
+
 
             try{
                 function getCookie(name) {
@@ -47,17 +56,29 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 const data = await response.json();
 
-                if(data.success){ result.innerHTML = "✅ Connection Successful";
-                    document.getElementById("cluster-detected-info").style.display = "block";
+                if(data.success){ 
+                    const clusterInfo = document.getElementById("cluster-detected-info");
+
+                    clusterInfo.style.display = "block";
+                    setTimeout(() => {clusterInfo.classList.add("show");}, 10);
+
                     document.getElementById("detected-cluster-name").textContent = data.cluster_name;
                     document.getElementById("detected-cluster-url").textContent = data.url;
                     document.getElementById("save-cluster-btn").disabled = false;
                 }else{
-                    result.innerHTML = "❌ Validation Failed";
+                    document.getElementById("cluster-detected-info").classList.remove("show");
+                    document.getElementById("cluster-detected-info").style.display = "none";
+
+                    errorPanel.style.display = "block";
+                    setTimeout(() => {errorPanel.classList.add("show");}, 10);
+
                 }
 
             }catch(error){
-                result.innerHTML = "❌ Connection Failed";
+                clusterInfo.classList.remove("show");
+                clusterInfo.style.display = "none";
+
+                result.innerHTML ="❌ Connection Failed";
 
             }
 
