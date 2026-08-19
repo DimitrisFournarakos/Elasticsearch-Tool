@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(){
             
             window.hideAllProperties();
             document.getElementById("cluster-properties").style.display = "block";
+            document.getElementById("details-title").innerHTML =`🌐 ${this.dataset.name}`;
             document.getElementById("cluster-name").textContent =this.dataset.name;
             document.getElementById("cluster-url").textContent =this.dataset.url;
             document.getElementById("cluster-enabled").textContent =this.dataset.enabled === "true" ? "Enabled ✅": "Disabled ❌";

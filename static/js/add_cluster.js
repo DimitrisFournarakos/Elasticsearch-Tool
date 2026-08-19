@@ -28,8 +28,7 @@ document.addEventListener("DOMContentLoaded", function(){
                                                                 <path d="M16 14h8"></path>
 
                                                             </svg> Add Cluster`;
-        
-        document.getElementById("details-title").innerHTML = ClusterName;
+    
 
     });
 
