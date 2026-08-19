@@ -295,7 +295,7 @@ docker compose -f deployment/docker-compose.yml up -d
 Open:
 
 ```text
-http://localhost:9000/elastic_dashboard/
+http://localhost:9000
 ```
 
 ---
