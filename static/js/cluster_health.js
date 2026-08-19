@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function () {
     
     const healthNode = document.querySelector(".cluster-health-item");
 
+    if(!healthNode){
+        return;
+    }
+
     healthNode.addEventListener("click", function (e) {
         e.stopPropagation();       
         
