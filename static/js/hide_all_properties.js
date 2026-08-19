@@ -19,6 +19,7 @@ window.hideAllProperties = function () {
     document.getElementById("index-history-properties").style.display = "none";
     document.getElementById("shard-current-status-properties").style.display = "none";
     document.getElementById("shard-history-properties").style.display = "none";
+    document.getElementById("add-cluster-properties").style.display = "none";
     
 };
 

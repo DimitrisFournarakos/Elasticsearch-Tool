@@ -1,0 +1,103 @@
+<div class="property-box" id="add-cluster-properties">
+
+    <h3>Add Cluster</h3>
+
+    <br>
+
+    <div class="properties-table">
+
+        <div class="properties-header">
+            <span>Property</span>
+            <span>Value</span>
+        </div>
+
+        <div class="property-row">
+            <span class="property-label">Cluster ID</span>
+            <input
+                type="text"
+                id="cluster-id"
+                placeholder="elastic-prod">
+        </div>
+
+        <div class="property-row">
+            <span class="property-label">Cluster Name</span>
+            <input
+                type="text"
+                id="cluster-name"
+                placeholder="Production Elasticsearch Cluster">
+        </div>
+
+        <div class="property-row">
+            <span class="property-label">URL</span>
+            <input
+                type="text"
+                id="cluster-url"
+                placeholder="https://elastic-prod.company.com:9200">
+        </div>
+
+        <div class="property-row">
+            <span class="property-label">Username</span>
+            <input
+                type="text"
+                id="cluster-username"
+                placeholder="Elasticsearch Username">
+        </div>
+
+        <div class="property-row">
+            <span class="property-label">Password</span>
+            <input
+                type="password"
+                id="cluster-password"
+                placeholder="Elasticsearch Password">
+        </div>
+
+        <div class="property-row">
+            <span class="property-label">Environment</span>
+
+            <select id="cluster-environment" required>
+                <option value="" selected hidden>Select Environment</option>
+
+                <option value="production">Production</option>
+                <option value="staging">Staging</option>
+                <option value="qa">QA</option>
+                <option value="development">Development</option>
+                <option value="monitoring">Monitoring</option>
+                <option value="sandbox">Sandbox</option>
+                <option value="disaster-recovery">Disaster Recovery</option>
+
+            </select>
+
+        </div>
+
+        <div class="property-row-checkbox">
+
+            <span class="property-label">Enabled</span>
+
+            <input
+                type="checkbox"
+                id="cluster-enabled"
+                checked>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <button
+        class="form-button"
+        id="validate-cluster-btn">
+        Validate Connection
+    </button>
+
+    <button
+        class="form-button form-button-save"
+        id="save-cluster-btn">
+        Add Cluster
+    </button>
+
+    <br><br>
+
+    <div id="cluster-validation-result"></div>
+
+</div>

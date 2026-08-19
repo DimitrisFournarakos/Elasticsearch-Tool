@@ -200,6 +200,9 @@ ul.tree li{
 #shard-current-status-properties{
     display: none;
 }
+#add-cluster-properties{
+    display: none;
+}
 .node-label{
     display:inline-block;
     padding:2px 6px;
@@ -770,4 +773,133 @@ ul.tree li{
     color:white;
     font-size:22px;
     font-weight:bold;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------*/
+/*Button Style - Add Cluster*/
+.form-button{
+    background:#0078d4;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:8px 16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+.form-button:hover{
+    background:#1890ff;
+}
+
+.form-button-save{
+    background:#107c10;
+}
+
+.form-button-save:hover{
+    background:#16a516;
+}
+
+/*Style για τα Input Fields του Add Cluster*/
+.property-row input,
+.property-row select{
+    width:100%;
+    padding:8px;
+
+    background:#1e1e1e;
+    color:white;
+
+    border:1px solid #444;
+    border-radius:4px;
+
+    box-sizing:border-box;
+}
+
+/* Checkbox */
+.property-row-checkbox{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:6px 0;
+   
+}
+
+.property-row-checkbox .property-label{
+    width:280px;
+}
+
+#cluster-enabled{
+    transform: scale(1.5); /*Ορίζω το ποσο μεγαλο θα ειναι το checkbox*/
+    cursor: pointer;
+}
+
+/*Style message validation result*/
+#cluster-validation-result{
+    margin-top:15px;
+    font-weight:bold;
+}
+
+/*βαζει σαν background κάποιο text σε κάθε input Πεδίο*/
+.property-row input::placeholder{
+    color:#707070;
+    opacity:0.65
+   
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------------------*/
+/*Button Style for Add Cluster*/
+.sidebar-actions{
+    padding-left:35px;
+    margin-top:8px;
+}
+
+.sidebar-action-button{
+    margin-top:18px;
+    margin-left:20px;
+
+    background:none;
+    border:none;
+
+    color:#c586ff;
+
+    font-size:14px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    text-align:left;
+}
+
+.sidebar-action-button:hover{
+    color:#d9a8ff;
+}
+
+.cluster-add-button{
+
+    background:#2d2d2d;
+    color:#4fc3f7;
+
+    border:1px solid #444;
+    border-radius:6px;
+
+    padding:6px 12px;
+
+    font-size:14px;
+    font-weight:bold;
+
+    cursor:pointer;
+
+    margin-top:16px;
+    
+    
+    transition:all 0.2s ease;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.cluster-add-button:hover{
+
+    background:#3a3a3a;
+    border-color:#4fc3f7;
 }
