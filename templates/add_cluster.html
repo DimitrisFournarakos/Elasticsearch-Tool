@@ -12,26 +12,10 @@
         </div>
 
         <div class="property-row">
-            <span class="property-label">Cluster ID</span>
-            <input
-                type="text"
-                id="cluster-id"
-                placeholder="elastic-prod">
-        </div>
-
-        <div class="property-row">
-            <span class="property-label">Cluster Name</span>
-            <input
-                type="text"
-                id="cluster-name"
-                placeholder="Production Elasticsearch Cluster">
-        </div>
-
-        <div class="property-row">
             <span class="property-label">URL</span>
             <input
                 type="text"
-                id="cluster-url"
+                id="form-cluster-url"
                 placeholder="https://elastic-prod.company.com:9200">
         </div>
 
@@ -69,17 +53,6 @@
 
         </div>
 
-        <div class="property-row-checkbox">
-
-            <span class="property-label">Enabled</span>
-
-            <input
-                type="checkbox"
-                id="cluster-enabled"
-                checked>
-
-        </div>
-
     </div>
 
     <br>
@@ -90,14 +63,67 @@
         Validate Connection
     </button>
 
-    <button
-        class="form-button form-button-save"
-        id="save-cluster-btn">
+    <button class="form-button form-button-save" id="save-cluster-btn" disabled>
         Add Cluster
     </button>
 
     <br><br>
 
+
     <div id="cluster-validation-result"></div>
+            <div id="cluster-detected-info" class="cluster-detected-info" style="display:none;">
+                <div class="detected-info-header">
+                    ✅ Connection Successful
+                </div>
+
+                <div class="detected-info-grid">
+                    <div class="detected-info-card">
+                        <div class="detected-info-title">
+                            Cluster Name
+                        </div>
+
+                        <div
+                            class="detected-info-value"
+                            id="detected-cluster-name">
+                        </div>
+                    </div>
+
+                    <div class="detected-info-card">
+                        <div class="detected-info-title">
+                            Cluster URL
+                        </div>
+
+                        <div
+                            class="detected-info-value"
+                            id="detected-cluster-url">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="cluster-validation-error" class="cluster-validation-error" style="display:none;">
+                    <div class="validation-error-header">
+                         ❌ Connection Failed
+                    </div>
+
+                    <div class="validation-error-message">
+                        Unable to connect to the Elasticsearch cluster.
+                        
+                        <br><br>
+
+                        Please verify:
+
+                        <ul>
+                            <li>Cluster URL</li>
+                            <li>Username</li>
+                            <li>Password</li>
+                            <li>Cluster Availability</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
 
 </div>

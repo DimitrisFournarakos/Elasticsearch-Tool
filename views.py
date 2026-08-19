@@ -1,9 +1,33 @@
 from django.shortcuts import render,redirect
 from django.http import JsonResponse
 from elasticsearch_api import get_nodes,get_cluster_health,get_users,get_clusters,get_indices,get_shards,get_node_disk_usage,format_storage_size,elastic_size_to_bytes,get_snapshots,get_cluster_health_history,save_cluster_storage_history,get_client,get_last_storage_usage,get_cluster_storage_history,get_last_node_usage,save_node_history,get_node_history,get_last_index_size,save_index_history,get_index_history,get_last_index_documents,get_last_shard_history,save_shard_history,get_shard_history
-import json 
 from collections import defaultdict
+from elasticsearch import Elasticsearch
+from django.views.decorators.http import require_POST
+import json 
 
+
+@require_POST
+def validate_cluster(request):
+    try:
+
+        data = json.loads(request.body)
+        print("REQUEST DATA:", data)
+        print("RAW BODY:", request.body)
+        url = data["url"]
+        username = data["username"]
+        password = data["password"]
+
+        es = Elasticsearch(url,basic_auth=(username, password))
+    
+        health = es.cluster.health()
+
+        return JsonResponse({"success": True,"cluster_name": health["cluster_name"],"url": url,})
+
+    except Exception as e:
+        return JsonResponse({"success": False,"error": str(e)})
+
+    
 def elastic_dashboard(request):
     selected_cluster = request.session.get("selected_cluster")
     clusters = get_clusters()

@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from views import elastic_dashboard,connect_cluster,disconnect_cluster,cluster_health_history_panel,cluster_storage_history_panel,node_history_panel,index_history_panel,shard_history_panel
+from views import elastic_dashboard,connect_cluster,disconnect_cluster,cluster_health_history_panel,cluster_storage_history_panel,node_history_panel,index_history_panel,shard_history_panel,validate_cluster
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("",elastic_dashboard,name="dashboard"),
+    path("validate-cluster/",validate_cluster, name="validate_cluster"),
     path("elastic_dashboard/",elastic_dashboard,name="elastic_dashboard"),
     path("connect_cluster/<str:cluster_id>/", connect_cluster, name="connect_cluster"),
     path("disconnect_cluster/",disconnect_cluster,name="disconnect_cluster"),

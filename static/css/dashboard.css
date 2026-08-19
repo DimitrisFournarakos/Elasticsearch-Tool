@@ -903,3 +903,87 @@ ul.tree li{
     background:#3a3a3a;
     border-color:#4fc3f7;
 }
+/*------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*Style for clutser detected info*/
+.cluster-detected-info{
+    margin-top:20px;
+
+    opacity:0;
+    transform:translateY(10px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.cluster-detected-info.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+.detected-info-header{
+    color:#00ff88;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.detected-info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+.detected-info-card{
+    background:#252526;
+    border:1px solid #444;
+    border-radius:6px;
+    padding:12px;
+}
+
+.detected-info-title{
+    color:#9e9e9e;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.detected-info-value{
+    color:white;
+    font-weight:bold;
+}
+
+/*Style for Failed Validation message*/
+.cluster-validation-error{
+    margin-top:20px;
+
+    opacity:0;
+    transform:translateY(10px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.cluster-validation-error.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.validation-error-header{
+    color:#ff6b6b;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.validation-error-message{
+    background:#252526;
+    border:1px solid #ff6b6b;
+    border-radius:6px;
+    padding:12px;
+    color:white;
+}
+
+.validation-error-message ul{
+    margin-top:8px;
+    padding-left:18px;
+}
