@@ -12,6 +12,17 @@ document.addEventListener("DOMContentLoaded", function(){
             const password = document.getElementById("cluster-password").value;
             const environment = document.getElementById("form-cluster-environment").value;
 
+            //MAKE Environmet field required
+            if(!environment){
+                const message = document.getElementById("cluster-save-message");
+                document.getElementById("cluster-save-header").innerHTML = "❌ Environment Required";
+                document.getElementById("cluster-save-text").innerHTML = "Please select an environment before adding the cluster.";
+                message.className = "cluster-save-message cluster-save-error";
+                message.style.display = "block";
+
+                setTimeout(() => {message.classList.add("show");}, 10);
+                return;
+            }
 
             const payload = { 
                 id: clusterName.toLowerCase().replace(/\s+/g,"-"),
