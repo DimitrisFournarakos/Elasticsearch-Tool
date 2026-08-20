@@ -1,28 +1,19 @@
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("click", function(e){
+    const cluster = e.target.closest(".cluster-item");
+        if(!cluster){
+        return;
+        }
 
-    const clusters = document.querySelectorAll(".cluster-item");
-    
-    clusters.forEach(cluster => {
-        cluster.addEventListener("click", function(){
-                       
-            if(!togglePanel("cluster-properties",this.dataset.id)){
-                return;
-            }
+        if(!togglePanel("cluster-properties",cluster.dataset.id)){
+            return;
+        }
 
-            document.getElementById("details-title").innerHTML =`🌐 ${this.dataset.name}`;
-            document.getElementById("cluster-name").textContent =this.dataset.name;
-            document.getElementById("cluster-url").textContent =this.dataset.url;
-            document.getElementById("cluster-environment").textContent = this.dataset.environment;           
-
-            document.getElementById("connect-btn").dataset.clusterId = this.dataset.id; //επιλέγω το cluster και αποθηκεύω το id του
-
-            animatePanel("cluster-properties");
-
-        });
-
-
-    });
-
+        document.getElementById("details-title").innerHTML = `🌐 ${cluster.dataset.name}`;
+        document.getElementById("cluster-name").textContent = cluster.dataset.name;
+        document.getElementById("cluster-url").textContent = cluster.dataset.url;
+        document.getElementById("cluster-environment").textContent = cluster.dataset.environment;
+        document.getElementById("connect-btn").dataset.clusterId = cluster.dataset.id;
+        animatePanel("cluster-properties");
 });
 
 //Συναρτηση click handler στο Connect Button
@@ -33,4 +24,3 @@ const connectBtn = document.getElementById("connect-btn");
         window.location.href = "/connect_cluster/" + clusterId + "/";
         
 });
-

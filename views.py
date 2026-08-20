@@ -279,6 +279,12 @@ def connect_cluster(request, cluster_id):
 
     return redirect("elastic_dashboard")
 
+#Endpoint για τα clusters που θα χρειαστει για το dynamic reload της λίστας των Clusters
+def get_clusters_json(request):
+    clusters = get_clusters()
+
+    return JsonResponse({"clusters": clusters})
+
 def disconnect_cluster(request):
     request.session.pop("selected_cluster",None)
     return redirect("elastic_dashboard")

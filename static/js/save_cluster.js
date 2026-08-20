@@ -46,8 +46,9 @@ document.addEventListener("DOMContentLoaded", function(){
                     message.style.display = "none";
                     message.style.display = "block";
 
+                    await refreshClusterList();
                     setTimeout(() => {message.classList.add("show");},10);
-                    // setTimeout(() => {location.reload();}, 1500);
+                    
                 }else{
                     const message = document.getElementById("cluster-save-message");
 
@@ -96,4 +97,30 @@ function getCookie(name){
     }
 
     return cookieValue;
+}
+
+
+//Refresh Function
+async function refreshClusterList(){
+    const response = await fetch("/get-clusters/");
+    const data = await response.json();
+    const clusterList = document.getElementById("cluster-list");
+
+    clusterList.innerHTML = "";
+
+    data.clusters.forEach(cluster => {
+        clusterList.innerHTML += 
+            `<li class="cluster-item"
+                data-id="${cluster.id}"
+                data-name="${cluster.name}"
+                data-url="${cluster.url}"
+                data-environment="${cluster.environment}">
+
+                <span class="node-label">
+                    🌐 ${cluster.name}
+                </span>
+            </li>`;
+
+    });
+
 }
