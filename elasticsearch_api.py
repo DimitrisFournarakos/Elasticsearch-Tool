@@ -1,6 +1,6 @@
 from elasticsearch import Elasticsearch
 from datetime import datetime,timezone
-import json
+import json,os
 
 def get_client(cluster):
     return Elasticsearch(cluster["url"], basic_auth=( cluster["username"], cluster["password"] ))
@@ -13,6 +13,7 @@ def get_cluster_by_id(cluster_id):
             return cluster
 
     return None
+
 #----Functions for cluster health history - hidden index ".cluster-health-history"------------------------
 def ensure_health_history_index(es):
     index_name = ".cluster-health-history"
@@ -624,10 +625,39 @@ def get_shard_history(cluster,cluster_name,period):
 
     return results
 #------------------------------------------------------------------------------------------------
+def ensure_clusters_file():
+    if not os.path.exists("clusters.json"):
+
+        with open("clusters.json", "w") as f:
+            json.dump({"clusters": []},f,indent=4)
+            
+
+def save_cluster_to_json(cluster_data):
+    ensure_clusters_file()
+
+    with open("clusters.json", "r") as f:
+        data = json.load(f)
+
+    clusters = data["clusters"]
+
+    # Έλεγχος για duplicate id
+    for cluster in clusters:
+        if cluster["id"] == cluster_data["id"]  or  cluster["url"] == cluster_data["url"]:
+            raise ValueError(f"Cluster ID '{cluster_data['id']}' already exists.")
+
+    clusters.append(cluster_data)
+
+    with open("clusters.json", "w") as f:
+        json.dump(data,f,indent=4)
+
 def get_clusters():
+    ensure_clusters_file()
+
     with open("clusters.json","r") as f:
         data = json.load(f)
+
     return data["clusters"]
+
 
 def get_nodes(cluster):
 
