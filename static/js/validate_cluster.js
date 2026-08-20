@@ -71,9 +71,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
                     errorPanel.style.display = "block";
                     setTimeout(() => {errorPanel.classList.add("show");}, 10);
-
                 }
-
             }catch(error){
                 clusterInfo.classList.remove("show");
                 clusterInfo.style.display = "none";

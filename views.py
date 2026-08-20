@@ -12,8 +12,6 @@ def validate_cluster(request):
     try:
 
         data = json.loads(request.body)
-        print("REQUEST DATA:", data)
-        print("RAW BODY:", request.body)
         url = data["url"]
         username = data["username"]
         password = data["password"]
@@ -32,7 +30,6 @@ def save_cluster(request):
     try:
 
         data = json.loads(request.body)
-        print("SAVE REQUEST:", data)
         save_cluster_to_json(data)
 
         return JsonResponse({"success": True})

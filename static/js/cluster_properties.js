@@ -1,7 +1,7 @@
 document.addEventListener("click", function(e){
     const cluster = e.target.closest(".cluster-item");
         if(!cluster){
-        return;
+            return;
         }
 
         if(!togglePanel("cluster-properties",cluster.dataset.id)){
