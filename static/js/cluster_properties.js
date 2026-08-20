@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-    const clusters =document.querySelectorAll(".cluster-item");
+    const clusters = document.querySelectorAll(".cluster-item");
     
     clusters.forEach(cluster => {
         cluster.addEventListener("click", function(){
@@ -10,8 +10,7 @@ document.addEventListener("DOMContentLoaded", function(){
             document.getElementById("details-title").innerHTML =`🌐 ${this.dataset.name}`;
             document.getElementById("cluster-name").textContent =this.dataset.name;
             document.getElementById("cluster-url").textContent =this.dataset.url;
-            document.getElementById("cluster-enabled").textContent =this.dataset.enabled === "true" ? "Enabled ✅": "Disabled ❌";
-            document.getElementById("cluster-environment").textContent = this.dataset.environment;
+            document.getElementById("cluster-environment").textContent = this.dataset.environment;           
 
             document.getElementById("connect-btn").dataset.clusterId = this.dataset.id; //επιλέγω το cluster και αποθηκεύω το id του
 
