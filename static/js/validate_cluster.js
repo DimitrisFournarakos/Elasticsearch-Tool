@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function(){
                     });
 
                 const data = await response.json();
-
+           
                 if(data.success){ 
                     const clusterInfo = document.getElementById("cluster-detected-info");
 

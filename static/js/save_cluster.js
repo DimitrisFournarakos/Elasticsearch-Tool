@@ -38,18 +38,43 @@ document.addEventListener("DOMContentLoaded", function(){
 
                 const data = await response.json();
                 if(data.success){
+                    const message = document.getElementById("cluster-save-message");
+                    message.className = "cluster-save-message cluster-save-success";
+                    document.getElementById("cluster-save-header").innerHTML ="✅ Cluster Added Successfully";
+                    document.getElementById("cluster-save-text").innerHTML = "The cluster has been added successfully and will now appear in the cluster list.";
+                    message.classList.remove("show");
+                    message.style.display = "none";
+                    message.style.display = "block";
 
-                    location.reload();
+                    setTimeout(() => {message.classList.add("show");},10);
+                    // setTimeout(() => {location.reload();}, 1500);
                 }else{
-                    alert(data.error);
+                    const message = document.getElementById("cluster-save-message");
+
+                    message.className = "cluster-save-message cluster-save-error";
+                    document.getElementById("cluster-save-header").innerHTML = "❌ Cluster Already Exists";
+                    document.getElementById("cluster-save-text").innerHTML = data.error;
+                    message.classList.remove("show");
+                    message.style.display = "none";
+                    message.style.display = "block";
+
+                    setTimeout(() => {message.classList.add("show");}, 10);
                 }
+                            }catch(error){
+                                const message = document.getElementById("cluster-save-message");
 
-            }catch(error){
-                alert("Unable to save cluster.");
-            }
+                                message.className = "cluster-save-message cluster-save-error";
+                                document.getElementById("cluster-save-header").innerHTML = "❌ Save Failed";
+                                document.getElementById("cluster-save-text").innerHTML = "Unable to save cluster.";
+                                message.classList.remove("show");
+                                message.style.display = "none";
+                                message.style.display = "block";
 
-        }
-    );
+                                setTimeout(() => { message.classList.add("show");}, 10);
+                            }
+
+                        }
+                    );
 
 });
 

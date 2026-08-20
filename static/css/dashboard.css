@@ -995,6 +995,7 @@ ul.tree li{
     animation: dashboardFadeIn 0.5s ease-out;
 }
 
+/*Fade animation for every panel*/
 @keyframes dashboardFadeIn{
 
     from{
@@ -1029,4 +1030,52 @@ ul.tree li{
 
 .panel-fade{
     animation: panelFadeIn 0.30s ease-out;
+}
+
+/*Style for every error message about "Add Cluster" Button*/
+.cluster-save-message{
+    margin-top:20px;
+
+    opacity:0;
+    transform:translateY(10px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+.cluster-save-message.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.cluster-save-success{
+    background:#252526;
+    border:1px solid #00ff88;
+    border-radius:8px;
+    padding:12px;
+}
+
+.cluster-save-error{
+    background:#252526;
+    border:1px solid #ff7070;
+    border-radius:8px;
+    padding:12px;
+}
+
+.cluster-save-header{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.cluster-save-success .cluster-save-header{
+    color:#00ff88;
+}
+
+.cluster-save-error .cluster-save-header{
+    color:#ff7070;
+}
+
+.cluster-save-text{
+    color:white;
 }
