@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         user.addEventListener("click", function (e) {
             e.stopPropagation();
 
-            if (!togglePanel("user-properties",this.dataset.username)){
+            if (!togglePanel("user-properties",this.dataset.username + "-" + this.dataset.role)){
                 return;
             }
 
@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("user-email").textContent = this.dataset.email;
             document.getElementById("user-role").innerHTML = this.dataset.role;
             document.getElementById("user-enabled").textContent = this.dataset.enabled;
+
+            animatePanel("user-properties");
             
         });
 

@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded",function () {
                     }
                     document.getElementById("monitor-status").innerHTML = status;
 
+                    animatePanel("node-disk-properties");
+
                 }
             );
 

@@ -40,6 +40,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 statusElement.innerHTML =`<span style=" color:white; "> 🔴 Closed</span>`;
             }
            
+            
+            animatePanel("index-properties");
 
         });
     });

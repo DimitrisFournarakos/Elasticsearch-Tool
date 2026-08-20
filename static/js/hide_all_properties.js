@@ -23,21 +23,62 @@ window.hideAllProperties = function () {
     
 };
 
-//Συνάρτηση για να ανοιγει-κλείνει με click ένα αρχείο στο δεξί πάνελ.
+// Συνάρτηση για να ανοιγει-κλείνει με click ένα αρχείο στο δεξί πάνελ.
 window.togglePanel = function(panelId, itemId){
+
     const panel = document.getElementById(panelId);
 
-    if (window.activeItem === itemId && panel.style.display === "block"){
+    if(
+        window.activeItem === itemId &&
+        panel.style.display === "block"
+    ){
+
         panel.style.display = "none";
+
         document.getElementById("details-title").innerHTML = "";
+
         window.activeItem = null;
 
         return false;
     }
 
     window.hideAllProperties();
+
     panel.style.display = "block";
+
+    panel.classList.remove("panel-fade");
+
+    // Force reflow
+    void panel.offsetWidth;
+
+    panel.classList.add("panel-fade");
+
     window.activeItem = itemId;
 
     return true;
+};
+
+//Helper function in order to add the fade animation for same items in folders, π.χ. users,roles,shards κλπ. properties panels
+window.animatePanel = function(panelId){
+
+    const panel = document.getElementById(panelId);
+
+    if(!panel){
+        return;
+    }
+
+    panel.style.display = "none";
+
+    setTimeout(() => {
+
+        panel.style.display = "block";
+
+        panel.classList.remove("panel-fade");
+
+        void panel.offsetWidth;
+
+        panel.classList.add("panel-fade");
+
+    }, 10);
+
 };

@@ -214,6 +214,8 @@ ul.tree li{
 }
 
 #connect-btn{
+    transform:scale(0.98);
+    transition:all 0.15s ease;
     background:#00bfb3;
     color:white;
     border:none;
@@ -986,4 +988,45 @@ ul.tree li{
 .validation-error-message ul{
     margin-top:8px;
     padding-left:18px;
+}
+
+
+.container{
+    animation: dashboardFadeIn 0.5s ease-out;
+}
+
+@keyframes dashboardFadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.property-box{
+    animation: panelFadeIn 0.30s ease-out;
+}
+
+@keyframes panelFadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.panel-fade{
+    animation: panelFadeIn 0.30s ease-out;
 }

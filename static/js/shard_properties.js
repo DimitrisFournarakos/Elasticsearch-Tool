@@ -48,6 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("shard-store").textContent = this.dataset.store;
             document.getElementById("shard-dataset").textContent = this.dataset.dataset;
             document.getElementById("shard-ip").textContent = this.dataset.ip;
+
+            animatePanel("shard-properties");
         });
 
     });

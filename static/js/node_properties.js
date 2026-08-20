@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", function(){
             document.getElementById("node-ip").textContent = this.dataset.ip;
             document.getElementById("node-version").textContent = this.dataset.version;
 
+            animatePanel("node-properties");
+
         });
     });
 });

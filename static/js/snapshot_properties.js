@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded",function(){
                     document.getElementById("snapshot-state").textContent = this.dataset.state;
                     document.getElementById("snapshot-indices").innerHTML = this.dataset.indices;
 
+                    animatePanel("snapshot-properties");
                 }
             );
 
