@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", function(){
         if(!togglePanel("add-cluster-properties","add-cluster")){
             return;
         }
+        
+        resetAddClusterForm();
 
         document.getElementById("details-title").innerHTML = `<svg width="24"
                                                                 height="23"
@@ -33,3 +35,30 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 
 });
+
+//Helper Function για να γίνεται reset το form του Add Cluster όταν πατάω κάπου αλλού
+function resetAddClusterForm(){
+
+    document.getElementById("form-cluster-url").value = "";
+    document.getElementById("cluster-username").value = "";
+    document.getElementById("cluster-password").value = "";
+
+    document.getElementById("form-cluster-environment").selectedIndex = 0;
+
+    document.getElementById("save-cluster-btn").disabled = true;
+
+    document.getElementById("cluster-validation-result").innerHTML = "";
+
+    document.getElementById("cluster-detected-info").style.display = "none";
+    document.getElementById("cluster-detected-info").classList.remove("show");
+
+    document.getElementById("cluster-validation-error").style.display = "none";
+    document.getElementById("cluster-validation-error").classList.remove("show");
+
+    document.getElementById("cluster-save-message").style.display = "none";
+    document.getElementById("cluster-save-message").classList.remove("show");
+
+    document.getElementById("detected-cluster-name").textContent = "";
+    document.getElementById("detected-cluster-url").textContent = "";
+
+}
