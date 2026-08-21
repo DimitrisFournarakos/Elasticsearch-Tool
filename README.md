@@ -10,38 +10,63 @@ Designed to provide an intuitive alternative administration interface for monito
 ### Cluster Management
 
 - Multi-cluster support
-- Cluster health monitoring
-- Cluster overview dashboard
-- Node monitoring
-- Shard monitoring
+- Cluster connection management
+- Cluster creation and deletion
+- Encrypted cluster credentials
+- Cluster information dashboard
+
+### Historical Monitoring
+
+- Cluster Health History
+- Cluster Growth History
+- Node Growth History
+- Index Growth History
+- Shard Growth History
+- Trend analysis
+- Availability metrics
+- Historical event tracking
 
 ### User Administration
 
-- User management
 - User details explorer
 - Role visualization
+- Role-based user browsing
+
+### Node Monitoring
+
+- Node monitoring
+- Node disk usage analysis
+- Node growth history
 
 ### Index Management
 
 - Index explorer
 - Index statistics
 - Index disk usage monitoring
+- Index growth history
+- Document growth tracking
+- Storage growth analysis
+
+### Shard Monitoring
+
+- Shard allocation overview
+- Shard health monitoring
+- Shard growth history
+- Shard storage analysis
 
 ### Snapshot Management
 
-- Snapshot repository creation
+- Snapshot repository explorer
 - Snapshot browsing
-- Snapshot creation
-- Repository Explorer
 - Snapshot property viewer
+- Repository overview
 
-### Monitoring
+### Security
 
-- Cluster monitoring
-- Node monitoring
-- Shard allocation overview
-- Disk usage analysis
-
+- Encrypted cluster credentials storage
+- Automatic password encryption
+- Automatic password decryption
+- Environment-based cluster configuration
 ---
 
 ## Dashboard
@@ -83,13 +108,13 @@ http://localhost:9000
 ![Index Monitoring](docs/screenshots/index-growth-history-1.png)
 ![Index Monitoring](docs/screenshots/index-growth-history-2.png)
 
-### Shard Monitoring
+#### Shard Monitoring
 ![Shard Monitoring](docs/screenshots/shard-monitoring.png)
 ![Shard Monitoring](docs/screenshots/shard-growth-history-1.png)
 ![Shard Monitoring](docs/screenshots/shard-growth-history-2.png)
 ---
 
-## Historical Monitoring
+## Monitoring Architecture
 
 Elasticsearch Tool includes built-in historical monitoring capabilities.
 
@@ -103,7 +128,7 @@ The application automatically creates hidden Elasticsearch indices to store moni
 .cluster-shard-history
 ```
 
-### Available Historical Dashboards
+### Historical Dashboards
 
 - Cluster Health History
 - Cluster Growth History
@@ -111,17 +136,15 @@ The application automatically creates hidden Elasticsearch indices to store moni
 - Index Growth History
 - Shard Growth History
 
-### Features
+### Monitoring Capabilities
 
 - Automatic historical data collection
 - Trend analysis
-- Availability metrics
-- Recent events tracking
+- Availability tracking
+- Growth monitoring
+- Recent event tracking
 - Interactive charts
 - Native Elasticsearch storage
-
-No external database or manual configuration is required.
-
 
 ### Stored Information
 
@@ -137,20 +160,11 @@ Depending on the monitoring type, historical records may include:
 Examples of stored metrics:
 
 - Health status changes
-- Storage usage changes
-- Node disk usage
-- Index growth metrics
-- Shard allocation statistics
+- Storage usage history
+- Node disk usage history
+- Index growth statistics
+- Shard allocation events
 
-### Available Metrics
-
-- Current Status
-- Historical Timeline
-- Trend Analysis
-- Availability Metrics
-- Growth Monitoring
-- Recent Events
-- Interactive Charts
 
 ### Benefits
 
@@ -182,22 +196,40 @@ elastic_monitor/
 
 ├── Dockerfile
 ├── requirements.txt
-├── .env-example
 ├── README.md
+├── LICENSE
+├── .gitignore
+├── .env-example
+
+├── config/
 
 ├── deployment/
 │   ├── docker-compose.yml
 │   ├── docker-compose-elasticsearch.yml
 │   └── elasticsearch.yml
 
-├── config/
+├── docs/
+│   └── screenshots/
+
 ├── static/
 ├── templates/
 
 ├── elastic_monitor.py
 ├── elasticsearch_api.py
-├── manage.py
+├── encryption_utils.py
 ├── views.py
+├── manage.py
+```
+
+### Runtime Generated Files
+
+The following files are created automatically during runtime and are not included in the repository:
+
+```text
+clusters.json
+users.json
+db.sqlite3
+.env
 ```
 
 ---
@@ -213,7 +245,7 @@ cd Elasticsearch-Tool
 ```
 ---
 
-## Environment Variables
+### Environment Variables
 
 Create a `.env` file based on:
 
@@ -224,18 +256,47 @@ cp .env-example .env
 Example:
 
 ```env
+# Django
+
 SECRET_KEY=CHANGE_ME
-ELASTIC_PASSWORD=ChangeMe123!
-MONITORING_PASSWORD=ChangeMe456!
+
+# Cluster Credential Encryption
+
+CLUSTER_ENCRYPTION_KEY=GENERATE_ENCRYPTION_KEY
+
+# Demo Elasticsearch Environment Only
+
+ELASTIC_PASSWORD=CHANGE_ME
+MONITORING_PASSWORD=CHANGE_ME
 ```
 
+**Note:**
+
+`ELASTIC_PASSWORD` and `MONITORING_PASSWORD` are only required when using the included demo Elasticsearch environment (`docker-compose-elasticsearch.yml`).
+
+Cluster credentials added through the web interface are stored separately in `clusters.json` and are automatically encrypted using `CLUSTER_ENCRYPTION_KEY`.
+
 ---
-## Cluster Configuration
+### Cluster Credential Encryption
 
-Before using the application, configure the Elasticsearch clusters that you want to monitor.
+Cluster credentials stored in `clusters.json` are automatically encrypted using Fernet encryption.
 
-Make and Edit the `clusters.json` file and add your cluster information.
-The clusters.json file must be located in the project root directory.
+The encryption key is defined in:
+
+```env
+CLUSTER_ENCRYPTION_KEY=GENERATE_ENCRYPTION_KEY
+```
+
+Passwords are encrypted during cluster creation and automatically decrypted when establishing Elasticsearch connections.
+
+No manual encryption or decryption steps are required.
+
+---
+### Cluster Configuration
+
+Clusters can be added directly from the web interface using the Add Cluster panel.
+
+The application automatically creates and manages the required `clusters.json` file if it does not already exist.
 
 Example:
 
@@ -243,23 +304,13 @@ Example:
 {
   "clusters": [
     {
-      "id": "prod",
-      "name": "elastic-cluster",
-      "url": "http://localhost:9200",
-      "username": "elastic",
-      "password": "your_password",
-      "enabled": true,
-      "environment": "production"
-    },
-    {
-      "id": "monitoring",
-      "name": "monitoring-cluster",
-      "url": "http://localhost:9203",
-      "username": "elastic",
-      "password": "your_password",
-      "enabled": true,
-      "environment": "monitoring"
-    }
+  "id": "prod",
+  "name": "elastic-cluster",
+  "url": "http://localhost:9200",
+  "username": "elastic",
+  "password": "gAAAAAB...",
+  "environment": "production"
+  }
   ]
 }
 ```
@@ -272,11 +323,8 @@ Example:
 | name | Cluster display name |
 | url | Elasticsearch endpoint URL |
 | username | Elasticsearch username |
-| password | Elasticsearch password |
-| enabled | Enable or disable the cluster |
+| password | Elasticsearch password (encrypted) |
 | environment | Environment type (production, monitoring, development, etc.) |
-
-After updating `clusters.json`, restart the application.
 
 ## Docker Deployment
 
@@ -289,7 +337,7 @@ docker build -t elasticsearch-tool .
 Run application:
 
 ```bash
-docker compose -f deployment/docker-compose.yml up -d
+docker-compose -f deployment/docker-compose.yml up -d
 ```
 
 Open:
@@ -326,15 +374,12 @@ path.repo:
   - /usr/share/elasticsearch/snapshots
 ```
 
-allowing:
+providing:
 
-- Repository Creation
-- Snapshot Creation
-- Snapshot Restore
-- Repository Explorer
-
-
----
+- Snapshot repository browsing
+- Snapshot inspection
+- Repository overview
+- Snapshot property exploration
 
 ## Author
 
@@ -349,6 +394,6 @@ https://github.com/DimitrisFournarakos
 
 Copyright © 2026 Dimitrios Fournarakos.
 
-All Rights Reserved.
+This software is distributed under a Commercial Source Code License.
 
-This project is not licensed for public use, modification, redistribution, or commercial exploitation without explicit written permission from the author.
+See the LICENSE file for complete licensing terms.

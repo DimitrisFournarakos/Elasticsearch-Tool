@@ -1,9 +1,12 @@
 from elasticsearch import Elasticsearch
 from datetime import datetime,timezone
 import json,os
+from encryption_utils import encrypt_password,decrypt_password
 
 def get_client(cluster):
-    return Elasticsearch(cluster["url"], basic_auth=( cluster["username"], cluster["password"] ))
+    password = decrypt_password(cluster["password"])
+
+    return Elasticsearch(cluster["url"],basic_auth=(cluster["username"],password))
 
 def get_cluster_by_id(cluster_id):
     clusters = get_clusters()
@@ -645,6 +648,7 @@ def save_cluster_to_json(cluster_data):
         if cluster["id"] == cluster_data["id"]  or  cluster["url"] == cluster_data["url"]:
             raise ValueError(f"Cluster ID '{cluster_data['id']}' already exists.")
 
+    cluster_data["password"] = encrypt_password(cluster_data["password"])
     clusters.append(cluster_data)
 
     with open("clusters.json", "w") as f:
