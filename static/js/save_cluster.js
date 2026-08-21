@@ -34,6 +34,9 @@ document.addEventListener("DOMContentLoaded", function(){
             };
 
             const csrftoken = getCookie("csrftoken");
+            const validationError = document.getElementById("cluster-validation-error");
+            validationError.classList.remove("show");
+            validationError.style.display = "none";
             try{
                 const response = await fetch("/save-cluster/",
                         {

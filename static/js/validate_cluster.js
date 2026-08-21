@@ -20,6 +20,10 @@ document.addEventListener("DOMContentLoaded", function(){
             clusterInfo.classList.remove("show");
             clusterInfo.style.display = "none";
 
+            const saveMessage = document.getElementById("cluster-save-message");
+            saveMessage.classList.remove("show");
+            saveMessage.style.display = "none";
+
             document.getElementById("save-cluster-btn").disabled = true;
             result.innerHTML = "";
 
