@@ -8,11 +8,17 @@ document.addEventListener("click", function(e){
             return;
         }
 
+        const deleteConfirmation = document.getElementById("cluster-delete-confirmation");
+        deleteConfirmation.classList.remove("show");
+        deleteConfirmation.style.display = "none";
+
         document.getElementById("details-title").innerHTML = `🌐 ${cluster.dataset.name}`;
         document.getElementById("cluster-name").textContent = cluster.dataset.name;
         document.getElementById("cluster-url").textContent = cluster.dataset.url;
         document.getElementById("cluster-environment").textContent = cluster.dataset.environment;
         document.getElementById("connect-btn").dataset.clusterId = cluster.dataset.id;
+        document.getElementById("delete-cluster-btn").dataset.clusterId = cluster.dataset.id;
+
         animatePanel("cluster-properties");
 });
 

@@ -1,6 +1,28 @@
 <div id="cluster-properties" class="property-box">
 
-    <h2>Cluster Information</h2>
+    <div class="cluster-header">
+        <h2>Cluster Information</h2>
+        <button id="delete-cluster-btn" class="cluster-delete-icon">
+            <svg width="20"
+                 height="22"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+                <path d="M3 6h18"></path>
+                <path d="M8 6V4h8v2"></path>
+                <path d="M19 6l-1 14H6L5 6"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+            </svg>
+
+            <span class="refresh-tooltip">Delete Cluster</span>
+        </button>
+
+    </div>
     <br>
 
     <div class="properties-table">
@@ -29,10 +51,24 @@
 
     <br>
 
-    <div class="cluster-actions">
-        <button id="connect-btn" class="form-button form-button-save">
-            Connect
-        </button>
+    <div class="cluster-actions"><button id="connect-btn" class="form-button form-button-save">Connect</button></div>
+
+        <div id="cluster-delete-confirmation" class="cluster-delete-confirmation" style="display:none;">
+
+            <div class="delete-confirmation-header">⚠ Delete Cluster</div>
+
+            <div class="delete-confirmation-text">
+                You are about to permanently remove: 
+                
+                <strong id="delete-cluster-name"></strong>
+                <br>
+                This action cannot be undone.
+            </div>
+
+            <div class="delete-confirmation-actions">
+                <button id="confirm-delete-btn" class="form-button-delete">Delete Cluster</button>
+                <button id="cancel-delete-btn" class="form-button">Cancel</button>               
+            </div>
     </div>
 
 </div>

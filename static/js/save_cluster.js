@@ -119,7 +119,6 @@ async function refreshClusterList(){
     const response = await fetch("/get-clusters/");
     const data = await response.json();
     const clusterList = document.getElementById("cluster-list");
-
     clusterList.innerHTML = "";
 
     data.clusters.forEach(cluster => {
@@ -136,5 +135,26 @@ async function refreshClusterList(){
             </li>`;
 
     });
+
+    clusterList.innerHTML += `<li class="cluster-add-item">
+                                <button id="open-add-cluster" class="cluster-add-button">
+
+                                    <svg width="18"
+                                        height="17"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+
+                                        <ellipse cx="10" cy="5" rx="6" ry="3"></ellipse>
+                                        <path d="M4 5v7c0 1.7 2.7 3 6 3s6-1.3 6-3V5"></path>
+                                        <path d="M20 10v8"></path>
+                                        <path d="M16 14h8"></path>
+                                    </svg>
+                                    <span>Add Cluster</span>
+                                </button>
+                            </li>`;
 
 }

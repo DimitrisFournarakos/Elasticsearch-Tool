@@ -683,10 +683,12 @@ ul.tree li{
 }
 
 #refresh-dashboard-btn:hover .refresh-tooltip,
-#refresh-clusters-btn:hover .refresh-tooltip{
+#refresh-clusters-btn:hover .refresh-tooltip,
+.cluster-delete-icon:hover .refresh-tooltip{
     opacity:0.9;
     display:block;
 }
+
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 /*Table Style for properties*/
@@ -1080,3 +1082,85 @@ ul.tree li{
     color:white;
 }
 /*-------------------------------------------------------------------------------------------------------------------------------------*/
+/*Delete Cluster Icon - Style & Same Toolip style as refresh-button toolip*/
+.cluster-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+.cluster-delete-icon{
+    background:none;
+    border:none;
+    color:#ff7070;
+    cursor:pointer;
+    padding:6px;
+    border-radius:6px;
+    position:relative;
+    transition:all 0.2s ease;
+}
+
+.cluster-delete-icon:hover{
+    background:#2d2d2d;
+    color:#ff4d4d;
+}
+
+/*Style - Delete Confirmation Message*/
+.cluster-delete-confirmation{
+
+    margin-top:20px;
+    background:#252526;
+    border:1px solid #ff7070;
+    border-radius:8px;
+    padding:15px;
+    display:none;
+    opacity:0;
+    transform:translateY(10px);
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.cluster-delete-confirmation.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.delete-confirmation-header{
+    color:#ff7070;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.delete-confirmation-text{
+    color:white;
+    line-height:1.6;
+}
+
+.delete-confirmation-actions{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+}
+/*Style for Delete Cluster Button in the confirmation panel*/
+.form-button-delete{
+    background:#a4262c;
+    color:white;
+    border:none;
+    border-radius:6px;
+    padding:8px 14px;
+    font-size:13px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.2s ease;
+}
+
+.form-button-delete:hover{
+    background:#c42b1c;
+}
+
+.form-button-delete:active{
+    transform:scale(0.98);
+}
+/*------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------------*/

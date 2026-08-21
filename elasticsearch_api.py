@@ -650,6 +650,24 @@ def save_cluster_to_json(cluster_data):
     with open("clusters.json", "w") as f:
         json.dump(data,f,indent=4)
 
+def delete_cluster_from_json(cluster_id):
+    ensure_clusters_file()
+
+    with open("clusters.json","r") as f:
+        data = json.load(f)
+
+
+    new_clusters = []
+
+    for cluster in data["clusters"]:
+        if cluster["id"] != cluster_id:
+            new_clusters.append(cluster)
+
+    data["clusters"] = new_clusters
+
+    with open("clusters.json","w") as f:
+        json.dump(data,f,indent=4)
+
 def get_clusters():
     ensure_clusters_file()
 
