@@ -69,7 +69,7 @@ Designed to provide an intuitive alternative administration interface for monito
 - Environment-based cluster configuration
 ---
 
-## Dashboard
+## Elasticsearch-Tool Interface
 
 Access the application:
 
