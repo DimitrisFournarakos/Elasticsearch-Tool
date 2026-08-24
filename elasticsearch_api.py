@@ -672,6 +672,25 @@ def delete_cluster_from_json(cluster_id):
     with open("clusters.json","w") as f:
         json.dump(data,f,indent=4)
 
+def update_cluster_in_json(cluster_data):
+    ensure_clusters_file()
+
+    with open("clusters.json", "r") as f:
+        data = json.load(f)
+
+    for cluster in data["clusters"]:
+        if cluster["id"] == cluster_data["id"]:
+
+            cluster["url"] = cluster_data["url"]
+            cluster["username"] = cluster_data["username"]
+            cluster["password"] = encrypt_password(cluster_data["password"])
+            cluster["environment"] = (cluster_data["environment"])
+
+            break
+
+    with open("clusters.json", "w") as f:
+        json.dump(data,f,indent=4)
+
 def get_clusters():
     ensure_clusters_file()
 

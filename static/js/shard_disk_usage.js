@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",
 
         shardStorage.addEventListener("click",function (e) {
                 e.stopPropagation();
-                console.log(this.dataset);
+                
                 if (!togglePanel("shard-storage-properties","shard-storage")
                 ){
                     return;

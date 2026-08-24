@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", function(){
             const startsWithMatches = [];
             const containsMatches = [];
 
-            document.querySelectorAll(".item-label").forEach(element => {
+            document.querySelectorAll(".item-label, .node-label").forEach(element => {
                     const text = element.textContent.trim();
 
                     //Trim the emojis ... This is because i have 📄current_status for example and i want to find something which starts with c.
-                    const searchableText = text.replace(/^[^\w]+/, "").trim();
+                    const searchableText = text.replace(/^[^\p{L}\p{N}_-]+/u, "").trim();
                     const lowerText = searchableText.toLowerCase();
 
                     if(lowerText.startsWith(value)){

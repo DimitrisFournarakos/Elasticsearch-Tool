@@ -1,9 +1,14 @@
 document.addEventListener("click", function(e){
     const addClusterNode = e.target.closest("#open-add-cluster");
 
+
     if(!addClusterNode){
         return;
     }
+
+    
+    document.getElementById("save-cluster-btn").textContent = "Add Cluster";
+    document.getElementById("save-cluster-btn").dataset.mode = "add";
 
     if(!togglePanel("add-cluster-properties","add-cluster")){
         return;
@@ -53,5 +58,9 @@ function resetAddClusterForm(){
 
     document.getElementById("detected-cluster-name").textContent = "";
     document.getElementById("detected-cluster-url").textContent = "";
+
+    document.getElementById("save-cluster-btn").dataset.mode = "add";
+    document.querySelector("#add-cluster-properties h3").textContent = "Add Cluster";
+
 
 }

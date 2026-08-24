@@ -61,6 +61,24 @@ document.addEventListener("DOMContentLoaded", function(){
                 const data = await response.json();
            
                 if(data.success){ 
+
+                    const mode = document.getElementById("save-cluster-btn").dataset.mode;
+                    const originalCluster = document.getElementById("save-cluster-btn").dataset.originalCluster;
+
+                    if(mode === "edit" && originalCluster !== data.cluster_name){
+                        document.getElementById("save-cluster-btn").disabled = true;
+                        errorPanel.style.display = "block";
+
+                        document.querySelector(".validation-error-message").innerHTML = `The selected URL is already associated with <strong>${data.cluster_name}</strong>.
+                                                                                                                                                        <br><br>
+                                                                                                                                                        You are currently editing <strong>${originalCluster}</strong>.
+                                                                                                                                                        <br><br>
+                                                                                                                                                        Please verify that the URL points to the correct Elasticsearch cluster before saving your changes.`;
+
+                        setTimeout(() => {errorPanel.classList.add("show");},10);
+
+                        return;
+                    }
                     const clusterInfo = document.getElementById("cluster-detected-info");
 
                     clusterInfo.style.display = "block";

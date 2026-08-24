@@ -17,7 +17,14 @@ document.addEventListener("click", function(e){
         document.getElementById("cluster-url").textContent = cluster.dataset.url;
         document.getElementById("cluster-environment").textContent = cluster.dataset.environment;
         document.getElementById("connect-btn").dataset.clusterId = cluster.dataset.id;
+
         document.getElementById("delete-cluster-btn").dataset.clusterId = cluster.dataset.id;
+        
+        
+        document.getElementById("edit-cluster-btn").dataset.clusterId = cluster.dataset.id;
+        document.getElementById("edit-cluster-btn").dataset.clusterName = cluster.dataset.name;
+        document.getElementById("edit-cluster-btn").dataset.url = cluster.dataset.url;
+        document.getElementById("edit-cluster-btn").dataset.environment = cluster.dataset.environment;
 
         animatePanel("cluster-properties");
 });

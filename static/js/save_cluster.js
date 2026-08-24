@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", function(){
             const username = document.getElementById("cluster-username").value;
             const password = document.getElementById("cluster-password").value;
             const environment = document.getElementById("form-cluster-environment").value;
+            const mode = saveBtn.dataset.mode || "add";
+            const endpoint =  mode === "edit" ? "/update-cluster/" : "/save-cluster/";
 
             //MAKE Environmet field required
             if(!environment){
@@ -24,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 return;
             }
 
-            const payload = { 
-                id: clusterName.toLowerCase().replace(/\s+/g,"-"),
+            const payload = {
+                id: mode === "edit" ? saveBtn.dataset.clusterId : clusterName.toLowerCase().replace(/\s+/g,"-"),
                 name: clusterName,
                 url: url,
                 username: username,
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function(){
             validationError.classList.remove("show");
             validationError.style.display = "none";
             try{
-                const response = await fetch("/save-cluster/",
+                const response = await fetch(endpoint,
                         {
                             method:"POST",
                             headers:{
@@ -54,8 +56,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 if(data.success){
                     const message = document.getElementById("cluster-save-message");
                     message.className = "cluster-save-message cluster-save-success";
-                    document.getElementById("cluster-save-header").innerHTML ="✅ Cluster Added Successfully";
-                    document.getElementById("cluster-save-text").innerHTML = "The cluster has been added successfully and will now appear in the cluster list.";
+                    document.getElementById("cluster-save-header").innerHTML = mode === "edit" ? "✅ Cluster Updated Successfully" : "✅ Cluster Added Successfully";
+                    document.getElementById("cluster-save-text").innerHTML = mode === "edit" ? "The cluster configuration has been updated successfully." : "The cluster has been added successfully and will now appear in the cluster list.";
                     message.classList.remove("show");
                     message.style.display = "none";
                     message.style.display = "block";

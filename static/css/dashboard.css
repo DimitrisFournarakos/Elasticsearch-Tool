@@ -684,7 +684,8 @@ ul.tree li{
 
 #refresh-dashboard-btn:hover .refresh-tooltip,
 #refresh-clusters-btn:hover .refresh-tooltip,
-.cluster-delete-icon:hover .refresh-tooltip{
+.cluster-delete-icon:hover .refresh-tooltip,
+.cluster-edit-icon:hover .refresh-tooltip{
     opacity:0.9;
     display:block;
 }
@@ -1227,3 +1228,37 @@ ul.tree li{
     color:#c5c5c5;
     font-size:12px;
 }
+
+/*Cluster Edit Icon Style*/
+.cluster-edit-icon{
+    background:none;
+    border:none;
+    color:#4fc3f7;
+    cursor:pointer;
+    padding:6px;
+    border-radius:6px;
+    position:relative;
+    transition:all 0.2s ease;
+}
+
+.cluster-edit-icon:hover{
+    background:#2d2d2d;
+    color:#63d1ff;
+}
+
+.cluster-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cluster-header-icons{
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.cluster-edit-icon{
+    position:relative;
+}
+
