@@ -1190,3 +1190,40 @@ ul.tree li{
     font-size:15px;
     font-style:italic;
 }
+
+/*Style for Global Search Bar*/
+#global-search{
+    width:95%;
+    padding:8px;
+
+    background:#1e1e1e;
+    color:white;
+
+    border:1px solid #444;
+    border-radius:6px;
+
+    margin-top:5px;
+    margin-bottom:10px;
+    margin-left: 5px;
+
+    box-sizing:border-box;
+}
+
+#global-search-results{
+    margin-top:10px;
+}
+
+.global-search-result{
+    padding:6px 8px;
+    cursor:pointer;
+    border-radius:4px;
+}
+
+.global-search-result:hover{
+    background:#333;
+}
+
+.global-search-path{
+    color:#c5c5c5;
+    font-size:12px;
+}
