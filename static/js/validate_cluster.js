@@ -16,6 +16,16 @@ document.addEventListener("DOMContentLoaded", function(){
             errorPanel.classList.remove("show");
             errorPanel.style.display = "none";
 
+            document.querySelector(".validation-error-message").innerHTML = `Unable to connect to the Elasticsearch cluster.
+                                                                            <br><br>
+                                                                            Please verify:
+                                                                            <ul>
+                                                                                <li>Cluster URL</li>
+                                                                                <li>Username</li>
+                                                                                <li>Password</li>
+                                                                                <li>Cluster Availability</li>
+                                                                            </ul>`;
+
             const clusterInfo = document.getElementById("cluster-detected-info");
             clusterInfo.classList.remove("show");
             clusterInfo.style.display = "none";
@@ -98,7 +108,19 @@ document.addEventListener("DOMContentLoaded", function(){
                 clusterInfo.classList.remove("show");
                 clusterInfo.style.display = "none";
 
-                result.innerHTML ="❌ Connection Failed";
+                errorPanel.style.display = "block";
+
+                document.querySelector(".validation-error-message").innerHTML = `Unable to connect to the Elasticsearch cluster.
+                                                                                    <br><br>
+                                                                                    Please verify:
+                                                                                    <ul>
+                                                                                        <li>Cluster URL</li>
+                                                                                        <li>Username</li>
+                                                                                        <li>Password</li>
+                                                                                        <li>Cluster Availability</li>
+                                                                                    </ul>`;
+
+                setTimeout(() => {errorPanel.classList.add("show");}, 10);
 
             }
 
