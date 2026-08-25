@@ -265,16 +265,16 @@ SECRET_KEY=CHANGE_ME
 CLUSTER_ENCRYPTION_KEY=GENERATE_ENCRYPTION_KEY
 ### Generate Encryption Key
 
-```python
-from cryptography.fernet import Fernet
+Run the following command:
 
-print(Fernet.generate_key().decode())
+```bash
+python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-Copy the generated key into:
+Copy the generated value into:
 
 ```env
-CLUSTER_ENCRYPTION_KEY=...
+CLUSTER_ENCRYPTION_KEY=YOUR_GENERATED_KEY
 ```
 # Demo Elasticsearch Environment Only
 
