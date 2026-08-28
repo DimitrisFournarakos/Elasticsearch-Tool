@@ -229,10 +229,7 @@ def get_cluster_storage_history(cluster,cluster_name,period):
 
     for hit in response["hits"]["hits"]:
         results.append(hit["_source"])
-        
-    print("CLUSTER:", cluster_name)
-    print("PERIOD:", period)
-    print("RESULTS:", len(results))
+
     return results
 #--------------------------------------------------------------------------------------------
 
