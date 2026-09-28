@@ -409,3 +409,8 @@ Copyright © 2026 Dimitrios Fournarakos.
 This software is distributed under a Commercial Source Code License.
 
 See the LICENSE file for complete licensing terms.
+
+---
+
+> **⭐ If you liked this project, give it a star on GitHub!**  
+> It's a small gesture that helps a lot with visibility.
